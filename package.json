@@ -1,0 +1,19 @@
+{
+  "name": "obiechat",
+  "version": "0.0.1",
+  "private": true,
+  "author": "jack ratner",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+	  "underscore": "*",
+      "express": "3.4.0",
+      "jade": "*",
+      "mongoose": "*",
+      "socket.io": "*",
+      "cookie": "*",
+      "passport": "*",
+      "passport-google": "*"
+  }
+}

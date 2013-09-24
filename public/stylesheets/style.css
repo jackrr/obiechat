@@ -1,0 +1,17 @@
+/*
+	Styling for the header, footer, and general page shape
+*/
+.header .logo {
+  font-size: 32px;
+}
+.header .buttons {
+  float: right;
+  width: 400px;
+}
+.header .buttons .join {
+  width: 150px;
+}
+.header .buttons .signIn {
+  float: right;
+  width: 100px;
+}
