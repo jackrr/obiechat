@@ -1,12 +1,14 @@
-
 /*
  * GET home page.
  */
 
 module.exports = function(app) {
 	app.get('/', function(req, res) {
-		  res.render('index', { title: 'Express' });
+		app.db.Post.all(function(err, posts) {
+			if (err) console.log(err);
+			res.render('index', { posts: posts });	
+		});
 	});
 	
-	require('./user')(app);
+	//require('./post')(app);
 };

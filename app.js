@@ -5,11 +5,12 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
 
 var app = express();
+
+app.db = require('./db/db.js');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
