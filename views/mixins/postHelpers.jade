@@ -1,0 +1,11 @@
+include formHelpers
+
+mixin postView(post)
+	div.post
+		div.body= post.body
+		div.postedAt= post.createdDate
+		
+mixin postForm(slug)
+	form(name='post', action='/topic/#{slug}/post', method="post")
+		mixin text('body', 'Reply', 'body')
+		mixin submit('Post')

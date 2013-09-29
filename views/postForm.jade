@@ -1,6 +1,0 @@
-include mixins/formHelpers
-
-block postForm
-	form(name='post', action='/post', method="post")
-		mixin text('body', 'Reply', 'body')
-		mixin submit('Post')

@@ -34,4 +34,23 @@ module.exports = function(app) {
 			res.render('topic', {topic: topic});	
 		});
 	});
+	
+	app.post('/topic/:slug/post', function(req, res) {
+		// send the topic view
+		Topic.findBySlug(req.params.slug, function(err, topic) {
+			if(err) {
+				console.log(err);
+			}
+			if(!topic.name) {
+				res.send(404, "Topic not found");
+			}
+			topic.posts.push(req.body);
+			topic.save(function(err) {
+				if(err) {
+					console.log(err);
+				}
+				res.redirect('/topic/' + topic.slug);
+			});
+		});
+	});
 };

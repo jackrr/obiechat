@@ -1,19 +1,7 @@
 extends layout
 
+include mixins/topicHelpers
+
 block content
-	div.header 
-		div.logo obiechat
-		div.buttons
-			div.join 
-				a(href='/', class='joinBtn') Join Now
-			div.signIn
-				a(href='/', class='signInBtn') Sign In
-	div.main
-		div IN INDEX
-		div.postFormArea
-			include postForm
-		div POSTS
-		each post in posts
-			div.post
-				div.body= post.body
-				div.postedAt= post.createdDate
+	each topic in topics
+		mixin topicPreview(topic)

@@ -3,9 +3,9 @@
  */
 module.exports = function(app) {
 	app.get('/', function(req, res) {
-		app.db.Post.all(function(err, posts) {
+		app.db.Topic.all(function(err, topics) {
 			if (err) console.log(err);
-			res.render('index', { posts: posts });	
+			res.render('index', { topics: topics });	
 		});
 	});
 };
