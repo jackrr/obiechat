@@ -9,10 +9,11 @@ block content
 			div.signIn
 				a(href='/', class='signInBtn') Sign In
 	div.main
+		div IN INDEX
 		div.postFormArea
-			div There should be a post form here later
-			// create a post form
+			include postForm
+		div POSTS
 		each post in posts
-			div.post A post!
+			div.post
 				div.body= post.body
-				div.postedAt= post.createdAt
+				div.postedAt= post.createdDate

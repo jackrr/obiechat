@@ -6,3 +6,5 @@ var postSchema = new Schema({
 	body: {type: String, required: true},
 	createdDate: {type: Date, default: Date.now}
 });
+
+module.exports = postSchema;

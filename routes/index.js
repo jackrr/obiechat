@@ -1,7 +1,6 @@
 /*
  * GET home page.
  */
-
 module.exports = function(app) {
 	app.get('/', function(req, res) {
 		app.db.Post.all(function(err, posts) {
@@ -10,5 +9,5 @@ module.exports = function(app) {
 		});
 	});
 	
-	//require('./post')(app);
+
 };
