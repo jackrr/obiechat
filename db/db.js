@@ -6,7 +6,9 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 var Post = require('./models/post');
+var Topic = require('./models/topic');
 
 module.exports = {
-		Post: Post
+		Post: Post,
+		Topic: Topic
 };

@@ -1,0 +1,12 @@
+extends layout
+
+include mixins/formHelpers
+
+block content
+	div NEW TOPIC
+	form(name='topic', action='/topic', method="post")
+		div.nameLabel This is the name box:
+		mixin text('name', '', 'name')
+		div.descriptionLabel This is the description box:
+		mixin text('description', '', 'description')
+		mixin submit('Launch Topic')

@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	h2 The Topics
+	each topic in topics
+		div.topic
+			div.name= topic.name
+			div.createdAt= topic.createdDate
+			div.slug= topic.slug
