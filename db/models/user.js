@@ -8,8 +8,9 @@ User.all = function(cb) {
 	});
 };
 
-User.findOrCreateByGoogleID = function(googleID, profile, cb) {
-	User.findOne({googleID: googleID}, function(err, user) {
+User.findOrCreateByGoogleEmail = function(profile, cb) {
+	var email = profile.emails[0].value;
+	User.findOne({email: email}, function(err, user) {
 		if (err) {
 			return cb(err);
 		}
@@ -17,12 +18,11 @@ User.findOrCreateByGoogleID = function(googleID, profile, cb) {
 			return cb(null, user);
 		}
 		User.create({
-			googleID: googleID,
 			name: {
 				first: profile.name.givenName,
 				last: profile.name.familyName
 			},
-			email: profile.emails[0].value
+			email: email
 		}, function(err, user) {
 			cb(err, user);
 		});

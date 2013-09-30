@@ -8,7 +8,7 @@ googlePaths.realm = 'http://localhost:3000/';
 module.exports = function(app) {
 	var User = app.db.User;
 passport.use(new GoogleStrategy(googlePaths, function(identifier, profile, done) {
-    User.findOrCreateByGoogleID(identifier, profile, function(err, user) {
+    User.findOrCreateByGoogleEmail(profile, function(err, user) {
         done(err, user);
     });
 }));

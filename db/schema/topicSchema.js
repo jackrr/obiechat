@@ -7,10 +7,13 @@ var maxSlugLen = 25;
 
 var topicSchema = new Schema({
 	creatorID: Schema.Types.ObjectId,
+	creatorName: String,
 	name: {type: String, required: true},
 	description: String,
 	posts: [Post],
 	slug: String,
+	anonymous: {type: Boolean, default: false},
+	owned: {type: Boolean, default: false},
 	createdDate: {type: Date, default: Date.now}
 });
 

@@ -1,8 +1,12 @@
-mixin text(name, value, title)
-	input(type="text" name="#{name}" placeholder="#{value}")
+mixin text(name, placeholder, title)
+	input(type="text" name="#{name}" placeholder="#{placeholder}")
 
 mixin password(name, value, title)
 	input(type="password" name="#{name}" placeholder="#{value}")
 
 mixin submit(value)
 	input(type="submit" value="#{value}")
+	
+mixin checkbox(name, value, label)
+	span= label
+	input(type="checkbox" name="#{name}" value="#{value}")

@@ -2,5 +2,13 @@ mixin topicPreview(topic)
 	div.topicPreview
 		div.name= topic.name
 		div.createdAt= topic.readableCreatedDate
-		div.slug= topic.slug
-		a(href='/topic/#{topic.slug}', class='topicViewLink') View Topic
+		a(href='/topic/#{topic.slug}', class='topicViewLink') Open Topic
+		
+mixin topicHeader(topic)
+	div.topicHeader
+		div.name= topic.name
+		div.createdAt Created #{topic.readableCreatedDate}
+		- if (topic.owned)
+			div.owner Created By: #{topic.creatorName}
+		- if (topic.anonymous)
+			div.anonymous Anonymous

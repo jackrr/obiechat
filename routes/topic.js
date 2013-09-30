@@ -1,7 +1,11 @@
+var userAuth = require('../auth/userAuth');
+
 module.exports = function(app) {
 	var Topic = app.db.Topic;
+	var Post = app.db.Post;
+	var User = app.db.User;
 	
-	app.get('/topics', function(req, res) {
+	app.get('/topics', userAuth.signedIn, function(req, res) {
 		Topic.all(function(err, topics) {
 			if(err) {
 				console.log(err);
@@ -10,12 +14,12 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.get('/topic/new', function(req, res) {
+	app.get('/topic/new', userAuth.signedIn, function(req, res) {
 		// send form to create a topic
 		res.render('newTopic');
 	});
 	
-	app.post('/topic', function(req, res) {
+	app.post('/topic', userAuth.signedIn, function(req, res) {
 		Topic.create(req.body, function(err, topic) {
 			if(err) {
 				console.log(err);
@@ -25,7 +29,7 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.get('/topic/:slug', function(req, res) {
+	app.get('/topic/:slug', userAuth.signedIn, function(req, res) {
 		// send the topic view
 		Topic.findBySlug(req.params.slug, function(err, topic) {
 			if(err) {
@@ -35,21 +39,35 @@ module.exports = function(app) {
 		});
 	});
 	
-	app.post('/topic/:slug/post', function(req, res) {
+	app.post('/topic/:slug/post', userAuth.signedIn, function(req, res) {
 		// send the topic view
 		Topic.findBySlug(req.params.slug, function(err, topic) {
 			if(err) {
 				console.log(err);
 			}
 			if(!topic.name) {
-				res.send(404, "Topic not found");
+				return res.send(404, "Topic not found");
 			}
-			topic.posts.push(req.body);
-			topic.save(function(err) {
-				if(err) {
+			User.find({_id: req.user.id}, function(err, users) {
+				if (err) {
 					console.log(err);
 				}
-				res.redirect('/topic/' + topic.slug);
+				if (!users[0]) {
+					return res.send(404, "Invalid user");
+				}
+				var post = new Post(req.body);
+				post.creatorID = users[0]._id;
+				console.log(post);
+				if (!topic.anonymous) {
+					post.creatorName = users[0].displayName;	
+				}
+				topic.posts.push(post);
+				topic.save(function(err) {
+					if(err) {
+						console.log(err);
+					}
+					res.redirect('/topic/' + topic.slug);
+				});
 			});
 		});
 	});

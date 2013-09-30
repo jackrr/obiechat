@@ -7,6 +7,7 @@ block content
 	form(name='topic', action='/topic', method="post")
 		div.nameLabel This is the name box:
 		mixin text('name', '', 'name')
-		div.descriptionLabel This is the description box:
-		mixin text('description', '', 'description')
+		mixin checkbox('anonymous', 'anonymous', 'Anonymous')
+		mixin checkbox('owned', 'owned', 'Own it?')
+		mixin text('description', 'Description', 'description')
 		mixin submit('Launch Topic')

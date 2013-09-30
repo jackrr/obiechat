@@ -7,8 +7,7 @@ var userSchema = new Schema({
 		last: String,
 		pseudo: String
 	},
-	email: {type: String, required: true},
-	googleID: String
+	email: {type: String, required: true}
 });
 
 userSchema.virtual('displayName').get(function() {
