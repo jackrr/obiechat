@@ -7,8 +7,10 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 var Post = require('./models/post');
 var Topic = require('./models/topic');
+var User = require('./models/user');
 
 module.exports = {
 		Post: Post,
-		Topic: Topic
+		Topic: Topic,
+		User: User
 };

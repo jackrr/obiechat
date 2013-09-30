@@ -6,7 +6,7 @@ block content
 	div.topic
 		div.topicHeaders
 			div.name= topic.name
-			div.createdAt= topic.createdDate
+			div.createdAt Created: #{topic.readableCreatedDate}
 		each post in topic.posts
 			mixin postView(post)
 		div.postFormArea

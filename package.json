@@ -9,6 +9,7 @@
   "dependencies": {
 	  "underscore": "*",
       "express": "3.4.0",
+      "connect-mongo": "*",
       "jade": "*",
       "mongoose": "*",
       "socket.io": "*",

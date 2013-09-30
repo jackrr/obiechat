@@ -27,15 +27,19 @@
 /*
  * Styling for posts
  */
-.post {
-  max-width: 300px;
+.postContainer {
+  width: 300px;
 }
-.post .body {
+.postContainer .post {
+  display: inline-block;
+  padding-bottom: 10px;
+}
+.postContainer .post .body {
   background-color: #ddd;
   border: 1px solid #f00;
   padding: 4px;
-  display: inline-block;
+  min-width: 80px;
 }
-.post .postedAt {
-  margin-bottom: 0;
+.postContainer .post .postedAt {
+  float: right;
 }

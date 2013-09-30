@@ -1,6 +1,6 @@
 mixin topicPreview(topic)
 	div.topicPreview
 		div.name= topic.name
-		div.createdAt= topic.createdDate
+		div.createdAt= topic.readableCreatedDate
 		div.slug= topic.slug
 		a(href='/topic/#{topic.slug}', class='topicViewLink') View Topic

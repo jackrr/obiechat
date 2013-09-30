@@ -7,9 +7,14 @@ html
 		div.header 
 			div.logo obiechat
 			div.buttons
-				div.join 
-					a(href='/', class='joinBtn') Join Now
-				div.signIn
-					a(href='/', class='signInBtn') Sign In
+				- if (user && user.name)
+					div.userArea
+						div.email= user.email
+						div.name= user.displayName
+				- else
+					div.join 
+						a(href='/join', class='join btn') Join Now
+					div.signIn
+						a(href='/auth/google', class='signIn btn') Sign In
 		div.main
 			block content

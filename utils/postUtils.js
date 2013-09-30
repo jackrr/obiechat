@@ -1,7 +1,7 @@
 var dateUtils = require('./dateUtils');
 
 function cleanPost(post) {
-	post.browserDate = dateUtils.getReadableDate(post.createdDate);
+	// clean?	
 }
 
 module.exports = {

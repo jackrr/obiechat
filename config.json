@@ -1,0 +1,8 @@
+{
+	"db": {
+		"db": "test",
+		"host": "localhost"
+	},
+	"secret": "oa5bhei892sdkjl",
+	"sessionLength": 3600
+}

@@ -2,17 +2,23 @@
  * Styling for posts
  */
  
- .post {
- 	max-width: 300px;
- 		
-  	.body {
- 		background-color: #ddd;
- 		border: 1px solid #f00;
- 		padding: 4px;
- 		display: inline-block;
- 	}
+ .postContainer {
+ 	width: 300px;
  	
- 	.postedAt {
- 		margin-bottom: 0;
+ 	.post {
+		display: inline-block;
+		padding-bottom: 10px;
+ 		
+ 		.body {
+ 			background-color: #ddd;
+ 			border: 1px solid #f00;
+ 			padding: 4px;
+ 			min-width: 80px;
+ 		}
+ 	 	.postedAt {
+ 			float: right;
+ 		}
  	}
  }
+ 		
+  	

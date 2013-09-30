@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var slug = require('slug');
 var Schema = mongoose.Schema;
 var Post = require('./postSchema');
+var dateUtils = require('../../utils/dateUtils');
 var maxSlugLen = 25;
 
 var topicSchema = new Schema({
@@ -20,6 +21,10 @@ topicSchema.pre('validate', function(next) {
 	// check that no identical slug already exists, if so, make it unique somehow!
 	this.slug = slugFirst;
 	next();
+});
+
+topicSchema.virtual('readableCreatedDate').get(function() {
+	return dateUtils.getReadableDate(this.createdDate);
 });
 
 module.exports = topicSchema;

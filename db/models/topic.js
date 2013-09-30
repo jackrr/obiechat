@@ -5,7 +5,7 @@ var topicUtils = require('../../utils/topicUtils');
 
 Topic.all = function(cb) {
 	Topic.find({},function(err, topics) {
-		// topicUtils.cleanTopics(topics);
+		topicUtils.cleanTopicPreviews(topics);
 		cb(err, topics);
 	});
 };
