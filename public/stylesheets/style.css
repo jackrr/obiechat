@@ -24,3 +24,18 @@
   float: right;
   width: 100px;
 }
+/*
+ * Styling for posts
+ */
+.post {
+  max-width: 300px;
+}
+.post .body {
+  background-color: #ddd;
+  border: 1px solid #f00;
+  padding: 4px;
+  display: inline-block;
+}
+.post .postedAt {
+  margin-bottom: 0;
+}
