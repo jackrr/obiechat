@@ -1,15 +1,24 @@
 /*
 	Styling for the header, footer, and general page shape
 */
+.header {
+  height: 80px;
+}
 .header .logo {
   font-size: 32px;
+  float: left;
+  margin-top: 12px;
+  margin-left: 40px;
 }
 .header .buttons {
   float: right;
   width: 400px;
+  margin-top: 20px;
 }
 .header .buttons .join {
   width: 150px;
+  float: right;
+  margin-right: 20px;
 }
 .header .buttons .signIn {
   float: right;
