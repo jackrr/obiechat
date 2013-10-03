@@ -67,7 +67,7 @@ module.exports = function(app) {
 					if(err) {
 						console.log(err);
 					}
-					res.redirect('/topic/' + topic.slug);
+					res.render('partials/post', {post: post});
 				});
 			});
 		});
