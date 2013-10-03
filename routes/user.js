@@ -1,6 +1,8 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google').Strategy;
 var googlePaths = {};
+var userAuth = require('../auth/userAuth');
+
 
 googlePaths.returnURL = 'http://localhost:3000/auth/google/return';
 googlePaths.realm = 'http://localhost:3000/';
@@ -34,4 +36,9 @@ app.get('/auth/google/return', passport.authenticate('google', {
     successRedirect: '/',
     failureRedirect: '/join'
 }));
+
+app.get('/signOut', userAuth.signedIn, function(req, res) {
+	req.session.destroy();
+	res.redirect('/');
+});
 };

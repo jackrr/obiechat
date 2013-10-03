@@ -3,8 +3,11 @@ include formHelpers
 mixin postView(post)
 	div.postContainer
 		div.post
-			div.body= post.body
-			div.postedAt= post.readableCreatedDate
+			- if (post.creatorName)
+				span.author= post.creatorName 
+			span.body= post.body
+		div.dateContainer
+			span.postedAt= post.readableCreatedDate
 		
 mixin postForm(slug)
 	form(name='post', action='/topic/#{slug}/post', method="post")

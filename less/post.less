@@ -6,17 +6,24 @@
  	width: 300px;
  	
  	.post {
-		display: inline-block;
-		padding-bottom: 10px;
- 		
+		background-color: #ddd;
+ 		border: 1px solid #f00;
+ 		padding: 4px;
+ 		min-width: 80px;
+		
+		.author {
+			font-weight: 700;
+			margin: 0px 4px;
+		} 		
  		.body {
- 			background-color: #ddd;
- 			border: 1px solid #f00;
- 			padding: 4px;
- 			min-width: 80px;
+
  		}
- 	 	.postedAt {
- 			float: right;
+  	}
+  	
+ 	.dateContainer {
+ 		text-align: right;
+ 			
+ 		.postedAt {
  		}
  	}
  }

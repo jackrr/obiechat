@@ -5,13 +5,15 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		div.header 
-			div.logo obiechat
-			div.buttons
-				- if (user && user.name)
-					div.userArea
-						div.email= user.email
-						div.name= user.displayName
-				- else
+			a(href='/', class='logo') obiechat
+			
+			- if (user && user.name)
+				div(class='userArea headerRight')
+					div.email= user.email
+					div.name= user.displayName
+					a(href='/signOut', class='signOut btn') Sign Out
+			- else
+				div(class='buttons headerRight')
 					div.join 
 						a(href='/join', class='join btn') Join Now
 					div.signIn

@@ -10,13 +10,13 @@ module.exports = function(app) {
 			if(err) {
 				console.log(err);
 			}
-			res.render('topicList', {topics: topics});	
+			res.render('topicList', {topics: topics, user: req.user});	
 		});
 	});
 	
 	app.get('/topic/new', userAuth.signedIn, function(req, res) {
 		// send form to create a topic
-		res.render('newTopic');
+		res.render('newTopic', {user: req.user});
 	});
 	
 	app.post('/topic', userAuth.signedIn, function(req, res) {
@@ -35,7 +35,7 @@ module.exports = function(app) {
 			if(err) {
 				console.log(err);
 			}
-			res.render('topic', {topic: topic});	
+			res.render('topic', {topic: topic, user: req.user});	
 		});
 	});
 	
@@ -59,6 +59,7 @@ module.exports = function(app) {
 				post.creatorID = users[0]._id;
 				console.log(post);
 				if (!topic.anonymous) {
+					console.log('adding display name');
 					post.creatorName = users[0].displayName;	
 				}
 				topic.posts.push(post);

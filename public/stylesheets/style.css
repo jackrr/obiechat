@@ -10,19 +10,30 @@
   margin-top: 12px;
   margin-left: 40px;
 }
-.header .buttons {
+.header .headerRight {
   float: right;
   width: 400px;
   margin-top: 20px;
 }
-.header .buttons .join {
-  width: 150px;
+.header .headerRight.buttons .join {
   float: right;
   margin-right: 20px;
 }
-.header .buttons .signIn {
+.header .headerRight.buttons .signIn {
   float: right;
-  width: 100px;
+}
+/*
+ * 
+ * Global Classes
+ * 
+ */
+.btn {
+  background-color: #ddd;
+  border: 2px solid #222;
+  text-decoration: none;
+  color: #000;
+  padding: 4px;
+  margin: 2px;
 }
 /*
  * Styling for posts
@@ -31,15 +42,15 @@
   width: 300px;
 }
 .postContainer .post {
-  display: inline-block;
-  padding-bottom: 10px;
-}
-.postContainer .post .body {
   background-color: #ddd;
   border: 1px solid #f00;
   padding: 4px;
   min-width: 80px;
 }
-.postContainer .post .postedAt {
-  float: right;
+.postContainer .post .author {
+  font-weight: 700;
+  margin: 0px 4px;
+}
+.postContainer .dateContainer {
+  text-align: right;
 }

@@ -14,6 +14,8 @@ function getHourAndMinutes(date) {
 		return '' + (hour - 12) + minutes + ' PM';
 	} else if (hour === 0) {
 		return '12' + minutes + ' AM';
+	} else if (hour === 12) {
+		return '12' + minutes + ' PM';
 	}
 	return '' + hour + minutes + ' AM';
 }
