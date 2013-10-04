@@ -1,0 +1,13 @@
+extends layout
+
+include mixins/postHelpers
+include mixins/topicHelpers
+
+block content
+	div.topic
+		mixin topicHeader(topic)
+		div.posts
+			each post in topic.posts
+				mixin postView(post)
+		div.postFormArea
+			mixin postForm(topic.slug)
