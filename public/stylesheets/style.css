@@ -1,17 +1,82 @@
 /*
 	Styling for the header, footer, and general page shape
 */
+.header {
+  height: 80px;
+}
 .header .logo {
   font-size: 32px;
+  float: left;
+  margin-top: 12px;
+  margin-left: 40px;
 }
-.header .buttons {
+.header .headerRight {
   float: right;
   width: 400px;
+  margin-top: 20px;
 }
-.header .buttons .join {
-  width: 150px;
-}
-.header .buttons .signIn {
+.header .headerRight.buttons .join {
   float: right;
-  width: 100px;
+  margin-right: 20px;
+}
+.header .headerRight.buttons .signIn {
+  float: right;
+}
+/*
+ * 
+ * Global Classes
+ * 
+ */
+.btn {
+  background-color: #ddd;
+  border: 2px solid #222;
+  text-decoration: none;
+  color: #000;
+  padding: 4px;
+  margin: 2px;
+}
+/*
+ * Styling for posts
+ */
+.postContainer {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.postContainer .post.mine {
+  text-align: right;
+}
+.postContainer .post.mine .postInner {
+  margin-left: auto;
+  margin-right: 0;
+}
+.postContainer .post.other {
+  text-align: left;
+}
+.postContainer .post.other .dateContainer {
+  text-align: right;
+}
+.postContainer .post .postInner {
+  background-color: #ddd;
+  border: 1px solid #f00;
+  padding: 4px;
+  min-width: 80px;
+  width: 300px;
+}
+.postContainer .post .postInner .author {
+  font-weight: 700;
+  margin: 0px 4px;
+}
+.postContainer .post .postInner .dateContainer {
+  font-size: 11px;
+}
+/*
+ * post form
+ * 
+ */
+form[name=post] {
+  text-align: right;
+}
+.topic {
+  width: 800px;
 }

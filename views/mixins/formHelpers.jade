@@ -1,0 +1,15 @@
+mixin text(name, placeholder, title)
+	input(type="text" name="#{name}" placeholder="#{placeholder}")
+	
+mixin textArea(name, placeholder, autofocus, aClass)
+	textarea(name="#{name}" placeholder="#{placeholder}" autofocus="#{autofocus}" class="#{aClass}")
+
+mixin password(name, value, title)
+	input(type="password" name="#{name}" placeholder="#{value}")
+
+mixin submit(value)
+	input(type="submit" value="#{value}")
+	
+mixin checkbox(name, value, label)
+	span= label
+	input(type="checkbox" name="#{name}" value="#{value}")

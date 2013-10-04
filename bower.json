@@ -1,0 +1,21 @@
+{
+  "name": "obiechat",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jackrr/obiechat",
+  "authors": [
+    "Jack Ratner <jackratner@gmail.com>"
+  ],
+  "description": "Real-time chat application",
+  "main": "app.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "scripts/bowercomponents"
+  ],
+  "dependencies": {
+	  "requirejs": "*",
+	  "jquery": "*",
+	  "underscore": "*",
+	  "jquery-autosize": "*"
+  }
+}

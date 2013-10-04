@@ -1,12 +1,15 @@
-
 /*
  * GET home page.
  */
-
 module.exports = function(app) {
 	app.get('/', function(req, res) {
-		  res.render('index', { title: 'Express' });
+		app.db.Topic.all(function(err, topics) {
+			if (err) console.log(err);
+			res.render('index', { topics: topics, user: req.user });	
+		});
 	});
 	
-	require('./user')(app);
+	app.get('/join', function(req, res) {
+		res.render('join');
+	});
 };

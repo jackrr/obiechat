@@ -2,6 +2,7 @@ extends layout
 
 include mixins/topicHelpers
 
-block content
+block topicList
+	h2 The Topics
 	each topic in topics
-		mixin topicPreview(topic)
+		topicPreview(topic)

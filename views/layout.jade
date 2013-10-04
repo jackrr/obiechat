@@ -1,7 +1,23 @@
 doctype 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(data-main='/scripts/main.js', src='/components/requirejs/require.js')
+	body
+		div.header 
+			a(href='/', class='logo') obiechat
+			
+			- if (user && user.name)
+				div(class='userArea headerRight')
+					div.email= user.email
+					div.name= user.displayName
+					a(href='/signOut', class='signOut btn') Sign Out
+			- else
+				div(class='buttons headerRight')
+					div.join 
+						a(href='/join', class='join btn') Join Now
+					div.signIn
+						a(href='/auth/google', class='signIn btn') Sign In
+		div.main
+			block content
