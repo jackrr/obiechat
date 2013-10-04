@@ -10,11 +10,10 @@ Topic.all = function(cb) {
 	});
 };
 
-Topic.findBySlug = function(slug, cb) {
-	console.log(slug, '\nlooking it up now');
+Topic.findBySlug = function(slug, userID, cb) {
 	Topic.find({slug: slug}, function(err, topics) {
 		if (topics && topics.length) {
-			topicUtils.cleanTopic(topics[0]);
+			topicUtils.cleanTopic(userID, topics[0]);
 			return cb(err, topics[0]);	
 		}
 		cb(err, {});

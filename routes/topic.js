@@ -1,4 +1,5 @@
 var userAuth = require('../auth/userAuth');
+var postUtils = require('../utils/postUtils');
 
 module.exports = function(app) {
 	var Topic = app.db.Topic;
@@ -31,7 +32,7 @@ module.exports = function(app) {
 	
 	app.get('/topic/:slug', userAuth.signedIn, function(req, res) {
 		// send the topic view
-		Topic.findBySlug(req.params.slug, function(err, topic) {
+		Topic.findBySlug(req.params.slug, req.user.id, function(err, topic) {
 			if(err) {
 				console.log(err);
 			}
@@ -41,7 +42,7 @@ module.exports = function(app) {
 	
 	app.post('/topic/:slug/post', userAuth.signedIn, function(req, res) {
 		// send the topic view
-		Topic.findBySlug(req.params.slug, function(err, topic) {
+		Topic.findBySlug(req.params.slug, null, function(err, topic) {
 			if(err) {
 				console.log(err);
 			}
@@ -55,18 +56,20 @@ module.exports = function(app) {
 				if (!users[0]) {
 					return res.send(404, "Invalid user");
 				}
+				var user = users[0];
 				var post = new Post(req.body);
-				post.creatorID = users[0]._id;
+				post.creatorID = user._id;
 				console.log(post);
 				if (!topic.anonymous) {
 					console.log('adding display name');
-					post.creatorName = users[0].displayName;	
+					post.creatorName = user.displayName;	
 				}
 				topic.posts.push(post);
 				topic.save(function(err) {
 					if(err) {
 						console.log(err);
 					}
+					postUtils.cleanPost(user._id, post);
 					res.render('partials/post', {post: post});
 				});
 			});

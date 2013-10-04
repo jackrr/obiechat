@@ -39,18 +39,34 @@
  * Styling for posts
  */
 .postContainer {
-  width: 300px;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
-.postContainer .post {
+.postContainer .post.mine {
+  text-align: right;
+}
+.postContainer .post.mine .postInner {
+  margin-left: auto;
+  margin-right: 0;
+}
+.postContainer .post.other {
+  text-align: left;
+}
+.postContainer .post .postInner {
   background-color: #ddd;
   border: 1px solid #f00;
   padding: 4px;
   min-width: 80px;
+  width: 300px;
 }
-.postContainer .post .author {
+.postContainer .post .postInner .author {
   font-weight: 700;
   margin: 0px 4px;
 }
-.postContainer .dateContainer {
+.postContainer .post .dateContainer {
   text-align: right;
+}
+.topic {
+  width: 800px;
 }

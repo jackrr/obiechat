@@ -2,13 +2,23 @@ include formHelpers
 
 mixin postView(post)
 	div.postContainer
-		div.post
-			- if (post.creatorName)
-				span.author= post.creatorName 
-			span.body= post.body
-		div.dateContainer
-			span.postedAt= post.readableCreatedDate
-		
+		- if (post.isTheirs)
+			div(class='post mine')
+				div.postInner
+					- if (post.creatorName)
+						span.author= post.creatorName 
+					span.body= post.body
+				div.dateContainer
+					span.postedAt= post.readableCreatedDate
+		- else
+			div(class='post other')
+				div.postInner
+					- if (post.creatorName)
+						span.author= post.creatorName 
+					span.body= post.body
+				div.dateContainer
+					span.postedAt= post.readableCreatedDate
+			
 mixin postForm(slug)
 	form(name='post', action='/topic/#{slug}/post', method="post")
 		mixin text('body', 'Reply', 'body')

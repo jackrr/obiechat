@@ -3,13 +3,31 @@
  */
  
  .postContainer {
- 	width: 300px;
+ 	width:100%;
+ 	margin-top: 5px;
+ 	margin-bottom: 5px;
  	
  	.post {
+	
+ 		&.mine {
+ 			text-align: right;
+ 			.postInner {
+ 				margin-left: auto;
+ 				margin-right: 0;
+ 			}
+ 		}
+ 		
+ 		&.other {
+ 			text-align: left;
+ 		}
+ 			
+ 	
+ 	.postInner {
 		background-color: #ddd;
  		border: 1px solid #f00;
  		padding: 4px;
  		min-width: 80px;
+ 		width: 300px;
 		
 		.author {
 			font-weight: 700;
@@ -26,6 +44,8 @@
  		.postedAt {
  		}
  	}
+ 	}
+ 
  }
  		
   	

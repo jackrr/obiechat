@@ -1,7 +1,9 @@
 var dateUtils = require('./dateUtils');
 
-function cleanPost(post) {
-	// clean?	
+function cleanPost(userID, post) {
+	if (userID == post.creatorID) {
+		post.isTheirs = true;
+	}
 }
 
 module.exports = {
