@@ -15,6 +15,7 @@
   "dependencies": {
 	  "requirejs": "*",
 	  "jquery": "*",
-	  "underscore": "*"
+	  "underscore": "*",
+	  "jquery-autosize": "*"
   }
 }

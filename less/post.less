@@ -14,38 +14,52 @@
  			.postInner {
  				margin-left: auto;
  				margin-right: 0;
+ 				.dateContainer {
+ 					// text-align: left;
+ 				}
  			}
  		}
  		
  		&.other {
  			text-align: left;
+ 			
+ 			.dateContainer {
+ 				text-align: right;
+ 			}
  		}
  			
  	
- 	.postInner {
-		background-color: #ddd;
- 		border: 1px solid #f00;
- 		padding: 4px;
- 		min-width: 80px;
- 		width: 300px;
+ 		.postInner {
+			background-color: #ddd;
+ 			border: 1px solid #f00;
+ 			padding: 4px;
+ 			min-width: 80px;
+ 			width: 300px;
 		
-		.author {
-			font-weight: 700;
-			margin: 0px 4px;
-		} 		
- 		.body {
+			.author {
+				font-weight: 700;
+				margin: 0px 4px;
+			} 		
+ 			.body {
 
+ 			}
+ 			.dateContainer {
+ 				font-size: 11px;
+ 			}
  		}
-  	}
-  	
- 	.dateContainer {
- 		text-align: right;
- 			
- 		.postedAt {
- 		}
- 	}
- 	}
+	}
+}
+
+/*
+ * post form
+ * 
+ */
  
- }
+ form[name=post] {
+ 	text-align: right;
+ 	
+ 	textarea {
+	}
+}
  		
-  	
+ 

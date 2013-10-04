@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define(['jquery', 'jquery.autosize'], function($) {
 	$('form[name=post]').submit(function(e) {
 		e.preventDefault();
 		
@@ -6,5 +6,13 @@ define(['jquery'], function($) {
 			console.log(res);
 			$('.posts').append(res);
 		});
+	});
+	
+	$('textarea').autosize();
+	
+	$('.postForm').keydown(function(e) {
+		if (e && e.keyCode == 13) {
+			$('form[name=post]').submit();
+		}
 	});
 });
