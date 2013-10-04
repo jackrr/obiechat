@@ -2,10 +2,16 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google').Strategy;
 var googlePaths = {};
 var userAuth = require('../auth/userAuth');
+var config = require('./config.json');
 
+if (config.development) {
+	googlePaths.returnURL = 'http://localhost:3000/auth/google/return';
+	googlePaths.realm = 'http://localhost:3000/';
+} else {
+	googlePaths.returnURL = 'http://obiechat.com/auth/google/return';
+	googlePaths.realm = 'http://obiechat.com/';
+}
 
-googlePaths.returnURL = 'http://localhost:3000/auth/google/return';
-googlePaths.realm = 'http://localhost:3000/';
 
 module.exports = function(app) {
 	var User = app.db.User;
