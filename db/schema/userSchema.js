@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var permittedUsers = require('../../permittedUsers.json');
 
 var userSchema = new Schema({
 	name: {
-		first: String,
-		last: String,
+		first: {type: String, required: true},
+		last: {type: String, required: true},
 		pseudo: String
 	},
-	email: {type: String, required: true}
+	email: {type: String, required: true, enum: permittedUsers.users}
 });
 
 userSchema.virtual('displayName').get(function() {
