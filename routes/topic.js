@@ -68,6 +68,9 @@ module.exports = function(app) {
 				topic.save(function(err) {
 					if(err) {
 						console.log(err);
+						topic.posts.remove(post._id);
+						// TODO: send alert partial via socket, catch and put in dom on client
+						return res.send();
 					}
 					postUtils.cleanPost(user._id, post);
 					res.render('partials/post', {post: post});

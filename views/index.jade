@@ -3,5 +3,6 @@ extends layout
 include mixins/topicHelpers
 
 block content
+	a(href='/topic/new') Create a topic
 	each topic in topics
 		mixin topicPreview(topic)

@@ -14,6 +14,11 @@ var postSchema = new Schema({
 
 postSchema.pre('save', function(next) {
 	this.isTheirs = undefined;
+	this.body = this.body.trim();
+	console.log(this.body);
+	if (!this.body || !this.body.length) {
+		next(new Error('Empty posts not allowed'));
+	}
 	next();
 });
 
