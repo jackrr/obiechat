@@ -16,6 +16,7 @@
       "cookie": "*",
       "passport": "*",
       "passport-google": "*",
-      "slug": "*"
+      "slug": "*",
+      "socket.io-session": "*"
   }
 }
