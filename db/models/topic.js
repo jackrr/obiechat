@@ -37,4 +37,19 @@ Topic.findPostsSince = function(slug, userID, date, cb) {
 	});
 };
 
+Topic.addPostToTopic = function(slug, post, cb) {
+	Topic.findBySlug(slug, 0, function(err, topic) {
+		if (err) {
+			return cb(err);
+		}
+		if (topic.anonymous) {
+			post.creatorName = undefined;
+		}
+		// want this in one query to prevent weird overwrites of posts!
+		Topic.findOneAndUpdate({ slug: topic.slug }, { $push: { posts: post }}, function(err, topic) {
+			cb(err, topic);
+		});
+	});
+};
+
 module.exports = Topic;

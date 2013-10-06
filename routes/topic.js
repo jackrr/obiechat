@@ -56,44 +56,30 @@ module.exports = function(app, events) {
 	
 	app.post('/topic/:slug/post', userAuth.signedIn, function(req, res) {
 		// send the topic view
-		Topic.findBySlug(req.params.slug, null, function(err, topic) {
-			if(err) {
+		User.find({_id: req.user.id}, function(err, users) {
+			if (err) {
 				console.log(err);
 			}
-			if(!topic.name) {
-				return res.send(404, "Topic not found");
+			if (!users[0]) {
+				return res.send(404, "Invalid user");
 			}
-			User.find({_id: req.user.id}, function(err, users) {
+			var user = users[0];
+			req.body.creatorID = user._id;
+			req.body.displayName = user.displayName;
+			var post = new Post(req.body);
+			Topic.addPostToTopic(req.params.slug, post, function(err, topic) {
 				if (err) {
 					console.log(err);
+					return res.render('partials/alert', {error: err}, function(err, html) {
+						if (err) {
+							console.log(err);
+							res.send({error: 'Something went wrong!'});
+						}
+						res.send({error: html});
+					});
 				}
-				if (!users[0]) {
-					return res.send(404, "Invalid user");
-				}
-				var user = users[0];
-				var post = new Post(req.body);
-				post.creatorID = user._id;
-				console.log(post);
-				if (!topic.anonymous) {
-					post.creatorName = user.displayName;	
-				}
-				topic.posts.push(post);
-				topic.save(function(err) {
-					if(err) {
-						console.log(err);
-						topic.posts.remove(post._id);
-						return res.render('partials/alert', {error: err}, function(err, html) {
-							if (err) {
-								console.log(err);
-								res.send({error: 'Something went wrong!'});
-							}
-							res.send({error: html});
-						});
-					}
-					postUtils.cleanPost(user._id, post);
-					events.emit('topicChanged'+topic.slug);
-					res.render('partials/post', {post: post});
-				});
+				events.emit('topicChanged'+topic.slug);
+				res.send();
 			});
 		});
 	});
