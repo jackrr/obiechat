@@ -9,6 +9,10 @@ mixin topicHeader(topic)
 		div.name= topic.name
 		div.createdAt Created #{topic.readableCreatedDate}
 		- if (topic.owned)
-			div.owner Created By: #{topic.creatorName}
+			div.owned
+				span.label Created By:
+				span.ownerName= topic.creatorName
 		- if (topic.anonymous)
 			div.anonymous Anonymous
+		- if (topic.description)
+			div.description= topic.description
