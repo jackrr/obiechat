@@ -21,12 +21,25 @@ module.exports = function(app) {
 	});
 	
 	app.post('/topic', userAuth.signedIn, function(req, res) {
-		Topic.create(req.body, function(err, topic) {
-			if(err) {
+		User.find({_id: req.user.id}, function(err, users) {
+			if (err) {
 				console.log(err);
 			}
-			console.log('topic made');
-			res.redirect('/topic/' + topic.slug);
+			if (!users[0]) {
+				return res.send(403, "Invalid user");
+			}
+			var user = users[0];
+			var topic = new Topic(req.body);
+			topic.creatorID = user._id;
+			if (topic.owned) {
+				topic.creatorName = user.displayName;
+			}
+			topic.save(function(err) {
+				if (err) {
+					console.log(err);
+				}
+				res.redirect('/topic/' + topic.slug);
+			});
 		});
 	});
 	
@@ -61,7 +74,6 @@ module.exports = function(app) {
 				post.creatorID = user._id;
 				console.log(post);
 				if (!topic.anonymous) {
-					console.log('adding display name');
 					post.creatorName = user.displayName;	
 				}
 				topic.posts.push(post);
