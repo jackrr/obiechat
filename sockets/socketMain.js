@@ -1,4 +1,3 @@
-var topicSockets = require('./topicSockets');
 var usersOnline = 0;
 var EventEmitter = require('events').EventEmitter;
 var events = new EventEmitter;
@@ -22,7 +21,9 @@ function stopWatchingOnlineCount(id) {
 	delete sockets[id];
 }
 
-function initialize(io) {
+function initialize(app, io, globalEvents) {
+	var topicSockets = require('./topicSockets')(app, globalEvents.topics);
+
 	io.sockets.on('connection', function(socket) {
 		usersOnline++;
 		events.emit('usersChanged');
@@ -33,6 +34,7 @@ function initialize(io) {
 		
 		socket.on('disconnect', function() {
 			stopWatchingOnlineCount(socket.id);
+			topicSockets.removeSocket(socket.id);
 			usersOnline--;
 			events.emit('usersChanged');
 		});

@@ -40,16 +40,23 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+/*
+ * events
+ */
+var EventEmitter = require('events').EventEmitter;
+var events = {};
+events.topics = new EventEmitter;
+
 /* routes */
 require('./routes/index')(app);
 require('./routes/post')(app);
-require('./routes/topic')(app);
+require('./routes/topic')(app, events.topics);
 require('./routes/user')(app);
 
 var server = http.createServer(app);
 var io = socketio.listen(server);
 
-require('./sockets/socketMain')(io);
+require('./sockets/socketMain')(app, io, events);
 
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

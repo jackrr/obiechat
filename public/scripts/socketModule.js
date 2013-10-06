@@ -1,5 +1,4 @@
 define(['io', './layoutView'], function(io, layoutView) {
-	
 	var socket;
 	
 	function addListeners(socket) {
@@ -15,8 +14,12 @@ define(['io', './layoutView'], function(io, layoutView) {
 		return socket;
 	}
 	
+	function getSocket() {
+		return socket;
+	}
+	
 	return {
 		newSocket: initialize,
-		socket: socket
+		getSocket: getSocket
 	};
 });
