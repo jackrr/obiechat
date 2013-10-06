@@ -14,8 +14,8 @@ define(['jquery', 'jquery.autosize'], function($) {
 		
 			$('textarea').autosize();
 		
-			$('.postForm').keydown(function(e) {
-				if (e && e.keyCode == 13) {
+			$('.postForm').keyup(function(e) {
+				if (e && e.keyCode == 13 && !e.shiftKey) {
 					$('form[name=post]').submit();
 				}
 			});
