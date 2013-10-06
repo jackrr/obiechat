@@ -44,7 +44,7 @@ module.exports = function(app, events) {
 			socket.on('stopWatchingTopic', function(data) {
 				topics[slug]--;
 				events.removeListener('topicChanged'+slug, sendPosts);
-				events.removeListener('topicViewerCount'+slug, sendViewerCount);
+				events.removeListener('topicViewersChanged'+slug, sendViewerCount);
 			});
 		});
 	}
