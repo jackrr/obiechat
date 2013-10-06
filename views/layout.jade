@@ -8,6 +8,10 @@ html
 		div.header 
 			a(href='/', class='logo') obiechat
 			
+			div#usersOnline
+				span.label Users Online:
+				span.onlineCount
+			
 			- if (user && user.name)
 				div(class='userArea headerRight')
 					div.email= user.email

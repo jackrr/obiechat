@@ -1,4 +1,6 @@
-define(['jquery', './notificationController','jquery.autosize'], function($, notificationControl) {
+define(['jquery', './notificationController', './socketModule','jquery.autosize'], function($, notificationControl, socketModule) {
+	var socket = socketModule.socket;
+	
 	return { 
 		initialize: function() {
 			$('form[name=post]').submit(function(e) {
@@ -23,6 +25,8 @@ define(['jquery', './notificationController','jquery.autosize'], function($, not
 					$('form[name=post]').submit();
 				}
 			});
+			
+			console.log($(location));
 		}
 	};
 });

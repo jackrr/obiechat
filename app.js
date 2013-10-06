@@ -49,9 +49,7 @@ require('./routes/user')(app);
 var server = http.createServer(app);
 var io = socketio.listen(server);
 
-io.sockets.on('connection', function(socket) {
-	
-});
+require('./sockets/socketMain')(io);
 
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

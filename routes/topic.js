@@ -37,6 +37,7 @@ module.exports = function(app) {
 			topic.save(function(err) {
 				if (err) {
 					console.log(err);
+					res.send(400, "bad request");
 				}
 				res.redirect('/topic/' + topic.slug);
 			});
