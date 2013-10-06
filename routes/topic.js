@@ -1,7 +1,7 @@
 var userAuth = require('../auth/userAuth');
 var postUtils = require('../utils/postUtils');
 
-module.exports = function(app) {
+module.exports = function(app, events) {
 	var Topic = app.db.Topic;
 	var Post = app.db.Post;
 	var User = app.db.User;
@@ -37,13 +37,14 @@ module.exports = function(app) {
 			topic.save(function(err) {
 				if (err) {
 					console.log(err);
+					res.send(400, "bad request");
 				}
 				res.redirect('/topic/' + topic.slug);
 			});
 		});
 	});
 	
-	app.get('/topic/:slug', userAuth.signedIn, function(req, res) {
+	app.get('/topic/show/:slug', userAuth.signedIn, function(req, res) {
 		// send the topic view
 		Topic.findBySlug(req.params.slug, req.user.id, function(err, topic) {
 			if(err) {
@@ -81,10 +82,16 @@ module.exports = function(app) {
 					if(err) {
 						console.log(err);
 						topic.posts.remove(post._id);
-						// TODO: send alert partial via socket, catch and put in dom on client
-						return res.send();
+						return res.render('partials/alert', {error: err}, function(err, html) {
+							if (err) {
+								console.log(err);
+								res.send({error: 'Something went wrong!'});
+							}
+							res.send({error: html});
+						});
 					}
 					postUtils.cleanPost(user._id, post);
+					events.emit('topicChanged'+topic.slug);
 					res.render('partials/post', {post: post});
 				});
 			});

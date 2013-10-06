@@ -2,7 +2,10 @@ mixin text(name, placeholder, title)
 	input(type="text" name="#{name}" placeholder="#{placeholder}")
 	
 mixin textArea(name, placeholder, autofocus, aClass)
-	textarea(name="#{name}" placeholder="#{placeholder}" autofocus="#{autofocus}" class="#{aClass}")
+	- if (autofocus)
+		textarea(name="#{name}" placeholder="#{placeholder}" autofocus="true" class="#{aClass}")
+	- else
+		textarea(name="#{name}" placeholder="#{placeholder}" class="#{aClass}")
 
 mixin password(name, value, title)
 	input(type="password" name="#{name}" placeholder="#{value}")

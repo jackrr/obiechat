@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
+var _ = require('underscore');
 var topicSchema = require('../schema/topicSchema');
 var Topic = mongoose.model('Topic', topicSchema);
 var topicUtils = require('../../utils/topicUtils');
+
 
 Topic.all = function(cb) {
 	Topic.find({},function(err, topics) {
@@ -19,4 +21,20 @@ Topic.findBySlug = function(slug, userID, cb) {
 		cb(err, {});
 	});
 };
+
+Topic.findPostsSince = function(slug, userID, date, cb) {
+	Topic.findBySlug(slug, userID, function(err, topic) {
+		if (err) {
+			return cb(err);
+		}
+		var posts = [];
+		_.each(topic.posts, function(post) {
+			if (post.createdDate > date) {
+				posts.push(post);
+			}
+		});
+		cb(null, posts);
+	});
+};
+
 module.exports = Topic;

@@ -2,7 +2,7 @@ mixin topicPreview(topic)
 	div.topicPreview
 		div.name= topic.name
 		div.createdAt= topic.readableCreatedDate
-		a(href='/topic/#{topic.slug}', class='topicViewLink') Open Topic
+		a(href='/topic/show/#{topic.slug}', class='topicViewLink') Open Topic
 		
 mixin topicHeader(topic)
 	div.topicHeader
@@ -16,3 +16,6 @@ mixin topicHeader(topic)
 			div.anonymous Anonymous
 		- if (topic.description)
 			div.description= topic.description
+		div.currentViewers
+			span.label Users Viewing:
+			span.count
