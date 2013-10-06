@@ -9,7 +9,8 @@ var express = require('express')
   , path = require('path')
   , passport = require('passport')
   , MongoStore = require('connect-mongo')(express)
-  , config = require('./config.json');
+  , config = require('./config.json')
+  , socketio = require('socket.io');
 
 var app = express();
 
@@ -45,6 +46,13 @@ require('./routes/post')(app);
 require('./routes/topic')(app);
 require('./routes/user')(app);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+var io = socketio.listen(server);
+
+io.sockets.on('connection', function(socket) {
+	
+});
+
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

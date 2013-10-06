@@ -1,3 +1,3 @@
-define(['./topicInteraction'], function(topicInteraction) {
+define(['./topicInteraction', './notificationController'], function(topicInteraction) {
 	topicInteraction.initialize();
 });

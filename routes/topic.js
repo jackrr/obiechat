@@ -69,8 +69,13 @@ module.exports = function(app) {
 					if(err) {
 						console.log(err);
 						topic.posts.remove(post._id);
-						// TODO: send alert partial via socket, catch and put in dom on client
-						return res.send();
+						return res.render('partials/alert', {error: err}, function(err, html) {
+							if (err) {
+								console.log(err);
+								res.send({error: 'Something went wrong!'});
+							}
+							res.send({error: html});
+						});
 					}
 					postUtils.cleanPost(user._id, post);
 					res.render('partials/post', {post: post});
