@@ -1,4 +1,4 @@
-define(['io', './layoutView'], function(io, layoutView) {
+define(['jquery', 'io', './layoutView'], function($, io, layoutView) {
 	var socket;
 	
 	function addListeners(socket) {

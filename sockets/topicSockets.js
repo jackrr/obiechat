@@ -10,8 +10,7 @@ module.exports = function(app, events) {
 			var date = Date.now();
 			
 			function sendToSocket() {
-				// TODO: need the userID to figure out how to treat each post!!
-				Topic.findPostsSince(data.slug, date, function(err, posts) {
+				Topic.findPostsSince(data.slug, socket.userID, date, function(err, posts) {
 					var ret = {};
 					ret.posts = [];
 					
@@ -31,10 +30,10 @@ module.exports = function(app, events) {
 			sockets[socket.id] = sendToSocket;
 			events.on('topicChanged'+data.slug, sendToSocket);
 			sendToSocket();
-		});
-		
-		socket.on('stopWatchingTopic', function(data) {
-			events.removeListener('topicChanged'+data.slug, sockets[socket.id]);
+			
+			socket.on('stopWatchingTopic', function(data) {
+				events.removeListener('topicChanged'+data.slug, sendToSocket);
+			});
 		});
 	}
 	

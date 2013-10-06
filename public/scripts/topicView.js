@@ -1,10 +1,11 @@
 define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], function($, _, notificationControl) {
+	
 	function watchTopic(slug, socket) {
 		socket.emit('watchTopic', {slug: slug});
 		
 		socket.on('topicUpdated', function(data) {
 			_.each(data.posts, function(post) {
-				$('.posts').append(post);	
+				$('.posts').append(post);
 			});
 		});
 		

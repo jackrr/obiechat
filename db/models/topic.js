@@ -22,8 +22,8 @@ Topic.findBySlug = function(slug, userID, cb) {
 	});
 };
 
-Topic.findPostsSince = function(slug, date, cb) {
-	Topic.findBySlug(slug, 0, function(err, topic) {
+Topic.findPostsSince = function(slug, userID, date, cb) {
+	Topic.findBySlug(slug, userID, function(err, topic) {
 		if (err) {
 			return cb(err);
 		}
