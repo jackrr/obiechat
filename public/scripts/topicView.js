@@ -9,6 +9,10 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 			});
 		});
 		
+		socket.on('topicViewerCount', function(data) {
+			$('.currentViewers .count').html(data.count);
+		});
+		
 		$(window).unload(function() {
 			socket.emit('stopWatchingTopic', {slug: slug});
 		});

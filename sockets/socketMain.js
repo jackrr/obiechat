@@ -35,7 +35,6 @@ function initialize(app, io, globalEvents) {
 		
 		socket.on('disconnect', function() {
 			stopWatchingOnlineCount(socket.id);
-			topicSockets.removeSocket(socket.id);
 			usersOnline--;
 			events.emit('usersChanged');
 		});
