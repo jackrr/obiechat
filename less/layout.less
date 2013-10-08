@@ -1,33 +1,55 @@
 /*
-	Styling for the header, footer, and general page shape
-*/
+ * 	Styling for the header, footer, and general page shape
+ */
+ @import "variables.less";
+ 
+ html {
+ 	background-color: @siteBackground;
+ 	color: @darkgray;
+ 	font-family: @font;
+ 	
+ 	body {
+ 		margin: 0;
+ 	}
+ 	
+ 	.main {
+ 		position: fixed;
+ 		overflow: scroll;
+ 		top: @headerHeight;
+ 	}
+ }
 
 .header {
-	height: 80px;
+	height: @headerHeight;
+	position: fixed;
+	width: 100%;
+	background-color: @headerBackground;
+	color: @headerSecondaryText;
+	font-size: @headerSecondaryFontSize;
 	
 	.logo {
-		font-size: 32px;
+		font-size: @logosize;
 		float: left;
 		margin-top: 12px;
 		margin-left: 40px;
+		color: @logoColor;
+		text-decoration: none;
 	}
 	
 	.headerRight {
-		float: right;
-		width: 400px;
-		margin-top: 20px;
-		
+		position: fixed;
+		right: 200px;
+		top: 10px;
+
 		&.userArea {
-			.email {
-				
-			}
-			
-			.name {
+			.userName {
 				
 			}
 			
 			.signOut {
-				
+				position: fixed;
+				right: @userCountRight;
+				top: @signOutTop;
 			}
 		}
 		
@@ -42,6 +64,12 @@
 			}
 		}
 	}
+	
+	#usersOnline {
+		position: fixed;
+		right: @userCountRight;
+		top: (@headerHeight - 26px);
+	}
 }
 
 /*
@@ -51,10 +79,10 @@
  */
  
  .btn {
- 	background-color: #ddd;
- 	border: 2px solid #222;
+ 	background-color: @buttonBackground;
+ 	border: 2px solid @buttonBorder;
  	text-decoration: none;
- 	color: #000;
+ 	color: @buttonColor;
  	padding: 4px;
  	margin: 2px;
  }
