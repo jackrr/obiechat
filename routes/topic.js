@@ -39,7 +39,7 @@ module.exports = function(app, events) {
 					console.log(err);
 					res.send(400, "bad request");
 				}
-				res.redirect('/topic/' + topic.slug);
+				res.redirect('/topic/show/' + topic.slug);
 			});
 		});
 	});

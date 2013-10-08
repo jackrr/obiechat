@@ -142,6 +142,9 @@ html .main {
   font-weight: 700;
   margin: 0px 4px;
 }
+.postContainer .post .postInner .body {
+  white-space: pre-line;
+}
 .postContainer .post .postInner .dateContainer {
   font-size: 11px;
 }
