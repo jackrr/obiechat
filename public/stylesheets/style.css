@@ -1,19 +1,71 @@
 /*
-	Styling for the header, footer, and general page shape
-*/
+ * 	Styling for the header, footer, and general page shape
+ */
+/*
+ * Vintage Modern
+ * 
+ * color pallette provided by:
+ * ericaspooner colourlovers.com
+ */
+/*
+ * Numb
+ */
+/*
+ * Good Friends
+ */
+/*
+ * Adrift in Dreams
+ */
+/*
+ * colors
+ */
+/*
+ * fonts
+ */
+/*
+ * sizes
+ */
+/*
+ * positions
+ */
+html {
+  background-color: #ffffff;
+  color: #2e2e2e;
+  font-family: Arial, Helvetica, sans-serif;
+}
+html body {
+  margin: 0;
+}
+html .main {
+  position: fixed;
+  overflow: scroll;
+  top: 70px;
+}
 .header {
-  height: 80px;
+  height: 70px;
+  position: fixed;
+  width: 100%;
+  background-color: #bfb35a;
+  color: #5e8c6a;
+  font-size: 18px;
 }
 .header .logo {
-  font-size: 32px;
+  font-size: 36px;
   float: left;
   margin-top: 12px;
   margin-left: 40px;
+  color: #8c2318;
+  text-decoration: none;
 }
 .header .headerRight {
-  float: right;
-  width: 400px;
-  margin-top: 20px;
+  position: fixed;
+  right: 200px;
+  top: 10px;
+}
+.header .headerRight.userArea .signOut {
+  position: fixed;
+  right: 30px;
+  top: 7px;
 }
 .header .headerRight.buttons .join {
   float: right;
@@ -22,16 +74,21 @@
 .header .headerRight.buttons .signIn {
   float: right;
 }
+.header #usersOnline {
+  position: fixed;
+  right: 30px;
+  top: 44px;
+}
 /*
  * 
  * Global Classes
  * 
  */
 .btn {
-  background-color: #ddd;
-  border: 2px solid #222;
+  background-color: #ffffff;
+  border: 2px solid #8c2318;
   text-decoration: none;
-  color: #000;
+  color: #5e8c6a;
   padding: 4px;
   margin: 2px;
 }

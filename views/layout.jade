@@ -7,15 +7,11 @@ html
 	body
 		div.header 
 			a(href='/', class='logo') obiechat
-			
-			div#usersOnline
-				span.label Users Online:
-				span.onlineCount
-			
 			- if (user && user.name)
 				div(class='userArea headerRight')
-					div.email= user.email
-					div.name= user.displayName
+					div.userName
+						span.label Posting as:
+						span.name= user.displayName
 					a(href='/signOut', class='signOut btn') Sign Out
 			- else
 				div(class='buttons headerRight')
@@ -23,6 +19,7 @@ html
 						a(href='/join', class='join btn') Join Now
 					div.signIn
 						a(href='/auth/google', class='signIn btn') Sign In
+			div#usersOnline
 		div.main
 			block content
 		div#notifications
