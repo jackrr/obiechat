@@ -13,12 +13,18 @@ var postSchema = new Schema({
 });
 
 postSchema.pre('save', function(next) {
+	// clear non-persisted data
 	this.isTheirs = undefined;
+	
+	// clean up the body text
 	this.body = this.body.trim();
-	console.log(this.body);
 	if (!this.body || !this.body.length) {
 		next(new Error('Empty posts not allowed'));
 	}
+	this.body.replace(/\s+/g, ' ');
+	this.body = this.body.replace(/\r+/g, '');
+	this.body.replace(/\n\n+/g, '\n\n');
+	console.log(this.body);
 	next();
 });
 

@@ -7,7 +7,8 @@ block content
 	div.topic
 		mixin topicHeader(topic)
 		div.posts
-			each post in topic.posts
-				mixin postView(post)
+			if postPages
+				each postPage in postPages
+					mixin postPageView(postPage)
 		div.postFormArea
 			mixin postForm(topic.slug)

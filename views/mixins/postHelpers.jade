@@ -16,6 +16,10 @@ mixin postView(post)
 					span.body= post.body
 					div.dateContainer
 						span.postedAt= post.readableCreatedDate
+						
+mixin postPageView(postPage)
+	each post in postPage.posts
+		mixin postView(post)
 			
 mixin postForm(slug)
 	form(name='post', action='/topic/#{slug}/post', method="post")
