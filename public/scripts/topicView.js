@@ -3,6 +3,9 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 
 	function postsAdded() {
 		$postsAdded.html('New Posts in Topic!');
+		if (!($postContainer[0].scrollHeight > $postContainer.height()) || $postContainer.scrollTop() > $postContainer.height()) {
+			scrollTopic('bottom');
+		}
 	}
 
 	function watchTopic(slug, socket) {
