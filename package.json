@@ -17,6 +17,7 @@
       "passport": "*",
       "passport-google": "*",
       "slug": "*",
-      "socket.io-session": "*"
+      "socket.io-session": "*",
+      "async": "*"
   }
 }

@@ -1,32 +1,34 @@
 /*
  * 	Styling for the header, footer, and general page shape
  */
- @import "variables.less";
- 
- html {
+html {
  	background-color: @siteBackground;
  	color: @darkgray;
  	font-family: @font;
- 	
+ 	height: 100%;
+ 	width: 100%;
+
  	body {
  		margin: 0;
+ 		overflow: hidden;
  	}
- 	
+
  	.main {
  		position: fixed;
- 		overflow: scroll;
  		top: @headerHeight;
+ 		width: 100%;
  	}
  }
 
 .header {
+	top: 0px;
 	height: @headerHeight;
 	position: fixed;
 	width: 100%;
 	background-color: @headerBackground;
 	color: @headerSecondaryText;
 	font-size: @headerSecondaryFontSize;
-	
+
 	.logo {
 		font-size: @logosize;
 		float: left;
@@ -35,36 +37,35 @@
 		color: @logoColor;
 		text-decoration: none;
 	}
-	
+
 	.headerRight {
-		position: fixed;
 		right: 200px;
 		top: 10px;
 
 		&.userArea {
 			.userName {
-				
+
 			}
-			
+
 			.signOut {
 				position: fixed;
 				right: @userCountRight;
 				top: @signOutTop;
 			}
 		}
-		
+
 		&.buttons {
 			.join {
 				float: right;
 				margin-right: 20px;
 			}
-		
+
 			.signIn {
 				float: right;
 			}
 		}
 	}
-	
+
 	#usersOnline {
 		position: fixed;
 		right: @userCountRight;
@@ -73,11 +74,11 @@
 }
 
 /*
- * 
+ *
  * Global Classes
- * 
+ *
  */
- 
+
  .btn {
  	background-color: @buttonBackground;
  	border: 2px solid @buttonBorder;
@@ -86,26 +87,33 @@
  	padding: 4px;
  	margin: 2px;
  }
- 
+
  /*
   * Splash page
-  * 
+  *
   */
-  
+
 .splash {
 	margin: 100px auto;
 	width: 500px;
-	
+
 	.welcome {
 		margin: 10px;
 	}
 
 	#splashSignIn {
 		margin: 10px;
-		padding: 6px;	
+		padding: 6px;
 	}
 
 	.visitor {
 		margin: 10px;
 	}
+}
+
+/*
+ * Scrolling
+ */
+.infiniteScroll {
+	overflow: auto;
 }

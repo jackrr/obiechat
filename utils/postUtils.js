@@ -1,4 +1,5 @@
 var dateUtils = require('./dateUtils');
+var _ = require('underscore');
 
 function cleanPost(userID, post) {
 	if (userID == post.creatorID) {
@@ -6,6 +7,13 @@ function cleanPost(userID, post) {
 	}
 }
 
+function cleanPosts(posts, userID) {
+	_.each(posts, function(post) {
+		cleanPost(userID, post);
+	});
+}
+
 module.exports = {
-		cleanPost: cleanPost
+		cleanPost: cleanPost,
+		cleanPosts: cleanPosts
 };
