@@ -8,7 +8,7 @@ define(['jquery', 'io', './layoutView'], function($, io, layoutView) {
 	}
 	
 	function initialize() {
-		socket = io.connect('http://localhost:3000/');
+		socket = io.connect('http://obiechat.com/');
 		
 		addListeners(socket);
 		return socket;

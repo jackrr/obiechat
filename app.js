@@ -61,6 +61,7 @@ var server = http.createServer(app);
  */
 var io = socketio.listen(server);
 io.set('authorization', ioSession(express.cookieParser(config.secret), memoryStore));
+io.set('log level', 1);
 
 require('./sockets/socketMain')(app, io, events);
 

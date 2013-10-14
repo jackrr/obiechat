@@ -4,6 +4,5 @@
 		"host": "localhost"
 	},
 	"secret": "oa5bhei892sdkjl",
-	"sessionLength": 3600,
-	"development": true
+	"sessionLength": 3600
 }
