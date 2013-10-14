@@ -59,7 +59,6 @@ Topic.getPosts = function(slug, userID, cb, page) {
 		if (!page) {
 			page = topic.postPages.length - 1;
 		}
-		console.log(page);
 		PostPage.findById(topic.postPages[page], function(err, page) {
 			if (err) {
 				return cb(err);
@@ -75,21 +74,17 @@ Topic.getPageCount = function(slug, cb) {
 		if (err) {
 			return cb(err);
 		}
-		console.log('in topic model', topic.postPages.length);
 		cb(null, topic.postPages.length);
 	});
 };
 
-// TODO: update this to work with paging
 Topic.findPostsSince = function(slug, userID, date, cb) {
-	// for now just get the current page
-	console.log('finding posts');
+	// TODO: somehow check older pages if more posts?
 	Topic.findBySlug(slug, userID, function(err, topic) {
 		if (err) {
 			return cb(err);
 		}
 		PostPage.findById(topic.postPages[topic.postPages.length - 1], function(err, page) {
-			console.log(page);
 			if (err) {
 				return cb(err);
 			}

@@ -5,6 +5,8 @@ html {
  	background-color: @siteBackground;
  	color: @darkgray;
  	font-family: @font;
+ 	height: 100%;
+ 	width: 100%;
 
  	body {
  		margin: 0;
@@ -12,7 +14,9 @@ html {
  	}
 
  	.main {
- 		margin-top: @headerHeight;
+ 		position: fixed;
+ 		top: @headerHeight;
+ 		width: 100%;
  	}
  }
 

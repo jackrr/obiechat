@@ -1,12 +1,12 @@
 define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], function($, _, notificationControl) {
-	var page, slug, morePages = true;
+	var page, slug, $postContainer;
 
 	function watchTopic(slug, socket) {
 		socket.emit('watchTopic', {slug: slug});
 
 		socket.on('topicUpdated', function(data) {
 			_.each(data.posts, function(post) {
-				$('.posts').append(post);
+				$postContainer.append(post);
 				scrollTopic('bottom');
 			});
 		});
@@ -44,33 +44,38 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 				$('form[name=post]').submit();
 			}
 		});
-
+		
 		$('textarea').autosize();
 	}
 
-	function loadPage() {
-		$.get(slug + '/' + page, function(res) {
-			if (res.error) {
-				notification(res.error);
-			} else {
-				$('.posts').prepend(res);
-				scrollTopic('bottom');
-			}
-		});
+	function loadPage(cb) {
+		if (!(page < 0)) {
+			$.get(slug + '/' + page, function(res) {
+				if (res.error) {
+					notification(res.error);
+				} else {
+					page--;
+					$postContainer.prepend(res);
+					cb();
+				}
+			});
+		}
 	}
 
 	function getPageNum() {
 		$.get('/topic/' + slug + '/pageNumber', function(res) {
 			page = res.page-1;
 			fillTopic();
+			watchScroll();
 		});
 	}
 
 	function fillTopic() {
-		var $posts = $('.posts')[0];
-		if ( $posts.scrollHeight < $('html').height()) {
-			loadPage();
-			page--;
+		if ( $postContainer[0].scrollHeight < $('html').height()) {
+			loadPage(function() {
+				scrollTopic('bottom');
+			});
+
 		} else {
 			scrollTopic('bottom');
 		}
@@ -79,19 +84,30 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 	function scrollTopic(pos) {
 		switch (pos) {
 			case 'top':
-				$('.posts').scrollTop(0);
+				$postContainer.scrollTop(0);
 				break;
 			case 'bottom':
-				$('.posts').scrollTop($('.posts')[0].scrollHeight);
+				$postContainer.scrollTop($postContainer[0].scrollHeight);
 				break;
 			default:
-				$('.posts').scrollTop(pos);
+				$postContainer.scrollTop(pos);
 		}
 	}
 
+	function watchScroll() {
+		$postContainer.scroll(function() {
+			if ($postContainer.scrollTop() === 0) {
+				var oldHeight = $postContainer[0].scrollHeight;
+				loadPage(function() {
+					scrollTopic($postContainer[0].scrollHeight - oldHeight);
+				});
+			}
+		});
+	}
+
 	function initialize(path, socket) {
-		console.log('initializing topicView');
 		slug = path.replace('/topic/show/', '');
+		$postContainer = $('.posts');
 		getPageNum();
 		watchForm();
 		watchTopic(slug, socket);
