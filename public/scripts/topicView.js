@@ -1,5 +1,9 @@
 define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], function($, _, notificationControl) {
-	var page, slug, $postContainer;
+	var page, slug, $postContainer, $postsAdded;
+
+	function postsAdded() {
+		$postsAdded.html('New Posts in Topic!');
+	}
 
 	function watchTopic(slug, socket) {
 		socket.emit('watchTopic', {slug: slug});
@@ -7,7 +11,7 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 		socket.on('topicUpdated', function(data) {
 			_.each(data.posts, function(post) {
 				$postContainer.append(post);
-				scrollTopic('bottom');
+				postsAdded();
 			});
 		});
 
@@ -44,7 +48,7 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 				$('form[name=post]').submit();
 			}
 		});
-		
+
 		$('textarea').autosize();
 	}
 
@@ -102,12 +106,16 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 					scrollTopic($postContainer[0].scrollHeight - oldHeight);
 				});
 			}
+			if (($postContainer.scrollTop() + $postContainer.height()) == $postContainer[0].scrollHeight) {
+				$postsAdded.html('');
+			}
 		});
 	}
 
 	function initialize(path, socket) {
 		slug = path.replace('/topic/show/', '');
 		$postContainer = $('.posts');
+		$postsAdded = $('.topicHeader .alerts .added');
 		getPageNum();
 		watchForm();
 		watchTopic(slug, socket);
