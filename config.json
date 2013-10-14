@@ -5,6 +5,5 @@
 	},
 	"secret": "oa5bhei892sdkjl",
 	"sessionLength": 3600,
-	"postPageSize": 10,
-	"development": true	
+	"postPageSize": 10
 }
