@@ -22,6 +22,7 @@ memoryStore = new MongoStore(config.db);
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.locals.pretty = true; // preserve whitespace and [ what else will this do?? ]
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());

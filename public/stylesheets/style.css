@@ -1,7 +1,4 @@
 /*
- * 	Styling for the header, footer, and general page shape
- */
-/*
  * Vintage Modern
  * 
  * color pallette provided by:
@@ -28,20 +25,27 @@
 /*
  * positions
  */
+/*
+ * 	Styling for the header, footer, and general page shape
+ */
 html {
   background-color: #ffffff;
   color: #2e2e2e;
   font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  width: 100%;
 }
 html body {
   margin: 0;
+  overflow: hidden;
 }
 html .main {
   position: fixed;
-  overflow: scroll;
   top: 70px;
+  width: 100%;
 }
 .header {
+  top: 0px;
   height: 70px;
   position: fixed;
   width: 100%;
@@ -58,7 +62,6 @@ html .main {
   text-decoration: none;
 }
 .header .headerRight {
-  position: fixed;
   right: 200px;
   top: 10px;
 }
@@ -80,9 +83,9 @@ html .main {
   top: 44px;
 }
 /*
- * 
+ *
  * Global Classes
- * 
+ *
  */
 .btn {
   background-color: #ffffff;
@@ -94,7 +97,7 @@ html .main {
 }
 /*
   * Splash page
-  * 
+  *
   */
 .splash {
   margin: 100px auto;
@@ -111,6 +114,12 @@ html .main {
   margin: 10px;
 }
 /*
+ * Scrolling
+ */
+.infiniteScroll {
+  overflow: auto;
+}
+/*
  * Styling for posts
  */
 .postContainer {
@@ -120,20 +129,25 @@ html .main {
 }
 .postContainer .post.mine {
   text-align: right;
+  margin-right: 5px;
 }
 .postContainer .post.mine .postInner {
   margin-left: auto;
+  background-color: #f2c45a;
   margin-right: 0;
 }
 .postContainer .post.other {
   text-align: left;
+  margin-left: 5px;
+}
+.postContainer .post.other .postInner {
+  background-color: #88a65e;
 }
 .postContainer .post.other .dateContainer {
   text-align: right;
 }
 .postContainer .post .postInner {
-  background-color: #ddd;
-  border: 1px solid #f00;
+  border: 1px solid #2e2e2e;
   padding: 4px;
   min-width: 80px;
   width: 300px;
@@ -142,16 +156,37 @@ html .main {
   font-weight: 700;
   margin: 0px 4px;
 }
+.postContainer .post .postInner .body {
+  white-space: pre-line;
+}
 .postContainer .post .postInner .dateContainer {
   font-size: 11px;
 }
 /*
  * post form
- * 
+ *
  */
 form[name=post] {
   text-align: right;
 }
 .topic {
   width: 800px;
+  margin: 0 auto;
+}
+.topic .topicHeader {
+  float: left;
+  width: inherit;
+  color: #5e8c6a;
+  background-color: #f2c45a;
+}
+.topic .posts {
+  float: left;
+  width: inherit;
+  background-color: #dee4f6;
+  height: 500px;
+}
+.topic .postFormArea {
+  float: left;
+  width: inherit;
+  background-color: #ffffff;
 }

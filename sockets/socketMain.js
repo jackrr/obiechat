@@ -23,16 +23,16 @@ function stopWatchingOnlineCount(id) {
 
 function initialize(app, io, globalEvents) {
 	var topicSockets = require('./topicSockets')(app, globalEvents.topics);
-	
+
 	io.sockets.on('connection', function(socket) {
 		socket.userID = socket.handshake.session.passport.user;
 		usersOnline++;
 		events.emit('usersChanged');
-		
+
 		watchOnlineCount(socket);
-		
+
 		topicSockets.addSocket(socket);
-		
+
 		socket.on('disconnect', function() {
 			stopWatchingOnlineCount(socket.id);
 			usersOnline--;
