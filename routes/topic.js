@@ -44,6 +44,31 @@ module.exports = function(app, events) {
 		});
 	});
 
+	app.get('/topic/show/:slug/:page', userAuth.signedIn, function(req, res) {
+		console.log(req.params.page);
+		Topic.getPosts(req.params.slug, req.user.id, function(err, topic, page) {
+			if (err) {
+				return res.render('partials/alert', {error: err}, function(err, html) {
+					if (err) {
+						console.log(err);
+						res.send({error: 'Something went wrong!'});
+					}
+					res.send({error: html});
+				});
+			}
+			res.render('partials/postPage', {page: page, user: req.user});
+		}, req.params.page);
+	});
+
+	app.get('/topic/:slug/pageNumber', userAuth.signedIn, function(req, res) {
+		Topic.getPageCount(req.params.slug, function(err, count) {
+			if (err) {
+				console.log(err);
+			}
+			res.send({page: count-1})
+		});
+	});
+
 	app.get('/topic/show/:slug', userAuth.signedIn, function(req, res) {
 		// send the topic view
 		Topic.getPosts(req.params.slug, req.user.id, function(err, topic, page) {

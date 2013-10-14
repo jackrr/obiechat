@@ -36,7 +36,7 @@ Topic.createNew = function(topic, cb) {
 	topic.save(function(err) {
 		PostPage.create({
 			pageNumber: 1,
-			topicID: topic._id,
+			topicID: topic._id
 		}, function(err, newPage) {
 			if (err) {
 				return cb(err);
@@ -59,6 +59,7 @@ Topic.getPosts = function(slug, userID, cb, page) {
 		if (!page) {
 			page = topic.postPages.length - 1;
 		}
+		console.log(page);
 		PostPage.findById(topic.postPages[page], function(err, page) {
 			if (err) {
 				return cb(err);
@@ -66,6 +67,16 @@ Topic.getPosts = function(slug, userID, cb, page) {
 			postUtils.cleanPosts(page.posts, userID);
 			cb(null, topic, page);
 		});
+	});
+};
+
+Topic.getPageCount = function(slug, cb) {
+	Topic.findBySlug(slug, 0, function(err, topic) {
+		if (err) {
+			return cb(err);
+		}
+		console.log('in topic model', topic.postPages.length);
+		cb(null, topic.postPages.length);
 	});
 };
 
@@ -107,6 +118,9 @@ function writePosts(topic, cb) {
 			slots--;
 			index++;
 		}
+		if (!posts[index]) {
+			delete postQueues[topic._id];
+		}
 		PostPage.addPosts(page._id, subPosts, function(err) {
 			if (err) return cb(err);
 			if (posts[index]) { // no more room for the posts in this page
@@ -127,7 +141,6 @@ function writePosts(topic, cb) {
 					});
 				});
 			} else {
-				delete postQueues[topic._id];
 				cb(null);
 			}
 		});

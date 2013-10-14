@@ -37,7 +37,11 @@ html body {
   margin: 0;
   overflow: hidden;
 }
+html .main {
+  margin-top: 70px;
+}
 .header {
+  top: 0px;
   height: 70px;
   position: fixed;
   width: 100%;
@@ -162,10 +166,8 @@ form[name=post] {
   text-align: right;
 }
 .topic {
-  position: relative;
   width: 800px;
   margin: 0 auto;
-  top: 70px;
 }
 .topic .topicHeader {
   float: left;
