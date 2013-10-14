@@ -1,3 +1,26 @@
 .topic {
-	width: 800px;
+	position: relative;
+	width: @topicWidth;
+	margin: 0 auto;
+	top: @headerHeight;
+
+	.topicHeader {
+		float: left;
+		width: inherit;
+		color: @topicHeaderText;
+		background-color: @topicHeaderBackground;
+	}
+
+	.posts {
+		float: left;
+		width: inherit;
+		background-color: @topicBackground;
+		height: @topicPostsHeight;
+	}
+
+	.postFormArea {
+		float: left;
+		width: inherit;
+		background-color: @white;
+	}
 }

@@ -46,11 +46,11 @@ module.exports = function(app, events) {
 
 	app.get('/topic/show/:slug', userAuth.signedIn, function(req, res) {
 		// send the topic view
-		Topic.getPosts(req.params.slug, req.user.id, function(err, topic, posts) {
+		Topic.getPosts(req.params.slug, req.user.id, function(err, topic, page) {
 			if(err) {
 				console.log(err);
 			}
-			res.render('topic', {topic: topic, user: req.user, postPage: posts});	
+			res.render('topic', {topic: topic, user: req.user, postPage: page});
 		});
 	});
 
@@ -67,7 +67,7 @@ module.exports = function(app, events) {
 			req.body.creatorID = user._id;
 			req.body.displayName = user.displayName;
 			var post = new Post(req.body);
-			Topic.addPostToTopic(req.params.slug, post, function(err, topic) {
+			Topic.addPostToTopic(req.params.slug, post, function(err, success) {
 				if (err) {
 					console.log(err);
 					return res.render('partials/alert', {error: err}, function(err, html) {
@@ -78,7 +78,9 @@ module.exports = function(app, events) {
 						res.send({error: html});
 					});
 				}
-				events.emit('topicChanged'+topic.slug);
+				if (success) {
+					events.emit('topicChanged'+req.params.slug);
+				}
 				res.send();
 			});
 		});

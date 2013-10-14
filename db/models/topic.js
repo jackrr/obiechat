@@ -67,23 +67,31 @@ Topic.getPosts = function(slug, userID, cb, page) {
 
 // TODO: update this to work with paging
 Topic.findPostsSince = function(slug, userID, date, cb) {
+	// for now just get the current page
+	console.log('finding posts');
 	Topic.findBySlug(slug, userID, function(err, topic) {
 		if (err) {
 			return cb(err);
 		}
-		var posts = [];
-		_.each(topic.posts, function(post) {
-			if (post.createdDate > date) {
-				posts.push(post);
+		PostPage.findById(topic.postPages[topic.postPages.length - 1], function(err, page) {
+			console.log(page);
+			if (err) {
+				return cb(err);
 			}
+			var posts = [];
+			_.each(page.posts, function(post) {
+				if (post.createdDate > date) {
+					posts.push(post);
+				}
+			});
+			postUtils.cleanPosts(posts, userID);
+			cb(null, posts);
 		});
-		cb(null, posts);
 	});
 };
 
 function addPost(topic, post, cb) {
 	var pageID = topic.postPages[topic.postPages.length - 1];
-	console.log(pageID);
 	PostPage.addPost(pageID, post, function(err, oldPP) {
 		if (err) {
 			console.log('Couldnt save post to page: ', err);

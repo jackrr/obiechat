@@ -12,15 +12,15 @@ mixin postView(post)
 			div(class='post other')
 				div.postInner
 					- if (post.creatorName)
-						span.author= post.creatorName 
+						span.author= post.creatorName
 					span.body= post.body
 					div.dateContainer
 						span.postedAt= post.readableCreatedDate
-						
+
 mixin postPageView(postPage)
 	each post in postPage.posts
 		mixin postView(post)
-			
+
 mixin postForm(slug)
 	form(name='post', action='/topic/#{slug}/post', method="post")
 		mixin textArea('body', 'Reply', true, 'postForm')

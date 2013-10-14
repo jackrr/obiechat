@@ -6,9 +6,8 @@ include mixins/topicHelpers
 block content
 	div.topic
 		mixin topicHeader(topic)
-		div.posts
-			if postPages
-				each postPage in postPages
-					mixin postPageView(postPage)
+		div(class='posts infiniteScroll')
+			if postPage
+				mixin postPageView(postPage)
 		div.postFormArea
 			mixin postForm(topic.slug)

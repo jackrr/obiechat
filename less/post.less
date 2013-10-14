@@ -1,45 +1,49 @@
 /*
  * Styling for posts
  */
- 
+
  .postContainer {
  	width:100%;
  	margin-top: 5px;
  	margin-bottom: 5px;
- 	
+
  	.post {
-	
+
  		&.mine {
  			text-align: right;
+ 			margin-right: 5px;
  			.postInner {
  				margin-left: auto;
+	 			background-color: @myPostColor;
  				margin-right: 0;
  				.dateContainer {
  					// text-align: left;
  				}
  			}
  		}
- 		
+
  		&.other {
  			text-align: left;
- 			
+ 			margin-left: 5px;
+ 			.postInner {
+	 			background-color: @theirPostColor;
+ 			}
  			.dateContainer {
  				text-align: right;
  			}
  		}
- 			
- 	
+
+
  		.postInner {
-			background-color: #ddd;
- 			border: 1px solid #f00;
+ 			border: 1px solid @postBorder;
  			padding: 4px;
  			min-width: 80px;
  			width: 300px;
-		
+
 			.author {
 				font-weight: 700;
 				margin: 0px 4px;
-			} 		
+			}
  			.body {
 				white-space: pre-line;
  			}
@@ -52,14 +56,13 @@
 
 /*
  * post form
- * 
+ *
  */
- 
+
  form[name=post] {
  	text-align: right;
- 	
+
  	textarea {
 	}
 }
- 		
- 
+
