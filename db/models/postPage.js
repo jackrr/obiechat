@@ -7,4 +7,8 @@ PostPage.addPost = function(id, post, cb) {
 	PostPage.findOneAndUpdate({_id: id}, { $push: { posts: post } }, cb);
 };
 
+PostPage.addPosts = function(id, posts, cb) {
+	PostPage.findOneAndUpdate({_id: id}, { $push: { posts: { $each: posts } } }, cb);
+};
+
 module.exports = PostPage;

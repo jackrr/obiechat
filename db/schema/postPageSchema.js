@@ -10,11 +10,8 @@ var postPageSchema = new Schema({
 	createdDate: {type: Date, default: Date.now}
 });
 
-postPageSchema.pre('save', function(next) {
-	if (this.posts.length > maxPostLength) {
-		next(new Error('Page full'));
-	}
-	next();
+postPageSchema.virtual('postSlots').get(function() {
+	return this.posts.length - maxPostLength;
 });
 
 module.exports = postPageSchema;

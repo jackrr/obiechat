@@ -28,6 +28,10 @@ Topic.findBySlug = function(slug, userID, cb) {
 	});
 };
 
+Topic.addPage = function(id, page, cb) {
+	Topic.findOneAndUpdate({_id: id}, { $push: { postPages: page._id } }, cb);
+};
+
 Topic.createNew = function(topic, cb) {
 	topic.save(function(err) {
 		PostPage.create({
@@ -37,11 +41,11 @@ Topic.createNew = function(topic, cb) {
 			if (err) {
 				return cb(err);
 			}
-			Topic.addPage(topic._id, newPage, function(err, page) {
+			Topic.addPage(topic._id, newPage, function(err, upTopic) {
 				if (err) {
 					return cb(err);
 				}
-				cb(null, topic, page);
+				cb(null, upTopic, newPage);
 			});
 		});
 	});
@@ -90,59 +94,56 @@ Topic.findPostsSince = function(slug, userID, date, cb) {
 	});
 };
 
-function addPost(topic, post, cb) {
-	var pageID = topic.postPages[topic.postPages.length - 1];
-	PostPage.addPost(pageID, post, function(err, oldPP) {
-		if (err) {
-			console.log('Couldnt save post to page: ', err);
-			/*
-			 * This is complicated.
-			 */
-			if (err.message == 'Page full') {
-				if (pagingBlocked[topic._id]) {
-					// some other request is creating the page!
-					postQueues[topic._id].push(post);
-					return cb(new Error('Post added to queue...'));
-				}
-				pagingBlocked[topic._id] = true; // prevent multiple new pages
-				postQueues[topic._id] = [post];
+function writePosts(topic, cb) {
+	PostPage.findById(topic.postPages[topic.postPages.length - 1], function(err, page) {
+		if (err) return cb(err);
+		var slots = page.postSlots;
+		var asyncs = [];
+		var posts = postQueues[topic._id];
+		var index = 0;
+		var subPosts = [];
+		while (slots && posts[index]) {
+			subPosts.push(posts[index]);
+			slots--;
+			index++;
+		}
+		PostPage.addPosts(page._id, subPosts, function(err) {
+			if (err) return cb(err);
+			if (posts[index]) { // no more room for the posts in this page
 				PostPage.create({
 					pageNumber: topic.postPages.length + 1,
 					topicID: topic._id,
-				}, function(err, newPage) {
+				},
+				function(err, newPage) {
 					if (err) {
 						return cb(err);
 					}
-					Topic.addPage(topic._id, newPage, function(err, page) {
+					Topic.addPage(topic._id, newPage, function(err, upTopic) {
 						if (err) {
 							return cb(err);
 						}
-						// add all posts in queue to the page
-						var asyncs = {};
-						_.each(postQueues[topic._id], function(post, index) {
-							asyncs[index] = function(callback) {
-								addPost(topic, post, callback);
-							};
-						});
-						async.parallel(asyncs, function(err, results) {
-							if (err) {
-								return cb(err);
-							}
-							delete postQueues[topic._id];
-							delete pagingBlockedp[topic._id];
-							cb(null);
-						});
+						postQueues[topic._id] = postQueues[topic._id].slice(index);
+						return writePosts(upTopic, cb);
 					});
 				});
+			} else {
+				delete postQueues[topic._id];
+				cb(null);
 			}
-			// other error
-			return cb(err);
-		}
-		console.log('no error');
-		// that was easy
-		cb(null);
+		});
 	});
-};
+}
+
+function addPost(topic, post, cb) {
+	if (postQueues[topic._id]) {
+		postQueues[topic._id].push(post);
+		return cb(null, 'post added to queue');
+	}
+	postQueues[topic._id] = [post];
+	writePosts(topic, function(err) {
+		cb(err);
+	});
+}
 
 Topic.addPostToTopic = function(slug, post, cb) {
 	Topic.findBySlug(slug, 0, function(err, topic) {
@@ -152,7 +153,7 @@ Topic.addPostToTopic = function(slug, post, cb) {
 		if (topic.anonymous) {
 			post.creatorName = undefined;
 		}
-		addPost(topic, post, function(err) {
+		addPost(topic, post, function(err, msg) {
 			if (err) {
 				return cb(err);
 			}
