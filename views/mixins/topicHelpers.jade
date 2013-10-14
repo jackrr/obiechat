@@ -1,21 +1,24 @@
 mixin topicPreview(topic)
-	div.topicPreview
-		div.name= topic.name
-		div.createdAt= topic.readableCreatedDate
+	.topicPreview
+		.name= topic.name
+		.createdAt= topic.readableCreatedDate
 		a(href='/topic/show/#{topic.slug}', class='topicViewLink') Open Topic
 		
 mixin topicHeader(topic)
-	div.topicHeader
-		div.name= topic.name
-		div.createdAt Created #{topic.readableCreatedDate}
+	.topicHeader
+		.name= topic.name
+		.createdAt Created #{topic.readableCreatedDate}
 		- if (topic.owned)
-			div.owned
+			.owned
 				span.label Created By:
 				span.ownerName= topic.creatorName
 		- if (topic.anonymous)
-			div.anonymous Anonymous
+			.anonymous Anonymous
 		- if (topic.description)
-			div.description= topic.description
-		div.currentViewers
+			.description= topic.description
+		.currentViewers
 			span.label Users Viewing:
 			span.count
+		.alerts
+			.added
+			.warns
