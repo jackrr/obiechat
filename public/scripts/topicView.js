@@ -80,7 +80,7 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 	function fillTopic() {
 		if ( $postContainer[0].scrollHeight < $('html').height()) {
 			loadPage(function() {
-				scrollTopic('bottom');
+				fillTopic();
 			});
 
 		} else {
