@@ -1,13 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var dateUtils = require('../../utils/dateUtils');
+var Warn = require('./warnSchema');
 
 var postSchema = new Schema({
 	creatorID: {type: Schema.Types.ObjectId, required: true},
 	creatorName: String,
 	body: {type: String, required: true},
 	createdDate: {type: Date, default: Date.now},
-	
+	warns: [Warn],
+
 	// non-persisted data
 	isTheirs: Boolean
 });
@@ -15,7 +17,7 @@ var postSchema = new Schema({
 postSchema.pre('save', function(next) {
 	// clear non-persisted data
 	this.isTheirs = undefined;
-	
+
 	// clean up the body text
 	this.body = this.body.trim();
 	if (!this.body || !this.body.length) {
