@@ -15,7 +15,6 @@ module.exports = function(app, events) {
 			topics[slug]++;
 
 			function sendPosts() {
-				console.log('called send posts');
 				Topic.findPostsSince(slug, socket.userID, date, function(err, posts) {
 					var ret = {};
 					ret.posts = [];
@@ -42,10 +41,18 @@ module.exports = function(app, events) {
 			sendViewerCount();
 			sendPosts();
 
-			socket.on('stopWatchingTopic', function(data) {
+			function stopWatching() {
 				topics[slug]--;
 				events.removeListener('topicChanged'+slug, sendPosts);
 				events.removeListener('topicViewersChanged'+slug, sendViewerCount);
+			}
+
+			socket.on('stopWatchingTopic', function(data) {
+				stopWatching();
+			});
+
+			socket.on('disconnect', function() {
+				stopWatching();
 			});
 		});
 	}

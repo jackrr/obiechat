@@ -4,11 +4,11 @@ define(['jquery'], function($) {
 		if (count == 1) {
 			html = count + ' user online';
 		} else {
-			html = count + ' users online'; 	
+			html = count + ' users online';
 		}
 		$('#usersOnline').html(html);
 	}
-	
+
 	return {
 		updateOnlineUsers: updateOnline
 	};

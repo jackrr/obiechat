@@ -10,6 +10,50 @@ var PostPage = require('./postPage');
 var pagingBlocked = {};
 var postQueues = {};
 
+function genSlug(str, cb) {
+	var maxSlugLen = 25;
+	var str = str.length < maxSlugLen ? str : str.substring(0, maxSlugLen);
+
+	str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.toLowerCase();
+
+  // remove accents, swap ñ for n, etc
+  var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+  var to   = "aaaaaeeeeeiiiiooooouuuunc------";
+  for (var i=0, l=from.length ; i<l ; i++) {
+    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+  .replace(/\s+/g, '-') // collapse whitespace and replace by -
+  .replace(/-+/g, '-'); // collapse dashes
+
+  var taken = false;
+  var index = 1;
+
+  Topic.find({slug: new RegExp(str+'(\-\d+)?')}, function(err, topics) {
+  	if (err) return cb(err);
+  	if (topics && topics.length) {
+  		if (topics.length > 1) {
+  			var getNum = /.*\-(\d+)$/;
+  			var nums = [];
+  			_.each(topics, function(topic) {
+  				var match = topic.slug.replace(str, '').replace('-', '');
+  				console.log(match);
+  				if (match) nums.push(parseInt(match));
+  			});
+  			var num = 1;
+  			while (_.indexOf(nums, num) >= 0) {
+  				num++;
+  			}
+  			str = str + '-' + num;
+  		} else {
+  			str = str + '-1';
+  		}
+  	}
+  	cb(null, str);
+  });
+}
+
 Topic.all = function(cb) {
 	Topic.find({},function(err, topics) {
 		topicUtils.cleanTopicPreviews(topics);
@@ -33,19 +77,26 @@ Topic.addPage = function(id, page, cb) {
 };
 
 Topic.createNew = function(topic, cb) {
-	topic.save(function(err) {
-		PostPage.create({
-			pageNumber: 1,
-			topicID: topic._id
-		}, function(err, newPage) {
+	genSlug(topic.name, function(err, slug) {
+		if (err) return cb(err);
+		topic.slug = slug;
+		topic.save(function(err) {
 			if (err) {
 				return cb(err);
 			}
-			Topic.addPage(topic._id, newPage, function(err, upTopic) {
+			PostPage.create({
+				pageNumber: 1,
+				topicID: topic._id
+			}, function(err, newPage) {
 				if (err) {
 					return cb(err);
 				}
-				cb(null, upTopic, newPage);
+				Topic.addPage(topic._id, newPage, function(err, upTopic) {
+					if (err) {
+						return cb(err);
+					}
+					cb(null, upTopic, newPage);
+				});
 			});
 		});
 	});
@@ -144,7 +195,7 @@ function writePosts(topic, cb) {
 
 function addPost(topic, post, cb) {
 	if (postQueues[topic._id]) {
-		postQueues[topic._id].push(post);
+		postQueues[topic._id].push(post); // hopefully this happens in place because javascript is single threaded
 		return cb(null, 'post added to queue');
 	}
 	postQueues[topic._id] = [post];
