@@ -1,0 +1,16 @@
+include formHelpers
+
+mixin warnForm(post)
+	.warnContainer
+		-if (post.creatorName)
+			.postBy= post.creatorName
+		.body= post.body
+		form(name='warn', action='/post/#{post.pageID}/#{post._id}/warn', method='post')
+			.types
+				mixin checkbox('type', 'offensive', 'offensive')
+				mixin checkbox('type', 'violent', 'violent')
+				mixin checkbox('type', 'discriminatory', 'discriminatory')
+			.description
+				mixin textArea('description', 'Description (optional)', false, 'descriptionField')
+			.submit
+				mixin submit('Send Warning')

@@ -11,12 +11,14 @@ var postSchema = new Schema({
 	warns: [Warn],
 
 	// non-persisted data
-	isTheirs: Boolean
+	isTheirs: Boolean,
+	pageID: Schema.Types.ObjectId
 });
 
 postSchema.pre('save', function(next) {
 	// clear non-persisted data
 	this.isTheirs = undefined;
+	this.pageID = undefined;
 
 	// clean up the body text
 	this.body = this.body.trim();

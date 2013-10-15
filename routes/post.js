@@ -1,17 +1,14 @@
-module.exports = function(app) {
-	var Post = app.db.Post;
-	
-	app.get('/posts', function(req, res) {
-		res.redirect('/');
-	});
-	
-	app.post('/post', function(req, res) {
-		Post.create(req.body, function(err, post) {
+var userAuth = require('../auth/userAuth');
+
+module.exports = function(app, events) {
+	var PostPage = app.db.PostPage;
+
+	app.get('/post/:pageID/:id/warn', userAuth.signedIn, function(req, res) {
+		PostPage.findPost(req.params.pageID, req.params.id, function(err, post) {
 			if(err) {
 				console.log(err);
 			}
-			console.log(post.body);
-			res.redirect('/');
+			res.render('warnForm', {post: post});
 		});
 	});
 };

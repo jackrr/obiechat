@@ -52,7 +52,7 @@ events.topics = new EventEmitter;
 
 /* routes */
 require('./routes/index')(app);
-require('./routes/post')(app);
+require('./routes/post')(app, events.topics);
 require('./routes/topic')(app, events.topics);
 require('./routes/user')(app);
 

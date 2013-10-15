@@ -114,7 +114,7 @@ Topic.getPosts = function(slug, userID, cb, page) {
 			if (err) {
 				return cb(err);
 			}
-			postUtils.cleanPosts(page.posts, userID);
+			postUtils.cleanPosts(page.posts, userID, page._id);
 			cb(null, topic, page);
 		});
 	});
@@ -145,7 +145,7 @@ Topic.findPostsSince = function(slug, userID, date, cb) {
 					posts.push(post);
 				}
 			});
-			postUtils.cleanPosts(posts, userID);
+			postUtils.cleanPosts(posts, userID, page._id);
 			cb(null, posts);
 		});
 	});

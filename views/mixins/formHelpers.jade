@@ -1,6 +1,6 @@
 mixin text(name, placeholder, title)
 	input(type="text" name="#{name}" placeholder="#{placeholder}")
-	
+
 mixin textArea(name, placeholder, autofocus, aClass)
 	- if (autofocus)
 		textarea(name="#{name}" placeholder="#{placeholder}" autofocus="true" class="#{aClass}")
@@ -12,7 +12,8 @@ mixin password(name, value, title)
 
 mixin submit(value)
 	input(type="submit" value="#{value}")
-	
+
 mixin checkbox(name, value, label)
-	input(type="checkbox" name="#{name}" value="#{value}")
-	span= label
+	span.checkbox
+		input(type="checkbox" name="#{name}" value="#{value}")
+		span= label

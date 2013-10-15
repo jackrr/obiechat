@@ -1,21 +1,23 @@
 include formHelpers
 
 mixin postView(post)
-	div.postContainer
+	.postContainer
 		- if (post.isTheirs)
 			div(class='post mine')
-				div.postInner
+				.postInner
 					span.body= post.body
-					div.dateContainer
+					.dateContainer
 						span.postedAt= post.readableCreatedDate
 		- else
 			div(class='post other')
-				div.postInner
+				.postInner
 					- if (post.creatorName)
 						span.author= post.creatorName
 					span.body= post.body
-					div.dateContainer
+					.dateContainer
 						span.postedAt= post.readableCreatedDate
+					.interactions
+						a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') Warn Post
 
 mixin postPageView(postPage)
 	each post in postPage.posts
