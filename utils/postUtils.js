@@ -1,7 +1,7 @@
 var dateUtils = require('./dateUtils');
 var _ = require('underscore');
 
-function cleanPost(pageID, userID, post) {
+function cleanPost(post, userID, pageID) {
 	if (userID == post.creatorID) {
 		post.isTheirs = true;
 	}
@@ -10,7 +10,7 @@ function cleanPost(pageID, userID, post) {
 
 function cleanPosts(posts, userID, pageID) {
 	_.each(posts, function(post) {
-		cleanPost(pageID, userID, post);
+		cleanPost(post, userID, pageID);
 	});
 }
 

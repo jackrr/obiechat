@@ -7,10 +7,42 @@ mixin warnForm(post)
 		.body= post.body
 		form(name='warn', action='/post/#{post.pageID}/#{post._id}/warn', method='post')
 			.types
-				mixin checkbox('type', 'offensive', 'offensive')
-				mixin checkbox('type', 'violent', 'violent')
-				mixin checkbox('type', 'discriminatory', 'discriminatory')
+				mixin checkbox('types', 'offensive', 'offensive')
+				mixin checkbox('types', 'violent', 'violent')
+				mixin checkbox('types', 'discriminatory', 'discriminatory')
+				mixin text('other', 'other')
 			.description
 				mixin textArea('description', 'Description (optional)', false, 'descriptionField')
 			.submit
 				mixin submit('Send Warning')
+
+mixin warn(warn)
+	.warn
+		.types Do you confirm that this post is:
+			each type in warn.types
+				span.type= type
+		.description= warn.description
+		a(class='confirm', href='/post/#{post.pageID}/#{post._id}/warn/confirm') Yes
+		a(class='deny', href='/post/#{post.pageID}/#{post._id}/warn/deny') Ignore
+
+mixin warnPreview(warn)
+	.warnPreview
+		div(class='hidePreview') Hide
+		.types Do you confirm that this post is:
+			each type in warn.types
+				span.type= type
+		.description= warn.description
+		a(class='confirm fake', href='#') Yes
+		a(class='deny fake', href='#') Ignore
+
+mixin warnConfirms(post, userID)
+	.warnContainer
+		div(class='close btn') Close
+		-if (post.creatorName)
+			.postBy= post.creatorName
+		.body= post.body
+		each warn in post.warns
+			-if (warn.creatorID == userID || warn.confirmedByUser(userID))
+				mixin warnPreview(warn)
+			-else
+				mixin warn(warn)

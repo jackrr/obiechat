@@ -9,10 +9,12 @@ var Post = require('./models/post');
 var Topic = require('./models/topic');
 var User = require('./models/user');
 var PostPage = require('./models/postPage');
+var Warn = require('./models/warn');
 
 module.exports = {
 		Post: Post,
 		Topic: Topic,
 		User: User,
-		PostPage: PostPage
+		PostPage: PostPage,
+		Warn: Warn
 };

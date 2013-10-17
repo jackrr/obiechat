@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var dateUtils = require('../../utils/dateUtils');
+var _ = require('underscore');
 
 var warnSchema = new Schema({
 	creatorID: {type: Schema.Types.ObjectId, required: true},
@@ -22,5 +23,12 @@ warnSchema.pre('save', function(next) {
 
 	next();
 });
+
+warnSchema.methods.confirmedByUser = function(userID) {
+	if (_.indexOf(this.confirmedBy, userID) < 0) {
+		return false;
+	}
+	return true;
+}
 
 module.exports = warnSchema;
