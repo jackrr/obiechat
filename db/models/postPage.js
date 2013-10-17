@@ -33,4 +33,19 @@ PostPage.addWarnToPost = function(pageID, postID, warn, cb) {
 	});
 };
 
+PostPage.confirmWarn = function(pageID, postID, warnID, userID, cb) {
+	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID, 'posts.$.warns._id': warnID}, { $push: { 'posts.$.warns.$.confirmedBy': userID } }, function(err, page) {
+		if (err) return cb(err);
+		cb(null, findPostInPage(page, postID));
+	});
+};
+
+PostPage.denyWarn = function(pageID, postID, warnID, userID, cb) {
+	// right now not doing denies of warns
+	PostPage.findOne({_id: pageID}, function(err, page) {
+		if (err) return cb(err);
+		cb(null, findPostInPage(page, postID));
+	});
+};
+
 module.exports = PostPage;

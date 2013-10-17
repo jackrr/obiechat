@@ -25,10 +25,7 @@ warnSchema.pre('save', function(next) {
 });
 
 warnSchema.methods.confirmedByUser = function(userID) {
-	if (_.indexOf(this.confirmedBy, userID) < 0) {
-		return false;
-	}
-	return true;
+	return !(_.indexOf(this.confirmedBy, userID) < 0);
 }
 
 module.exports = warnSchema;

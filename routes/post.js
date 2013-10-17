@@ -44,7 +44,28 @@ module.exports = function(app, events) {
 			// send the warning for confirmation from other users in topic
 
 			// send a preview of the confirmation to this user (so they know that others can approve!)
-			res.render('partials/warnConfirm', {post: post, userID: req.user.id});
+			res.render('partials/warnConfirmForm', {post: post, userID: req.user.id});
+		});
+	});
+
+	app.get('/post/:pageID/:id/warn/:warnID/confirm', userAuth.signedIn, function(req, res) {
+		PostPage.confirmWarn(req.params.pageID, req.params.id, req.params.warnID, req.user.id, function(err, post) {
+			if (err) {
+				console.log(err);
+			}
+			console.log(post.warns);
+			console.log(userID);
+
+			res.render('partials/warnConfirm', {response: 'confirm'});
+		});
+	});
+
+	app.get('/post/:pageID/:id/warn/:warnID/deny', userAuth.signedIn, function(req, res) {
+		PostPage.denyWarn(req.params.pageID, req.params.id, req.params.warnID, req.user.id, function(err, post) {
+			if (err) {
+				console.log(err);
+			}
+			res.render('partials/warnConfirm', {response: 'deny'});
 		});
 	});
 };
