@@ -8,7 +8,8 @@ var userSchema = new Schema({
 		last: {type: String, required: true},
 		pseudo: String
 	},
-	email: {type: String, required: true, enum: permittedUsers.users}
+//	email: {type: String, required: true, enum: permittedUsers.users}
+	email: {type: String, required: true}
 });
 
 userSchema.virtual('displayName').get(function() {

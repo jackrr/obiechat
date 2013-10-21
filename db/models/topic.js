@@ -194,6 +194,7 @@ function writePosts(topic, cb) {
 }
 
 function addPost(topic, post, cb) {
+	if (topic.anonymous) post.creatorName = undefined;
 	if (postQueues[topic._id]) {
 		postQueues[topic._id].push(post); // hopefully this happens in place because javascript is single threaded
 		return cb(null, 'post added to queue');

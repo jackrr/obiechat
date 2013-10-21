@@ -28,7 +28,6 @@ postSchema.pre('save', function(next) {
 	this.body.replace(/\s+/g, ' ');
 	this.body = this.body.replace(/\r+/g, '');
 	this.body.replace(/\n\n+/g, '\n\n');
-	console.log(this.body);
 	next();
 });
 
