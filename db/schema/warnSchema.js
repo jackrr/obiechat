@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var dateUtils = require('../../utils/dateUtils');
 var _ = require('underscore');
 
 var warnSchema = new Schema({

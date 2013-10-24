@@ -4,14 +4,50 @@ var userAuth = require('../auth/userAuth');
 module.exports = function(app, events) {
 	var PostPage = app.db.PostPage;
 	var Warn = app.db.Warn;
+	var WarnGroup = app.db.WarnGroup;
+	var Topic = app.db.Topic;
+	var self = this;
+
+	function newWarningInPost(pageID, post) {
+		PostPage.findById(pageID, function(err, page) {
+			if (err) return console.log(err);
+			Topic.findById(page.topicID, function(err, topic) {
+				if (err) return console.log(err);
+				events.emit('newWarning'+topic.slug, post);
+			});
+		})
+	};
 
 	app.get('/post/:pageID/:id/warn', userAuth.signedIn, function(req, res) {
 		PostPage.findPost(req.params.pageID, req.params.id, function(err, post) {
 			if(err) {
 				console.log(err);
 			}
-			postUtils.cleanPost(post, req.user.id, req.params.pageID);
-			res.render('partials/warnForm', {post: post});
+			postUtils.cleanPost(post, null, req.params.pageID);
+			if (post.warnGroup) {
+				WarnGroup.findById(post.warnGroup, function(err, wg) {
+					if (err) console.log(err);
+					app.render('partials/warnConfirmForm', {post: post, warnGroup: wg, userID: req.user.id}, function(err, html) {
+						if (err) console.log(err);
+						res.send({warnConfirms: html});
+					});
+				});
+			} else {
+				self.sendForm(req, res);
+			}
+		});
+	});
+
+	app.get('/post/:pageID/:id/warn/form', userAuth.signedIn, self.sendForm = function(req, res) {
+		PostPage.findPost(req.params.pageID, req.params.id, function(err, post) {
+			if(err) {
+				console.log(err);
+			}
+			postUtils.cleanPost(post, null, req.params.pageID);
+			app.render('partials/warnForm', {post: post}, function(err, html) {
+				if (err) return console.log(err);
+				res.send({warnForm: html});
+			});
 		});
 	});
 
@@ -32,40 +68,59 @@ module.exports = function(app, events) {
 				types.push(other);
 			}
 		}
-		req.body.types = types; // is this redundant?
+		req.body.types = types;
 		var warn = new Warn(req.body);
-		// check if similar warnings exist:
-		// same creatorID (overwrite), same types (append description and add confirmation)
 
-		PostPage.addWarnToPost(req.params.pageID, req.params.id, warn, function(err, post) {
-			if (err) {
+		PostPage.findPost(req.params.pageID, req.params.id, function(err, post) {
+			if(err) {
 				console.log(err);
+				return res.send('oops');
 			}
-			// send the warning for confirmation from other users in topic
-
-			// send a preview of the confirmation to this user (so they know that others can approve!)
-			res.render('partials/warnConfirmForm', {post: post, userID: req.user.id});
+			if (post.warnGroup) {
+				WarnGroup.addWarn(post.warnGroup, warn, function(err, wg) {
+					if (err) return console.log(err);
+					PostPage.incWarn(req.params.pageID, req.params.id, function(err, post) {
+						if (err) console.log(err);
+						newWarningInPost(req.params.pageID, post);
+						res.send({id: post.id, count: post.warnCount});
+					});
+				});
+			} else {
+				WarnGroup.create({warns: [warn], postID: post._id}, function(err, wg) {
+					if (err) {
+						console.log(err);
+						return res.send('oops');
+					}
+					PostPage.setWarnGroupForPost(req.params.pageID, post._id, wg, function(err, post) {
+						if (err) {
+							console.log(err);
+							return res.send('oops');
+						}
+						newWarningInPost(req.params.pageID, post);
+						res.send({id: post.id, count: post.warnCount});
+					});
+				})
+			}
 		});
 	});
 
-	app.get('/post/:pageID/:id/warn/:warnID/confirm', userAuth.signedIn, function(req, res) {
-		PostPage.confirmWarn(req.params.pageID, req.params.id, req.params.warnID, req.user.id, function(err, post) {
+	app.get('/warnGroup/:groupID/:warnID/:pageID/confirm', userAuth.signedIn, function(req, res) {
+		WarnGroup.addConfirm(req.params.groupID, req.params.warnID, req.params.userID, function(err, wg) {
 			if (err) {
 				console.log(err);
+				return res.send('oops');
 			}
-			console.log(post.warns);
-			console.log(userID);
-
-			res.render('partials/warnConfirm', {response: 'confirm'});
+			PostPage.incWarn(req.params.pageID, wg.postID, function(err, post) {
+				if (err) {
+					console.log(err);
+					return res.send('oops');
+				}
+				res.send({id: post.id, count: post.warnCount});
+			});
 		});
 	});
 
-	app.get('/post/:pageID/:id/warn/:warnID/deny', userAuth.signedIn, function(req, res) {
-		PostPage.denyWarn(req.params.pageID, req.params.id, req.params.warnID, req.user.id, function(err, post) {
-			if (err) {
-				console.log(err);
-			}
-			res.render('partials/warnConfirm', {response: 'deny'});
-		});
+	app.get('/warnGroup/:groupID/:warnID/:pageID/deny', userAuth.signedIn, function(req, res) {
+		console.log('not using this feature yet');
 	});
 };

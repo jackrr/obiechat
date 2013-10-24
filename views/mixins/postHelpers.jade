@@ -1,7 +1,7 @@
 include formHelpers
 
 mixin postView(post)
-	.postContainer
+	div(class='postContainer' id=post._id)
 		- if (post.isTheirs)
 			div(class='post mine')
 				.postInner
@@ -16,8 +16,9 @@ mixin postView(post)
 					span.body= post.body
 					.dateContainer
 						span.postedAt= post.readableCreatedDate
-					.interactions
+					.warnArea
 						a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') Warn Post
+						span.warnCount= post.warnCount
 
 mixin postPageView(postPage)
 	each post in postPage.posts

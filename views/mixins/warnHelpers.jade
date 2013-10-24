@@ -16,33 +16,33 @@ mixin warnForm(post)
 			.submit
 				mixin submit('Send Warning')
 
-mixin warn(warn)
+mixin warn(warn, groupID, post)
 	.warn
 		.types Do you confirm that this post is:
 			each type in warn.types
 				span.type= type
 		.description= warn.description
-		a(class='confirm', href='/post/#{post.pageID}/#{post._id}/warn/#{warn._id}/confirm') Yes
-		a(class='deny', href='/post/#{post.pageID}/#{post._id}/warn/#{warn._id}/deny') Ignore
+		a(class='confirm', href='/warnGroup/#{groupID}/#{warn._id}/#{pageID}/confirm') Yes
+		a(class='deny', href='/warnGroup/#{groupID}/#{warn._id}/#{pageID}/deny') Ignore
 
 mixin warnPreview(warn)
 	.warnPreview
-		div(class='hidePreview') Hide
-		.types Do you confirm that this post is:
+		.types You have identified this post as:
 			each type in warn.types
 				span.type= type
 		.description= warn.description
-		a(class='confirm fake', href='#') Yes
-		a(class='deny fake', href='#') Ignore
+		.info Other users will have the option to confirm or deny this warning.
 
-mixin warnConfirms(post, userID)
+mixin warnConfirms(post, warnGroup, userID)
 	.warnContainer
 		div(class='close btn') Close
 		-if (post.creatorName)
 			.postBy= post.creatorName
 		.body= post.body
-		each warn in post.warns
+		each warn in warnGroup.warns
 			-if (warn.creatorID == userID || warn.confirmedByUser(userID))
 				mixin warnPreview(warn)
 			-else
-				mixin warn(warn)
+				mixin warn(warn, warnGroup._id, post)
+		.newWarning
+			a(href='/post/#{post.pageID}/#{post._id}/warn/form' class='warnLink') New Warning

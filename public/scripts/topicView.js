@@ -63,6 +63,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 				} else {
 					page--;
 					$postContainer.prepend(res);
+					postsView.handleWarns();
 					cb();
 				}
 			});
