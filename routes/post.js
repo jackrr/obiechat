@@ -79,7 +79,7 @@ module.exports = function(app, events) {
 			if (post.warnGroup) {
 				WarnGroup.addWarn(post.warnGroup, warn, function(err, wg) {
 					if (err) return console.log(err);
-					PostPage.incWarn(req.params.pageID, req.params.id, function(err, post) {
+					PostPage.setWarnCountOnPost(req.params.pageID, req.params.id, wg.warns.length, function(err, post) {
 						if (err) console.log(err);
 						newWarningInPost(req.params.pageID, post);
 						res.send({id: post.id, count: post.warnCount});

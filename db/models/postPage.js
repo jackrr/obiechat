@@ -27,7 +27,14 @@ PostPage.findPost = function(pageID, postID, cb) {
 };
 
 PostPage.incWarn = function(pageID, postID, cb) {
-	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID}, { $inc: { warnCount: 1 } }, function(err, page) {
+	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID}, { $inc: { 'posts.$.warnCount': 1 } }, function(err, page) {
+		if (err) return cb(err);
+		cb(null, findPostInPage(page, postID));
+	});
+};
+
+PostPage.setWarnCountOnPost = function(pageID, postID, count, cb) {
+	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID}, { $set: { 'post.$.warnCount': count } }, function(err, page) {
 		if (err) return cb(err);
 		cb(null, findPostInPage(page, postID));
 	});
