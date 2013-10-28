@@ -7,15 +7,19 @@ var postSchema = new Schema({
 	creatorName: String,
 	body: {type: String, required: true},
 	createdDate: {type: Date, default: Date.now},
-	
+	warnGroup: Schema.Types.ObjectId,
+	warnCount: Number,
+
 	// non-persisted data
-	isTheirs: Boolean
+	isTheirs: Boolean,
+	pageID: Schema.Types.ObjectId
 });
 
 postSchema.pre('save', function(next) {
 	// clear non-persisted data
 	this.isTheirs = undefined;
-	
+	this.pageID = undefined;
+
 	// clean up the body text
 	this.body = this.body.trim();
 	if (!this.body || !this.body.length) {
@@ -24,7 +28,6 @@ postSchema.pre('save', function(next) {
 	this.body.replace(/\s+/g, ' ');
 	this.body = this.body.replace(/\r+/g, '');
 	this.body.replace(/\n\n+/g, '\n\n');
-	console.log(this.body);
 	next();
 });
 

@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], function($, _, notificationControl) {
+define(['jquery', 'underscore', './notificationController', './postsView', 'jquery.autosize'], function($, _, notificationControl, postsView) {
 	var page, slug, $postContainer, $postsAdded;
 
 	function postsAdded() {
@@ -63,6 +63,7 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 				} else {
 					page--;
 					$postContainer.prepend(res);
+					postsView.handleWarns();
 					cb();
 				}
 			});
@@ -119,6 +120,7 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 		slug = path.replace('/topic/show/', '');
 		$postContainer = $('.posts');
 		$postsAdded = $('.topicHeader .alerts .added');
+		postsView.initialize(socket);
 		getPageNum();
 		watchForm();
 		watchTopic(slug, socket);

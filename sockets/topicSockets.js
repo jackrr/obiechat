@@ -9,10 +9,12 @@ module.exports = function(app, events) {
 		socket.on('watchTopic', function(data) {
 			var slug = data.slug;
 			var date = Date.now();
+			var id = socket.id;
 			if (!topics[slug]) {
-				topics[slug] = 0;
+				topics[slug] = [];
 			}
-			topics[slug]++;
+			topics[slug].push(id);
+			events.emit('topicViewersChanged'+slug);
 
 			function sendPosts() {
 				Topic.findPostsSince(slug, socket.userID, date, function(err, posts) {
@@ -33,18 +35,26 @@ module.exports = function(app, events) {
 			}
 
 			function sendViewerCount() {
-				socket.emit('topicViewerCount', {count: topics[slug]});
+				socket.emit('topicViewerCount', {count: topics[slug].length});
+			}
+
+			function newWarning(post) {
+				console.log('sending warn count');
+				socket.emit('warnCountChange', {id: post._id, count: post.warnCount});
 			}
 
 			events.on('topicChanged'+slug, sendPosts);
 			events.on('topicViewersChanged'+slug, sendViewerCount);
+			events.on('newWarning'+slug, newWarning);
 			sendViewerCount();
 			sendPosts();
 
 			function stopWatching() {
-				topics[slug]--;
+				topics[slug] = _.without(topics[slug], id);
 				events.removeListener('topicChanged'+slug, sendPosts);
 				events.removeListener('topicViewersChanged'+slug, sendViewerCount);
+				events.removeListener('newWarning'+slug, newWarning);
+				events.emit('topicViewersChanged'+slug);
 			}
 
 			socket.on('stopWatchingTopic', function(data) {

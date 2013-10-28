@@ -1,0 +1,48 @@
+include formHelpers
+
+mixin warnForm(post)
+	.warnContainer
+		-if (post.creatorName)
+			.postBy= post.creatorName
+		.body= post.body
+		form(name='warn', action='/post/#{post.pageID}/#{post._id}/warn', method='post')
+			.types
+				mixin checkbox('types', 'offensive', 'offensive')
+				mixin checkbox('types', 'violent', 'violent')
+				mixin checkbox('types', 'discriminatory', 'discriminatory')
+				mixin text('other', 'other')
+			.description
+				mixin textArea('description', 'Description (optional)', false, 'descriptionField')
+			.submit
+				mixin submit('Send Warning')
+
+mixin warn(warn, groupID, post)
+	.warn
+		.types Do you confirm that this post is:
+			each type in warn.types
+				span.type= type
+		.description= warn.description
+		a(class='confirm', href='/warnGroup/#{groupID}/#{warn._id}/#{post.pageID}/confirm') Yes
+		a(class='deny', href='/warnGroup/#{groupID}/#{warn._id}/#{post.pageID}/deny') Ignore
+
+mixin warnPreview(warn)
+	.warnPreview
+		.types You have identified this post as:
+			each type in warn.types
+				span.type= type
+		.description= warn.description
+		.info Other users will have the option to confirm or deny this warning.
+
+mixin warnConfirms(post, warnGroup, userID)
+	.warnContainer
+		div(class='close btn') Close
+		-if (post.creatorName)
+			.postBy= post.creatorName
+		.body= post.body
+		each warn in warnGroup.warns
+			-if (warn.creatorID == userID || warn.confirmedByUser(userID))
+				mixin warnPreview(warn)
+			-else
+				mixin warn(warn, warnGroup._id, post)
+		.newWarning
+			a(href='/post/#{post.pageID}/#{post._id}/warn/form' class='warnLink') New Warning

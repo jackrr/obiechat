@@ -8,9 +8,15 @@ db.on('error', console.error.bind(console, 'connection error:'));
 var Post = require('./models/post');
 var Topic = require('./models/topic');
 var User = require('./models/user');
+var PostPage = require('./models/postPage');
+var Warn = require('./models/warn');
+var WarnGroup = require('./models/warnGroup');
 
 module.exports = {
 		Post: Post,
 		Topic: Topic,
-		User: User
+		User: User,
+		PostPage: PostPage,
+		Warn: Warn,
+		WarnGroup: WarnGroup
 };
