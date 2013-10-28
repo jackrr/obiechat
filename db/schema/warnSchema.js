@@ -17,7 +17,6 @@ warnSchema.pre('save', function(next) {
 		this.description.replace(/\s+/g, ' ');
 		this.description = this.description.replace(/\r+/g, '');
 		this.description.replace(/\n\n+/g, '\n\n');
-		console.log(this.description);
 	}
 
 	next();

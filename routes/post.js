@@ -1,6 +1,6 @@
 var postUtils = require('../utils/postUtils');
 var userAuth = require('../auth/userAuth');
-
+var _ = require('underscore');
 module.exports = function(app, events) {
 	var PostPage = app.db.PostPage;
 	var Warn = app.db.Warn;
@@ -79,7 +79,7 @@ module.exports = function(app, events) {
 			if (post.warnGroup) {
 				WarnGroup.addWarn(post.warnGroup, warn, function(err, wg) {
 					if (err) return console.log(err);
-					PostPage.setWarnCountOnPost(req.params.pageID, req.params.id, wg.warns.length, function(err, post) {
+					PostPage.setWarnCountOnPost(req.params.pageID, req.params.id, wg.warnValue(), function(err, post) {
 						if (err) console.log(err);
 						newWarningInPost(req.params.pageID, post);
 						res.send({id: post.id, count: post.warnCount});
@@ -91,7 +91,7 @@ module.exports = function(app, events) {
 						console.log(err);
 						return res.send('oops');
 					}
-					PostPage.setWarnGroupForPost(req.params.pageID, post._id, wg, function(err, post) {
+					PostPage.setWarnGroupForPost(req.params.pageID, post._id, wg._id, wg.warnValue(), function(err, post) {
 						if (err) {
 							console.log(err);
 							return res.send('oops');
@@ -105,16 +105,18 @@ module.exports = function(app, events) {
 	});
 
 	app.get('/warnGroup/:groupID/:warnID/:pageID/confirm', userAuth.signedIn, function(req, res) {
-		WarnGroup.addConfirm(req.params.groupID, req.params.warnID, req.params.userID, function(err, wg) {
+		WarnGroup.addConfirm(req.params.groupID, req.params.warnID, req.user.id, function(err, wg) {
 			if (err) {
 				console.log(err);
 				return res.send('oops');
 			}
-			PostPage.incWarn(req.params.pageID, wg.postID, function(err, post) {
+			console.log(wg.warnValue());
+			PostPage.setWarnCountOnPost(req.params.pageID, wg.postID, wg.warnValue(), function(err, post) {
 				if (err) {
 					console.log(err);
 					return res.send('oops');
 				}
+				newWarningInPost(req.params.pageID, post);
 				res.send({id: post.id, count: post.warnCount});
 			});
 		});

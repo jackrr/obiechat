@@ -9,4 +9,15 @@ var warnGroupSchema = new Schema({
 	createdDate: {type: Date, default: Date.now}
 });
 
+warnGroupSchema.methods.warnValue = function() {
+	var score = 0;
+	_.each(this.warns, function(warn) {
+		score++;
+		if (warn.confirmedBy && warn.confirmedBy.length) {
+			score = score + warn.confirmedBy.length;
+		}
+	});
+	return score;
+};
+
 module.exports = warnGroupSchema;

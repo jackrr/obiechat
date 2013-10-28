@@ -10,7 +10,6 @@ module.exports = function(app, events) {
 			var slug = data.slug;
 			var date = Date.now();
 			var id = socket.id;
-			console.log(id);
 			if (!topics[slug]) {
 				topics[slug] = [];
 			}
@@ -39,8 +38,14 @@ module.exports = function(app, events) {
 				socket.emit('topicViewerCount', {count: topics[slug].length});
 			}
 
+			function newWarning(post) {
+				console.log('sending warn count');
+				socket.emit('warnCountChange', {id: post._id, count: post.warnCount});
+			}
+
 			events.on('topicChanged'+slug, sendPosts);
 			events.on('topicViewersChanged'+slug, sendViewerCount);
+			events.on('newWarning'+slug, newWarning);
 			sendViewerCount();
 			sendPosts();
 
@@ -48,6 +53,7 @@ module.exports = function(app, events) {
 				topics[slug] = _.without(topics[slug], id);
 				events.removeListener('topicChanged'+slug, sendPosts);
 				events.removeListener('topicViewersChanged'+slug, sendViewerCount);
+				events.removeListener('newWarning'+slug, newWarning);
 				events.emit('topicViewersChanged'+slug);
 			}
 

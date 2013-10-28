@@ -120,7 +120,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		slug = path.replace('/topic/show/', '');
 		$postContainer = $('.posts');
 		$postsAdded = $('.topicHeader .alerts .added');
-		postsView.initialize();
+		postsView.initialize(socket);
 		getPageNum();
 		watchForm();
 		watchTopic(slug, socket);

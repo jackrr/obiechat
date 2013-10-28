@@ -22,8 +22,8 @@ mixin warn(warn, groupID, post)
 			each type in warn.types
 				span.type= type
 		.description= warn.description
-		a(class='confirm', href='/warnGroup/#{groupID}/#{warn._id}/#{pageID}/confirm') Yes
-		a(class='deny', href='/warnGroup/#{groupID}/#{warn._id}/#{pageID}/deny') Ignore
+		a(class='confirm', href='/warnGroup/#{groupID}/#{warn._id}/#{post.pageID}/confirm') Yes
+		a(class='deny', href='/warnGroup/#{groupID}/#{warn._id}/#{post.pageID}/deny') Ignore
 
 mixin warnPreview(warn)
 	.warnPreview

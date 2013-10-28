@@ -8,6 +8,9 @@ WarnGroup.addWarn = function(groupID, warn, cb) {
 		if (err) return cb(err);
 		var oldWarn;
 		var createNew = true;
+		if (warn.description) {
+			warn.description = warn.description.trim();
+		}
 
 		// to prevent redundant warns on one post ...
 		_.each(wg.warns, function(w, index) {
@@ -19,7 +22,9 @@ WarnGroup.addWarn = function(groupID, warn, cb) {
 				}
 			});
 			if (append) {
-				w.description = w.description + '\nAND\n' + warn.description;
+				if (warn.description) {
+					w.description = w.description + '\nAND\n' + warn.description;
+				}
 				createNew = false;
 			}
 

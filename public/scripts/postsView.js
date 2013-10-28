@@ -7,8 +7,15 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 		notificationControl.initialize($notification);
 	}
 
-	function updateCount(data) {
-		$('#'+data.id + ' .warnCount').html(data.count);
+	function watchPostEvents(socket) {
+		socket.on('warnCountChange', function(data) {
+			updateCount(data.id, data.count);
+		});
+	}
+
+	function updateCount(id, count) {
+		console.log('updating count to' + count);
+		$('#' + id + ' .warnCount').html(count);
 	}
 
 	function warnInteracts(warnsHTML) {
@@ -32,26 +39,20 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 			e.preventDefault();
 			var $self = $(this);
 
-			if (!$(this).hasClass('fake')) {
 				$.get($(this).attr('href'), function(res) {
 					if (res.error) return notification(res.error);
 					$self.html('');
-					updateCount(res);
 				});
-			}
 		});
 
 		$warns.find('.deny').click(function(e) {
 			e.preventDefault();
 			var $self = $(this);
 
-			if (!$(this).hasClass('fake')) {
 				$.get($(this).attr('href'), function(res) {
 					if (res.error) return notification(res.error);
 					$self.html('');
-					updateCount(res);
 				});
-			}
 		});
 	}
 
@@ -65,7 +66,6 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 			$.post($(this).attr('action'), $(this).serialize(), function(res) {
 				if (res.error) return notification(res.error);
 				form.parent().remove();
-				updateCount(res);
 			});
 		});
 
@@ -85,9 +85,10 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 		});
 	}
 
-	function initialize() {
+	function initialize(socket) {
 		$warnRing = $('#warnRing');
 		handleWarns();
+		watchPostEvents(socket);
 	}
 
 	return {
