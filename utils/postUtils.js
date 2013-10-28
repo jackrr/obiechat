@@ -1,15 +1,16 @@
 var dateUtils = require('./dateUtils');
 var _ = require('underscore');
 
-function cleanPost(userID, post) {
+function cleanPost(post, userID, pageID) {
 	if (userID == post.creatorID) {
 		post.isTheirs = true;
 	}
+	post.pageID = pageID;
 }
 
-function cleanPosts(posts, userID) {
+function cleanPosts(posts, userID, pageID) {
 	_.each(posts, function(post) {
-		cleanPost(userID, post);
+		cleanPost(post, userID, pageID);
 	});
 }
 

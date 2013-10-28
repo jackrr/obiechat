@@ -44,6 +44,15 @@ html .main {
   top: 70px;
   width: 100%;
 }
+html #notifications {
+  position: fixed;
+  bottom: 0;
+}
+html #warnRing {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
 .header {
   top: 0px;
   height: 70px;
