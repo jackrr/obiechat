@@ -5,6 +5,13 @@ function signedIn(req, res, next) {
 	next();
 };
 
+function isSameUser(req, res, next) {
+	if (req.user.id != req.params.id) {
+		return res.redirect('/');
+	}
+	next();
+};
+
 function ajaxSignedIn(req, res, next) {
 	if (!req.user) {
 		return res.send(403, 'not signed in');
@@ -14,5 +21,6 @@ function ajaxSignedIn(req, res, next) {
 
 module.exports = {
 	signedIn: signedIn,
-	ajaxSignedIn: ajaxSignedIn
+	ajaxSignedIn: ajaxSignedIn,
+	isSameUser: isSameUser
 };
