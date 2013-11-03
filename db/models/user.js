@@ -8,6 +8,10 @@ User.all = function(cb) {
 	});
 };
 
+User.setNewPseudo = function(id, pseudo, cb) {
+	User.findOneAndUpdate({_id: id}, { $set: { 'name.pseudo': pseudo } }, cb);
+};
+
 User.findOrCreateByGoogleEmail = function(profile, cb) {
 	var email = profile.emails[0].value;
 	User.findOne({email: email}, function(err, user) {

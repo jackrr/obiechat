@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var _ = require('underscore');
+var async = require('async');
 var postPageSchema = require('../schema/postPageSchema');
 var PostPage = mongoose.model('PostPage', postPageSchema);
 
@@ -40,16 +41,16 @@ PostPage.setWarnGroupForPost = function(pageID, postID, wgID, count, cb) {
 	});
 };
 
-PostPage.confirmWarn = function(pageID, postID, warnID, userID, cb) {
-	// it is illegal to do double wildcards!
-	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID, 'posts.$.warns._id': warnID}, { $push: { 'posts.$.warns.$.confirmedBy': userID } }, function(err, page) {
-		if (err) return cb(err);
-		PostPage.findById(pageID, function(err, page) {
-			var post = findPostInPage(page, postID)
-			cb(null, post);
-		});
-	});
-};
+// PostPage.confirmWarn = function(pageID, postID, warnID, userID, cb) {
+// 	// it is illegal to do double wildcards!
+// 	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID, 'posts.$.warns._id': warnID}, { $push: { 'posts.$.warns.$.confirmedBy': userID } }, function(err, page) {
+// 		if (err) return cb(err);
+// 		PostPage.findById(pageID, function(err, page) {
+// 			var post = findPostInPage(page, postID)
+// 			cb(null, post);
+// 		});
+// 	});
+// };
 
 PostPage.denyWarn = function(pageID, postID, warnID, userID, cb) {
 	// right now not doing denies of warns
@@ -59,5 +60,27 @@ PostPage.denyWarn = function(pageID, postID, warnID, userID, cb) {
 		cb(null, findPostInPage(page, postID));
 	});
 };
+
+PostPage.updatePostsForUser = function(user, cb) {
+	// remove the body projection once this query is shown to work!
+	PostPage.find({ posts: { $elemMatch: { creatorID: user._id, creatorName: { $exists: true } } } }, function(err, pps) {
+		if (err) return cb(err);
+		var updateFunctions = [];
+		_.each(pps, function(pp) {
+			_.each(pp.posts, function(post) {
+				updateFunctions.push(function(callback) {
+					PostPage.findOneAndUpdate({ _id: pp._id, 'posts._id': post._id}, { $set: { 'posts.$.creatorName': user.displayName }}, function(err, pp) {
+						if (err) return callback(err);
+						callback();
+					});
+				});
+			});
+		});
+		console.log(updateFunctions.length);
+		async.waterfall(updateFunctions, function (err, result) {
+			cb(err);
+		});
+	});
+}
 
 module.exports = PostPage;

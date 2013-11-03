@@ -15,6 +15,8 @@ if (config.development) {
 
 module.exports = function(app) {
 	var User = app.db.User;
+	var PostPage = app.db.PostPage;
+
 	passport.use(new GoogleStrategy(googlePaths, function(identifier, profile, done) {
 		User.findOrCreateByGoogleEmail(profile, function(err, user) {
 			if (err) {
@@ -44,7 +46,7 @@ module.exports = function(app) {
 
 	app.get('/auth/google', passport.authenticate('google'));
 
-	app.get('/auth/google/return', passport.authenticate('google', { 
+	app.get('/auth/google/return', passport.authenticate('google', {
 		successRedirect: '/',
 		failureRedirect: '/splash'
 	}));
@@ -52,5 +54,35 @@ module.exports = function(app) {
 	app.get('/signOut', userAuth.signedIn, function(req, res) {
 		req.session.destroy();
 		res.redirect('/splash');
+	});
+
+	app.get('/user/:id', userAuth.isSameUser, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			if (err) {
+				console.log(err);
+			}
+			res.render('user', {user: user});
+		});
+	});
+
+	app.get('/user/:id/edit', userAuth.isSameUser, function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			if (err) {
+				console.log(err);
+			}
+			res.render('user', {user: user, edit: true});
+		});
+	});
+
+	app.post('/user/:id/editPseudo', userAuth.isSameUser, function(req, res) {
+		User.setNewPseudo(req.params.id, req.body.pseudo, function(err, user) {
+			if (err) {
+				console.log(err);
+			}
+			PostPage.updatePostsForUser(user, function(err) {
+				if (err) console.log(err);
+			});
+			res.render('user', {user: user});
+		});
 	});
 };

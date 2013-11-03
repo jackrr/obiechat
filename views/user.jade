@@ -1,0 +1,11 @@
+extends layout
+
+include mixins/userHelpers
+
+block content
+	-if (edit)
+		mixin displayUser(user)
+		mixin editForm(user)
+	-else
+		mixin displayUser(user)
+		mixin editLink(user)
