@@ -10,7 +10,10 @@ var userSchema = new Schema({
 	},
 //	email: {type: String, required: true, enum: permittedUsers.users}
 	email: {type: String, required: true}
+	// email: {type: String, required: true, match: /^[A-Z0-9._%+-]+@oberlin.edu/}
 });
+
+
 
 userSchema.virtual('displayName').get(function() {
 	if (this.name.pseudo) {
