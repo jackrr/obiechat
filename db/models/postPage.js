@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var _ = require('underscore');
+var async = require('async');
 var postPageSchema = require('../schema/postPageSchema');
 var PostPage = mongoose.model('PostPage', postPageSchema);
 
@@ -62,17 +63,24 @@ PostPage.denyWarn = function(pageID, postID, warnID, userID, cb) {
 
 PostPage.updatePostsForUser = function(user, cb) {
 	// remove the body projection once this query is shown to work!
-	PostPage.find({ posts: { $elemMatch: { creatorID: user._id, creatorName: { $exists: true } } } }, { _id: 1, 'posts.$._id': 1, 'posts.$.body': 1 }, function(err, pps) {
+	PostPage.find({ posts: { $elemMatch: { creatorID: user._id, creatorName: { $exists: true } } } }, function(err, pps) {
 		if (err) return cb(err);
-		return console.log(pps);
 		var updateFunctions = [];
 		_.each(pps, function(pp) {
-			updateFunctions.push(function(callback) {
-				PostPage.findOneAndUpdate({})
-			})
+			_.each(pp.posts, function(post) {
+				updateFunctions.push(function(callback) {
+					PostPage.findOneAndUpdate({ _id: pp._id, 'posts._id': post._id}, { $set: { 'posts.$.creatorName': user.displayName }}, function(err, pp) {
+						if (err) return callback(err);
+						callback();
+					});
+				});
+			});
+		});
+		console.log(updateFunctions.length);
+		async.waterfall(updateFunctions, function (err, result) {
+			cb(err);
 		});
 	});
-	cb();
 }
 
 module.exports = PostPage;
