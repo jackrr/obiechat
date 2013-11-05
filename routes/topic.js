@@ -7,7 +7,7 @@ module.exports = function(app, events) {
 	var User = app.db.User;
 
 	app.get('/topics', userAuth.signedIn, function(req, res) {
-		Topic.all(function(err, topics) {
+		Topic.previewsPage(1, function(err, topics) {
 			if(err) {
 				console.log(err);
 			}

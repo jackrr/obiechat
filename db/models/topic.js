@@ -6,9 +6,13 @@ var Topic = mongoose.model('Topic', topicSchema);
 var topicUtils = require('../../utils/topicUtils');
 var postUtils = require('../../utils/postUtils');
 var PostPage = require('./postPage');
+var TopicPopInfo = require('./topicPopInfo');
+var config = require('../../config.json');
+
 
 var pagingBlocked = {};
 var postQueues = {};
+var previewsLength = config.topicPreviewPageLength;
 
 function genSlug(str, cb) {
 	var maxSlugLen = 25;
@@ -61,6 +65,19 @@ Topic.all = function(cb) {
 	});
 };
 
+Topic.previewsPage = function(page, cb) {
+	Topic.find({}, {
+		_id: 1,
+		name: 1,
+		slug: 1,
+		createdDate: 1,
+		popularity: 1
+	}).sort('-popularity').skip((page-1)*previewsLength).limit(previewsLength).exec(function(err, previews) {
+		if (err) return cb(err);
+		cb(null, previews);
+	});
+};
+
 //TODO: update this to work with paging (what use is userID?)
 Topic.findBySlug = function(slug, userID, cb) {
 	Topic.find({slug: slug}, function(err, topics) {
@@ -73,13 +90,14 @@ Topic.findBySlug = function(slug, userID, cb) {
 };
 
 Topic.addPage = function(id, page, cb) {
-	Topic.findOneAndUpdate({_id: id}, { $push: { postPages: page._id } }, cb);
+	Topic.findOneAndUpdate({_id: id}, { $set: { lastActivity: Date.now() }, $push: { postPages: page._id } }, cb);
 };
 
 Topic.createNew = function(topic, cb) {
 	genSlug(topic.name, function(err, slug) {
 		if (err) return cb(err);
 		topic.slug = slug;
+		topic.lastActivity = Date.now();
 		topic.save(function(err) {
 			if (err) {
 				return cb(err);
@@ -217,6 +235,9 @@ Topic.addPostToTopic = function(slug, post, cb) {
 			if (err) {
 				return cb(err);
 			}
+			TopicPopInfo.incPostCount(topic._id, function(err, tpi) {
+				if (err) return console.log(err);
+			});
 			cb(null, true);
 		});
 	});

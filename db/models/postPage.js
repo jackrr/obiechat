@@ -7,7 +7,10 @@ var PostPage = mongoose.model('PostPage', postPageSchema);
 function findPostInPage(page, postID) {
 	var post;
 	_.each(page.posts, function(pagePost) {
-		if (pagePost._id.equals(postID)) post = pagePost;
+		if (pagePost._id.equals(postID)) {
+			post = pagePost;
+			post.topicID = page.topicID;
+		}
 	});
 	return post;
 };
@@ -76,7 +79,6 @@ PostPage.updatePostsForUser = function(user, cb) {
 				});
 			});
 		});
-		console.log(updateFunctions.length);
 		async.waterfall(updateFunctions, function (err, result) {
 			cb(err);
 		});

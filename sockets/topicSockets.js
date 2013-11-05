@@ -2,6 +2,7 @@ var _ = require('underscore');
 
 module.exports = function(app, events) {
 	var Topic = app.db.Topic;
+	var TopicPopInfo = app.db.TopicPopInfo;
 	var topics = {};
 
 	function addSocket(socket) {
@@ -15,6 +16,7 @@ module.exports = function(app, events) {
 			}
 			topics[slug].push(id);
 			events.emit('topicViewersChanged'+slug);
+
 
 			function sendPosts() {
 				Topic.findPostsSince(slug, socket.userID, date, function(err, posts) {
@@ -35,6 +37,10 @@ module.exports = function(app, events) {
 			}
 
 			function sendViewerCount() {
+				TopicPopInfo.setViewCount(slug, topics[slug].length, function(err, tpi) {
+					if (err) return console.log(err);
+					console.log("View count for topic ", tpi.slug, " set to: ", tpi.viewCount);
+				});
 				socket.emit('topicViewerCount', {count: topics[slug].length});
 			}
 

@@ -6,6 +6,7 @@ module.exports = function(app, events) {
 	var Warn = app.db.Warn;
 	var WarnGroup = app.db.WarnGroup;
 	var Topic = app.db.Topic;
+	var TopicPopInfo = app.db.TopicPopInfo;
 	var self = this;
 
 	function newWarningInPost(pageID, post) {
@@ -99,7 +100,12 @@ module.exports = function(app, events) {
 						newWarningInPost(req.params.pageID, post);
 						res.send({id: post.id, count: post.warnCount});
 					});
-				})
+				});
+
+				TopicPopInfo.incWarnCount(post.topicID, function(err, tpi) {
+					if (err) return console.log(err);
+					console.log("Warn value for topic ", tpi.slug, " set to: ", tpi.warnValue);
+				});
 			}
 		});
 	});
