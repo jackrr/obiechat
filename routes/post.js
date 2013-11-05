@@ -102,7 +102,7 @@ module.exports = function(app, events) {
 					});
 				});
 
-				TopicPopInfo.incWarnCount(post.topicID, function(err, tpi) {
+				TopicPopInfo.incWarnValue(post.topicID, function(err, tpi) {
 					if (err) return console.log(err);
 					console.log("Warn value for topic ", tpi.slug, " set to: ", tpi.warnValue);
 				});

@@ -5,6 +5,7 @@ var topicPopInfoSchema = new Schema({
 	topicID: Schema.Types.ObjectId,
 	slug: String,
 	lastPopularity: {type: Number, default: 0},
+	popularity: {type: Number, default: 0},
 	viewCount: {type: Number, default: 0},
 	postCount: {type: Number, default: 0},
 	warnValue: {type: Number, default: 0},

@@ -11,7 +11,7 @@ var User = require('./models/user');
 var PostPage = require('./models/postPage');
 var Warn = require('./models/warn');
 var WarnGroup = require('./models/warnGroup');
-var TopicPopInfo = require('./models/topicPopInfo')(Topic);
+var TopicPopInfo = require('./models/topicPopInfo');
 
 module.exports = {
 		Post: Post,

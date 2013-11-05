@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var _ = require('underscore');
 var async = require('async');
 var topicSchema = require('../schema/topicSchema');
+console.log('creating topic model');
 var Topic = mongoose.model('Topic', topicSchema);
 var topicUtils = require('../../utils/topicUtils');
 var postUtils = require('../../utils/postUtils');
@@ -93,6 +94,21 @@ Topic.addPage = function(id, page, cb) {
 	Topic.findOneAndUpdate({_id: id}, { $set: { lastActivity: Date.now() }, $push: { postPages: page._id } }, cb);
 };
 
+Topic.applyNewPops = function(pairs, cb) {
+	var updateFuncs = [];
+	_.each(pairs, function(tpi) {
+		updateFuncs.push(function(callback) {
+			Topic.findOneAndUpdate({_id: tpi.topicID}, { $set: { popularity: tpi.popularity } }, function(err, topic) {
+				if (err) return callback(err);
+				callback();
+			});
+		});
+	});
+	async.waterfall(updateFuncs, function(err, results) {
+		cb(err);
+	});
+};
+
 Topic.createNew = function(topic, cb) {
 	genSlug(topic.name, function(err, slug) {
 		if (err) return cb(err);
@@ -113,7 +129,12 @@ Topic.createNew = function(topic, cb) {
 					if (err) {
 						return cb(err);
 					}
-					cb(null, upTopic, newPage);
+					TopicPopInfo.create({topicID: upTopic._id, slug: upTopic.slug}, function(err, tpi){
+						if (err) {
+							return cb(err);
+						}
+						cb(null, upTopic, newPage);
+					});
 				});
 			});
 		});
