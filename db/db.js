@@ -11,6 +11,7 @@ var User = require('./models/user');
 var PostPage = require('./models/postPage');
 var Warn = require('./models/warn');
 var WarnGroup = require('./models/warnGroup');
+var TopicPopInfo = require('./models/topicPopInfo');
 
 module.exports = {
 		Post: Post,
@@ -18,5 +19,6 @@ module.exports = {
 		User: User,
 		PostPage: PostPage,
 		Warn: Warn,
-		WarnGroup: WarnGroup
+		WarnGroup: WarnGroup,
+		TopicPopInfo: TopicPopInfo
 };
