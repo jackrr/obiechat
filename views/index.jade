@@ -4,4 +4,5 @@ include mixins/topicHelpers
 
 block content
 	a(href='/topic/new') Create a topic
-	mixin topicPreviews(topics)
+	div(class="topicPreviewHolder infiniteScroll")
+		mixin topicPreviews(topics)

@@ -188,6 +188,7 @@ form[name=post] {
 }
 .topicPreviewHolder .topicPreview:hover {
   background-color: #88a65e;
+  cursor: pointer;
 }
 .topic {
   width: 800px;

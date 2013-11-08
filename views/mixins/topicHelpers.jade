@@ -5,9 +5,8 @@ mixin topicPreview(topic)
 		a(href='/topic/show/#{topic.slug}', class='topicViewLink') Open Topic
 
 mixin topicPreviews(topics)
-	div(class="topicPreviewHolder infiniteScroll")
-		each topic in topics
-			mixin topicPreview(topic)
+	each topic in topics
+		mixin topicPreview(topic)
 
 mixin topicHeader(topic)
 	.topicHeader

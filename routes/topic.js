@@ -15,6 +15,15 @@ module.exports = function(app, events) {
 		});
 	});
 
+	app.get('/topics/:page', userAuth.signedIn, function(req, res) {
+		Topic.previewsPage(req.params.page, function(err, topics) {
+			if(err) {
+				console.log(err);
+			}
+			res.render('partials/topicPreviews', {topics: topics});
+		});
+	});
+
 	app.get('/topic/new', userAuth.signedIn, function(req, res) {
 		// send form to create a topic
 		res.render('newTopic', {user: req.user});
