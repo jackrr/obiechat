@@ -6,5 +6,26 @@
 	"secret": "oa5bhei892sdkjl",
 	"sessionLength": 3600,
 	"postPageSize": 10,
-	"development": true	
+	"topicPreviewPageLength": 10,
+	"pop": {
+		"decayRate": 2,
+		"growthRate": 1,
+		"viewPercentage": 75,
+		"viewCeiling": 100,
+		"ageCats": {
+			"old": 400,
+			"year": 200,
+			"half-year": 100,
+			"month": 30,
+			"week": 20,
+			"day": 10,
+			"half-day": 8,
+			"quart-day": 5,
+			"hour": 3,
+			"half-hour": 2,
+			"quart-hour": 1
+		}
+	},
+
+	"development": true
 }

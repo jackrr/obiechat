@@ -7,11 +7,20 @@ module.exports = function(app, events) {
 	var User = app.db.User;
 
 	app.get('/topics', userAuth.signedIn, function(req, res) {
-		Topic.all(function(err, topics) {
+		Topic.previewsPage(1, function(err, topics) {
 			if(err) {
 				console.log(err);
 			}
 			res.render('topicList', {topics: topics, user: req.user});
+		});
+	});
+
+	app.get('/topics/:page', userAuth.signedIn, function(req, res) {
+		Topic.previewsPage(req.params.page, function(err, topics) {
+			if(err) {
+				console.log(err);
+			}
+			res.render('partials/topicPreviews', {topics: topics});
 		});
 	});
 
