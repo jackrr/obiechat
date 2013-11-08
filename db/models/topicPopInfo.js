@@ -57,10 +57,13 @@ function getPop(tpi) {
 
 function postWarnValue(postCount, warnValue) {
 	var pwRatio = 100 - config.pop.viewPercentage;
-	postCount = postCount || 1;
-	var pwValue = (postCount - (warnValue*warnValue))/ postCount;
+	var pwValue = (Math.sqrt(postCount) - warnValue)/config.pop.bigPostCount;
+	console.log(pwValue);
 	if (!pwValue || pwValue < 0) {
 		pwValue = 0;
+	}
+	if (pwValue > 1) {
+		pwValue = 1;
 	}
 	return pwValue * pwRatio;
 }
