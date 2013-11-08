@@ -59,7 +59,7 @@ function postWarnValue(postCount, warnValue) {
 	var pwRatio = 100 - config.pop.viewPercentage;
 	postCount = postCount || 1;
 	var pwValue = (postCount - (warnValue*warnValue))/ postCount;
-	if (pwValue < 0) {
+	if (!pwValue || pwValue < 0) {
 		pwValue = 0;
 	}
 	return pwValue * pwRatio;
