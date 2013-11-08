@@ -12,6 +12,7 @@
 		"growthRate": 1,
 		"viewPercentage": 75,
 		"viewCeiling": 100,
+		"bigPostCount": 100,
 		"ageCats": {
 			"old": 400,
 			"year": 200,
