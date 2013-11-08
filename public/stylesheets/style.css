@@ -178,6 +178,17 @@ html #warnRing {
 form[name=post] {
   text-align: right;
 }
+.topicPreviewHolder {
+  height: 500px;
+  width: 400px;
+  margin-left: 30px;
+}
+.topicPreviewHolder .topicPreview {
+  margin: 10px 0;
+}
+.topicPreviewHolder .topicPreview:hover {
+  background-color: #88a65e;
+}
 .topic {
   width: 800px;
   margin: 0 auto;

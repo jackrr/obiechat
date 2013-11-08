@@ -4,6 +4,11 @@ mixin topicPreview(topic)
 		.createdAt= topic.readableCreatedDate
 		a(href='/topic/show/#{topic.slug}', class='topicViewLink') Open Topic
 
+mixin topicPreviews(topics)
+	div(class="topicPreviewHolder infiniteScroll")
+		each topic in topics
+			mixin topicPreview(topic)
+
 mixin topicHeader(topic)
 	.topicHeader
 		.name= topic.name
