@@ -26,5 +26,8 @@
 			"half-hour": 2,
 			"quart-hour": 1
 		}
+	},
+	"warns": {
+			"warnThreshold": 5
 	}
 }

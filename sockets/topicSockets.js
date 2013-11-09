@@ -44,14 +44,23 @@ module.exports = function(app, events) {
 				socket.emit('topicViewerCount', {count: topics[slug].length});
 			}
 
+			function hidePost(post) {
+				app.render('partials/post', {post: post}, function(err, html) {
+					if (err) {
+						return console.log(err);
+					}
+					socket.emit('hidePost', {id: post._id, html: html});
+				});
+			}
+
 			function newWarning(post) {
-				console.log('sending warn count');
 				socket.emit('warnCountChange', {id: post._id, count: post.warnCount});
 			}
 
 			events.on('topicChanged'+slug, sendPosts);
 			events.on('topicViewersChanged'+slug, sendViewerCount);
 			events.on('newWarning'+slug, newWarning);
+			events.on('hidePost'+slug, hidePost);
 			sendViewerCount();
 			sendPosts();
 
@@ -60,6 +69,7 @@ module.exports = function(app, events) {
 				events.removeListener('topicChanged'+slug, sendPosts);
 				events.removeListener('topicViewersChanged'+slug, sendViewerCount);
 				events.removeListener('newWarning'+slug, newWarning);
+				events.removeListener('hidePost'+slug, hidePost);
 				events.emit('topicViewersChanged'+slug);
 			}
 

@@ -16,8 +16,18 @@ module.exports = function(app, events) {
 				if (err) return console.log(err);
 				events.emit('newWarning'+topic.slug, post);
 			});
-		})
+		});
 	};
+
+	function hidePost(pageID, post) {
+		PostPage.findById(pageID, function(err, page) {
+			if (err) return console.log(err);
+			Topic.findById(page.topicID, function(err, topic) {
+				if (err) return console.log(err);
+				events.emit('hidePost'+topic.slug, post);
+			});
+		});
+	}
 
 	app.get('/post/:pageID/:id/warn', userAuth.signedIn, function(req, res) {
 		PostPage.findPost(req.params.pageID, req.params.id, function(err, post) {
@@ -116,7 +126,6 @@ module.exports = function(app, events) {
 				console.log(err);
 				return res.send('oops');
 			}
-			console.log(wg.warnValue());
 			PostPage.setWarnCountOnPost(req.params.pageID, wg.postID, wg.warnValue(), function(err, post) {
 				if (err) {
 					console.log(err);
@@ -125,6 +134,15 @@ module.exports = function(app, events) {
 				newWarningInPost(req.params.pageID, post);
 				res.send({id: post.id, count: post.warnCount});
 			});
+			// this happens outside the client's request
+			if (wg.fullyWarned) {
+				PostPage.hidePost(req.params.pageID, wg.postID, function(err, post) {
+					if (err) {
+						return console.log(err);
+					}
+					hidePost(req.params.pageID, post);
+				});
+			}
 		});
 	});
 

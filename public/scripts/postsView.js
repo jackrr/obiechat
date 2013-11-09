@@ -14,7 +14,6 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 	}
 
 	function updateCount(id, count) {
-		console.log('updating count to' + count);
 		$('#' + id + ' .warnCount').html(count);
 	}
 
@@ -73,7 +72,6 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 	}
 
 	function handleWarns() {
-		console.log('handling warns');
 		$('.warnArea .warnLink').click(function(e) {
 			e.preventDefault();
 

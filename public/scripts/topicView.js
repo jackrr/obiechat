@@ -3,9 +3,20 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 
 	function postsAdded() {
 		$postsAdded.html('New Posts in Topic!');
-		if (!($postContainer[0].scrollHeight > $postContainer.height()) || $postContainer.scrollTop() > $postContainer.height()) {
+		$postsAdded.click(function() {
+			scrollTopic('bottom');
+			$('textarea').focus();
+		});
+		postsView.handleWarns();
+		if (($postContainer[0].scrollHeight - ($postContainer.height() + $postContainer.scrollTop())) < (5*$('.postContainer').height())) {
 			scrollTopic('bottom');
 		}
+	}
+
+	function watchHides(socket) {
+		socket.on('hidePost', function(data) {
+			$('#' + data.id).replaceWith(data.html);
+		});
 	}
 
 	function watchTopic(slug, socket) {
@@ -112,6 +123,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 			}
 			if (($postContainer.scrollTop() + $postContainer.height()) == $postContainer[0].scrollHeight) {
 				$postsAdded.html('');
+				$postsAdded.unbind('click');
 			}
 		});
 	}
@@ -124,6 +136,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		getPageNum();
 		watchForm();
 		watchTopic(slug, socket);
+		watchHides(socket);
 	}
 
 	return {

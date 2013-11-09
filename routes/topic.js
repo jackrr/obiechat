@@ -40,9 +40,6 @@ module.exports = function(app, events) {
 			var user = users[0];
 			var topic = new Topic(req.body);
 			topic.creatorID = user._id;
-			if (topic.owned) {
-				topic.creatorName = user.displayName;
-			}
 			Topic.createNew(topic, function(err, topic) {
 				if (err) {
 					console.log(err);
