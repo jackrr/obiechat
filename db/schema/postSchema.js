@@ -9,6 +9,7 @@ var postSchema = new Schema({
 	createdDate: {type: Date, default: Date.now},
 	warnGroup: Schema.Types.ObjectId,
 	warnCount: Number,
+	hidden: Boolean,
 
 	// non-persisted data
 	isTheirs: Boolean,

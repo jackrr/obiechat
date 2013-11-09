@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var _ = require('underscore');
 var Warn = require('./warnSchema');
+var config = require('../../config.json');
 
 var warnGroupSchema = new Schema({
 	postID: {type: Schema.Types.ObjectId, required: true, unique: true},
@@ -19,5 +20,9 @@ warnGroupSchema.methods.warnValue = function() {
 	});
 	return score;
 };
+
+warnGroupSchema.virtual('fullyWarned').get(function() {
+	return (this.warnValue() > config.warns.warnThreshold);
+});
 
 module.exports = warnGroupSchema;

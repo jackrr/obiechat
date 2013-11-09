@@ -30,6 +30,13 @@ PostPage.findPost = function(pageID, postID, cb) {
 	})
 };
 
+PostPage.hidePost = function(pageID, postID, cb) {
+	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID}, { $set: {'posts.$.hidden': true } }, function(err, page) {
+		if (err) return cb(err);
+		cb(null, findPostInPage(page, postID));
+	});
+};
+
 PostPage.setWarnCountOnPost = function(pageID, postID, count, cb) {
 	PostPage.findOneAndUpdate({_id: pageID, 'posts._id': postID}, { $set: { 'posts.$.warnCount': count } }, function(err, page) {
 		if (err) return cb(err);

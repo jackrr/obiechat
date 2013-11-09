@@ -13,6 +13,12 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		}
 	}
 
+	function watchHides(socket) {
+		socket.on('hidePost', function(data) {
+			$('#' + data.id).replaceWith(data.html);
+		});
+	}
+
 	function watchTopic(slug, socket) {
 		socket.emit('watchTopic', {slug: slug});
 
@@ -130,6 +136,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		getPageNum();
 		watchForm();
 		watchTopic(slug, socket);
+		watchHides(socket);
 	}
 
 	return {
