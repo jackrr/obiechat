@@ -21,6 +21,7 @@ var Topic = db.Topic, User = db.User, Post = db.Post;
 
 run(function() {
 	console.log('done');
+	process.exit(code=0);
 });
 
 function createUsers(cb) {
@@ -51,8 +52,6 @@ function createUsers(cb) {
 function createTopics(cb) {
 	var userIndex = 0;
 	var anon = true;
-	var owned = true;
-	lastSwitched = 'anon';
 
 	function createTopic(cb2) {
 		var fields = {
@@ -61,7 +60,6 @@ function createTopics(cb) {
 			name: randomString('topic ', 6),
 			description: randomString('', 20),
 			anonymous: anon,
-			owned: owned
 		};
 		var newTopic = new Topic(fields);
 		Topic.createNew(newTopic, function(err, topic) {
@@ -74,13 +72,7 @@ function createTopics(cb) {
 
 	function controller() {
 		if (topics.length < topicCount) {
-			if (lastSwitched == 'anon') {
-				owned = !owned;
-				lastSwitched = 'owned'
-			} else {
-				anon = !anon;
-				lastSwitched = 'anon';
-			}
+			anon = !anon;
 			userIndex = (userIndex+1)%userCount;
 			createTopic(controller);
 		} else {

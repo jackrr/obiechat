@@ -12,10 +12,6 @@ mixin topicHeader(topic)
 	.topicHeader
 		.name= topic.name
 		.createdAt Created #{topic.readableCreatedDate}
-		- if (topic.owned)
-			.owned
-				span.label Created By:
-				span.ownerName= topic.creatorName
 		- if (topic.anonymous)
 			.anonymous Anonymous
 		- if (topic.description)
