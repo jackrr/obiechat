@@ -27,6 +27,8 @@
 			"quart-hour": 1
 		}
 	},
-
+	"warns": {
+			"warnThreshold": 5
+	},
 	"development": true
 }

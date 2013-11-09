@@ -2,23 +2,30 @@ include formHelpers
 
 mixin postView(post)
 	div(class='postContainer' id=post._id)
-		- if (post.isTheirs)
-			div(class='post mine')
+		- if (post.hidden)
+			div(class='post hidden')
 				.postInner
-					span.body= post.body
+					span.body This post has been hidden due to negative user feedback.
 					.dateContainer
 						span.postedAt= post.readableCreatedDate
-		- else
-			div(class='post other')
-				.postInner
-					- if (post.creatorName)
-						span.author= post.creatorName
-					span.body= post.body
-					.dateContainer
-						span.postedAt= post.readableCreatedDate
-					.warnArea
-						a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') Warn Post
-						span.warnCount= post.warnCount
+		-else
+			- if (post.isTheirs)
+				div(class='post mine')
+					.postInner
+						span.body= post.body
+						.dateContainer
+							span.postedAt= post.readableCreatedDate
+			- else
+				div(class='post other')
+					.postInner
+						- if (post.creatorName)
+							span.author= post.creatorName
+						span.body= post.body
+						.dateContainer
+							span.postedAt= post.readableCreatedDate
+						.warnArea
+							a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') Warn Post
+							span.warnCount= post.warnCount
 
 mixin postPageView(postPage)
 	each post in postPage.posts
