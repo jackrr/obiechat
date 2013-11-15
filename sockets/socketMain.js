@@ -1,6 +1,4 @@
 var usersOnline = 0;
-var EventEmitter = require('events').EventEmitter;
-var events = new EventEmitter;
 
 var sockets = {};
 
@@ -8,21 +6,33 @@ function sendOnlineCount(socket) {
 	socket.emit('onlineCount', {count: usersOnline});
 }
 
-function watchOnlineCount(socket) {
-	sendOnlineCount(socket);
-	sockets[socket.id] = function() {
+function sendNotification(socket, data) {
+	socket.emit('notification', data);
+}
+
+
+
+function initialize(app, io, events) {
+	var topicSockets = require('./topicSockets')(app, events);
+
+	function watchOnlineCount(socket) {
 		sendOnlineCount(socket);
-	};
-	events.on('usersChanged', sockets[socket.id]);
-}
+		var functionHolder = sockets[socket.id] = {};
+		functionHolder.onlineCount = function() {
+			sendOnlineCount(socket);
+		};
+		functionHolder.sendNotification = function(data) {
+			sendNotification(socket, data);
+		};
+		events.on('usersChanged', functionHolder.onlineCount);
+		events.on('newNotification', functionHolder.sendNotification);
+	}
 
-function stopWatchingOnlineCount(id) {
-	events.removeListener('usersChanged', sockets[id]);
-	delete sockets[id];
-}
-
-function initialize(app, io, globalEvents) {
-	var topicSockets = require('./topicSockets')(app, globalEvents.topics);
+	function stopWatchingOnlineCount(id) {
+		events.removeListener('usersChanged', sockets[id].onlineCount);
+		events.removeListener('newNotification', sockets[id].sendNotification)
+		delete sockets[id];
+	}
 
 	io.sockets.on('connection', function(socket) {
 		socket.userID = socket.handshake.session.passport.user;

@@ -39,9 +39,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 	}
 
 	function notification(message) {
-		var $notification = $(message);
-		$('#notifications').append($notification);
-		notificationControl.initialize($notification);
+		notificationControl.newError(message);
 	}
 
 	function watchForm() {
@@ -49,8 +47,8 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 			e.preventDefault();
 
 			$.post($(this).attr('action'), $(this).serialize(), function(res) {
-				if (res.error) {
-					notification(res.error);
+				if (res.empty) {
+					$(e.target).find('textarea').val("");
 				} else {
 					$(e.target).find('textarea').val("");
 				}
