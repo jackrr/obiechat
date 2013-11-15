@@ -23,12 +23,13 @@ postSchema.pre('save', function(next) {
 
 	// clean up the body text
 	this.body = this.body.trim();
-	if (!this.body || !this.body.length) {
-		next(new Error('Empty posts not allowed'));
-	}
 	this.body.replace(/\s+/g, ' ');
 	this.body = this.body.replace(/\r+/g, '');
 	this.body.replace(/\n\n+/g, '\n\n');
+	if (this.body || !this.body.length) {
+		console.log('empty post!');
+		next(new Error('Empty posts not allowed'));
+	}
 	next();
 });
 

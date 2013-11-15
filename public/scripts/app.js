@@ -1,4 +1,4 @@
-define(['jquery', './topicView', './socketModule', './topicListView'], function($, topicView, socketModule, topicListView) {
+define(['jquery', './topicView', './socketModule', './topicListView', './notificationController'], function($, topicView, socketModule, topicListView, notificationControl) {
 	var socket = socketModule.newSocket();
 
 	// if viewing a topic, load the view
@@ -12,4 +12,8 @@ define(['jquery', './topicView', './socketModule', './topicListView'], function(
 	if (topicList) {
 		topicListView.initialize();
 	}
+
+	socket.on('notification', function(data) {
+		notificationControl[data.type] ? notificationControl[data.type](data.html) : notificationControl.newNotification(data.html);
+	});
 });

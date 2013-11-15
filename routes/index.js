@@ -8,8 +8,7 @@ module.exports = function(app) {
 
 	app.get('/', userAuth.signedIn, function(req, res) {
 		app.db.Topic.previewsPage(1, function(err, topics) {
-			if (err) console.log(err);
-			console.log(topics);
+			if (err) return res.send(500);
 			res.render('index', { topics: topics, user: req.user });
 		});
 	});

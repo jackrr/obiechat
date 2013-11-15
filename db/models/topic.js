@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var _ = require('underscore');
 var async = require('async');
 var topicSchema = require('../schema/topicSchema');
-console.log('creating topic model');
 var Topic = mongoose.model('Topic', topicSchema);
 var topicUtils = require('../../utils/topicUtils');
 var postUtils = require('../../utils/postUtils');
