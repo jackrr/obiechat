@@ -7,7 +7,7 @@ function sendOnlineCount(socket) {
 }
 
 function sendNotification(socket, data) {
-	socket.emit('newNotification', data);
+	socket.emit('notification', data);
 }
 
 

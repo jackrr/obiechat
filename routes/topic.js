@@ -46,7 +46,7 @@ module.exports = function(app, events) {
 				if (err) {
 					return returnError(req, res, 400, "Try again", err);
 				}
-				notifyAll('topic', {subject: 'New topic created', slug: topic.slug, name: topic.name});
+				notifyAll('topicNotification', {subject: 'New topic created', slug: topic.slug, name: topic.name});
 				res.redirect('/topic/show/' + topic.slug);
 			});
 		});

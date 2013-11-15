@@ -17,8 +17,15 @@ define(['jquery', 'jquery.autosize'], function($) {
 		watchForEvents($element);
 	};
 
+	var topic = function(html) {
+		var $element = $(html);
+		$('#notifications .topic').append($element);
+		watchForEvents($element);
+	}
+
 	return {
 		newError: error,
-		newNotification: general
+		newNotification: general,
+		topicNotification: topic
 	};
 });
