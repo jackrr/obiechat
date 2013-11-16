@@ -213,6 +213,11 @@ form[name=post] textarea {
   width: 400px;
   margin-left: 30px;
 }
+@media screen and (max-height: 700px) {
+  .topicPreviewHolder {
+    height: 400px;
+  }
+}
 .topicPreviewHolder .topicPreview {
   margin: 10px 0;
 }

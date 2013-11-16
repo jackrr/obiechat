@@ -3,6 +3,16 @@ extends layout
 include mixins/topicHelpers
 
 block content
-	a(href='/topic/new') Create a topic
-	div(class="topicPreviewHolder infiniteScroll")
-		mixin topicPreviews(topics)
+	#topicHolder
+		.topic
+			.topicHeaderContainer
+			div(class='posts infiniteScroll')
+
+	#topicBrowser
+		a(href='/topic/new', class='newTopicLink') Create a topic
+		.topicPreviewContainer
+			div(class="topicPreviewHolder infiniteScroll")
+				mixin topicPreviews(topics)
+		.tab
+			span(class='symbol open') -
+			span(class='label') Topic Browser

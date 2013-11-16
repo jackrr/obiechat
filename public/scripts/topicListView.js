@@ -1,9 +1,22 @@
 define(['jquery', 'underscore', 'window'], function($, _, window) {
-	var page, $previews;
+	var page, $previews, $header, $posts;
+
+	function changeTopic(href) {
+		$.get(href, function(res) {
+			$posts.html(res.posts);
+			$header.html(res.topicHeader);
+			console.log(res);
+		});
+	}
 
 	function watchTopicPreviewsForClicks() {
+		$('.topicViewLink').click(function(e) {
+			e.preventDefault();
+			changeTopic($(e.delegateTarget).attr('href')); // make listener below get called
+		});
+
 		$('.topicPreview').click(function(e) {
-			window.location.href = $(e.delegateTarget).find('.topicViewLink').attr('href');
+			changeTopic($(e.delegateTarget).find('.topicViewLink').attr('href'));
 		});
 	}
 
@@ -27,6 +40,8 @@ define(['jquery', 'underscore', 'window'], function($, _, window) {
 
 	function initialize() {
 		$previews = $('.topicPreviewHolder');
+		$posts = $('#topicHolder .posts');
+		$header = $('#topicHolder .topicHeaderContainer');
 		page = 2;
 		watchTopicPreviewsForClicks();
 		fillAndWatchPreviewArea();

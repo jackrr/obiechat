@@ -1,5 +1,8 @@
 .topicPreviewHolder {
 	height: @topicPreviewHolderHeight;
+	@media screen and (max-height: @maxHeight) {
+		height: @topicPreviewHolderHeightSmall;
+	}
 	width: 400px;
 	margin-left: 30px;
 
@@ -14,8 +17,6 @@
 }
 
 .topic {
-
-
 
 	.topicHeader {
 		width: @topicBrowserWidth;
