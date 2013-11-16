@@ -13,6 +13,7 @@ module.exports = function(app, events) {
 			var id = socket.id;
 			if (!topics[slug]) {
 				topics[slug] = [];
+				console.log('adding listener');
 				events.on('topicViewersChanged'+slug, saveViewerCount);
 			}
 			topics[slug].push(id);

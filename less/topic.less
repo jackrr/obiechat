@@ -14,26 +14,38 @@
 }
 
 .topic {
-	width: @topicWidth;
-	margin: 0 auto;
+
+
 
 	.topicHeader {
+		width: @topicBrowserWidth;
+		@media screen and (max-width: @maxWidth) {
+			width: @topicBrowserWidthSmall;
+		}
 		float: left;
-		width: inherit;
 		color: @topicHeaderText;
 		background-color: @topicHeaderBackground;
 	}
 
-	.posts {
-		float: left;
-		width: inherit;
-		background-color: @topicBackground;
-		height: @topicPostsHeight;
-	}
+	.topicMain {
+			float: left;
+			width: @topicWidth;
+			@media screen and (max-width: @maxWidth) {
+				width: @topicWidthSmall;
+			}
 
-	.postFormArea {
-		float: left;
-		width: inherit;
-		background-color: @white;
+		.posts {
+			background-color: @topicBackground;
+			height: @topicPostsHeight;
+			@media screen and (max-height: @maxHeight) {
+				height: @topicPostsHeightSmall;
+			}
+		}
+
+		.postFormArea {
+			float: left;
+			width: inherit;
+			background-color: @white;
+		}
 	}
 }

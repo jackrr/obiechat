@@ -4,10 +4,11 @@ include mixins/postHelpers
 include mixins/topicHelpers
 
 block content
-	div.topic
+	.topic
 		mixin topicHeader(topic)
-		div(class='posts infiniteScroll')
-			if postPage
-				mixin postPageView(postPage)
-		div.postFormArea
-			mixin postForm(topic.slug)
+		.topicMain
+			div(class='posts infiniteScroll')
+				if postPage
+					mixin postPageView(postPage)
+			div.postFormArea
+				mixin postForm(topic.slug)

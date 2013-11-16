@@ -5,24 +5,29 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(data-main='/scripts/main.js', src='/components/requirejs/require.js')
 	body
-		div.header
+		.header
 			a(href='/', class='logo') obiechat
 			- if (user && user.name)
 				div(class='userArea headerRight')
-					div.userName
+					.userName
 						span.label Posting as:
 						span.name
 							a(href='/user/#{user._id}' class='userProfileLink')= user.displayName
 					a(href='/signOut', class='signOut btn') Sign Out
 			- else
 				div(class='buttons headerRight')
-					div.join
+					.join
 						a(href='/join', class='join btn') Join Now
-					div.signIn
+					.signIn
 						a(href='/auth/google', class='signIn btn') Sign In
-			div#usersOnline
-		div.main
+			#usersOnline
+		.main
 			block content
+		#topicBrowser
+			.topicPreviewContainer
+			.tab
+				span(class='symbol open') -
+				span(class='label') Topic Browser
 		#notifications
 			.general
 			.errors
