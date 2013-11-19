@@ -81,7 +81,10 @@ module.exports = function(app, events) {
 				if (err) return returnError(req, res, 500, "Render error", err);
 				app.render('partials/postPage', {page: page, user: req.user}, function(err, posts) {
 					if (err) return returnError(req, res, 500, "Render error", err);
-					res.send({ topicHeader: topicHeader, posts: posts });
+					app.render('partials/postPageForm', {slug: topic.slug}, function(err, postForm) {
+						if (err) return returnError(req, res, 500, "Render error", err);
+						res.send({ topicHeader: topicHeader, posts: posts, postForm: postForm });
+					});
 				});
 			});
 		});

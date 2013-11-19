@@ -1,11 +1,11 @@
 define(['jquery', 'underscore', 'window'], function($, _, window) {
-	var page, $previews, $header, $posts;
+	var page, $previews, $header, $posts, $formArea;
 
 	function changeTopic(href) {
 		$.get(href, function(res) {
 			$posts.html(res.posts);
 			$header.html(res.topicHeader);
-			console.log(res);
+			$formArea.html(res.postForm);
 		});
 	}
 
@@ -42,6 +42,7 @@ define(['jquery', 'underscore', 'window'], function($, _, window) {
 		$previews = $('.topicPreviewHolder');
 		$posts = $('#topicHolder .posts');
 		$header = $('#topicHolder .topicHeaderContainer');
+		$formArea = $('.topicMain .postFormArea');
 		page = 2;
 		watchTopicPreviewsForClicks();
 		fillAndWatchPreviewArea();
