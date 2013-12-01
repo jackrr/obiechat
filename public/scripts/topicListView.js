@@ -1,5 +1,5 @@
 define(['jquery', 'underscore', 'window', './topicView'], function($, _, window, topicView) {
-	var page, $previews, $header, $posts, $formArea, socket;
+	var page, $previews, $header, $posts, $formArea, $listToggle, socket;
 
 	function changeTopic(href) {
 		$.get(href, function(res) {
@@ -41,15 +41,26 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		});
 	}
 
+	function watchToggle() {
+		$listToggle.click(function() {
+			$('.previewsAndCreateRegion').toggle();
+			$listToggle.find('.symbol').toggleClass('open');
+			$listToggle.find('.symbol').html('+');
+			$listToggle.find('.open').html('-');
+		});
+	}
+
 	function initialize(the_socket) {
 		$previews = $('.topicPreviewHolder');
 		$posts = $('#topicHolder .posts');
 		$header = $('#topicHolder .topicHeaderContainer');
 		$formArea = $('.topicMain .postFormArea');
+		$listToggle = $('#topicListToggle');
 		page = 2;
 		socket = the_socket;
 		watchTopicPreviewsForClicks();
 		fillAndWatchPreviewArea();
+		watchToggle();
 	}
 
 	return {

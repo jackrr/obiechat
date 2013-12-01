@@ -11,10 +11,11 @@ block content
 				div.postFormArea
 
 	#topicBrowser
-		a(href='/topic/new', class='newTopicLink') New Topic
-		.topicPreviewContainer
-			div(class="topicPreviewHolder infiniteScroll")
-				mixin topicPreviews(topics)
-		.tab
+		.previewsAndCreateRegion
+			a(href='/topic/new', class='newTopicLink') New Topic
+			.topicPreviewContainer
+				div(class="topicPreviewHolder infiniteScroll")
+					mixin topicPreviews(topics)
+		div(class='tab', id='topicListToggle')
 			span(class='symbol open') -
 			span(class='label') Topic Browser

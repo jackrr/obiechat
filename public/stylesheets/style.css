@@ -71,7 +71,13 @@ html #topicBrowser .tab span {
   display: inline-block;
 }
 html #topicBrowser .tab .symbol {
-  margin-right: 20px;
+  content: '+';
+}
+html #topicBrowser .tab .symbol.open {
+  content: '-';
+}
+html #topicBrowser .tab .label {
+  padding-left: 20px;
 }
 html #notifications {
   position: fixed;
