@@ -19,11 +19,7 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 
 	function warnInteracts(warnsHTML) {
 		var $warns = $(warnsHTML);
-		$warnRing.append($warns);
-
-		$warns.children('.close').click(function(e) {
-			$(this).parent().remove();
-		});
+		showWarnRing($warns);
 
 		$warns.find('.newWarning .warnLink').click(function(e) {
 			e.preventDefault();
@@ -40,31 +36,52 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 
 				$.get($(this).attr('href'), function(res) {
 					if (res.error) return notification(res.error);
-					$self.html('');
+					hideWarnRing();
 				});
 		});
 
 		$warns.find('.deny').click(function(e) {
 			e.preventDefault();
 			var $self = $(this);
+			hideWarnRing();
 
-				$.get($(this).attr('href'), function(res) {
-					if (res.error) return notification(res.error);
-					$self.html('');
-				});
+				// $.get($(this).attr('href'), function(res) {
+				// 	if (res.error) return notification(res.error);
+				// 	hideWarnRing();
+				// });
 		});
+	}
+
+	function showWarnRing(content) {
+		$('.header').addClass('fade');
+		$('.main').addClass('fade');
+		$('#cover').show();
+
+		$warnRing.html(content);
+		$('#cover').click(function() {
+			hideWarnRing();
+		});
+	}
+
+	function hideWarnRing() {
+		$warnRing.html('');
+		$('#cover').hide();
+		$('.header').removeClass('fade');
+		$('.main').removeClass('fade');
 	}
 
 	function warnForm(warnForm) {
 		var $warn = $(warnForm);
-		$warnRing.append($warn);
+
+		showWarnRing($warn);
+
 		$warn.children('form[name=warn]').submit(function(e) {
 			e.preventDefault();
 			var form = $(this);
 
 			$.post($(this).attr('action'), $(this).serialize(), function(res) {
 				if (res.error) return notification(res.error);
-				form.parent().remove();
+				hideWarnRing();
 			});
 		});
 

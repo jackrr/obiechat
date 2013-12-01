@@ -38,6 +38,7 @@ html {
 			line-height: 26px;
 			background-color: @red;
 			color: @white;
+			cursor: pointer;
 
 			span {
 				vertical-align: middle;
@@ -61,8 +62,11 @@ html {
 
  	#warnRing {
  		position: fixed;
- 		bottom: 0;
- 		right: 0;
+ 		width: 400px;
+ 		left: 50%;
+ 		margin-left: -200px;
+ 		top: 200px;
+ 		z-index: 11;
  	}
  }
 
@@ -167,6 +171,20 @@ html {
 	.visitor {
 		margin: 10px;
 	}
+}
+
+.fade {
+	opacity:0.3;
+	filter:alpha(opacity=30); /* For IE8 and earlier */
+}
+
+#cover {
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: none;
+	z-index: 10;
 }
 
 /*

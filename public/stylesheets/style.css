@@ -65,16 +65,11 @@ html #topicBrowser .tab {
   line-height: 26px;
   background-color: #8c2318;
   color: #ffffff;
+  cursor: pointer;
 }
 html #topicBrowser .tab span {
   vertical-align: middle;
   display: inline-block;
-}
-html #topicBrowser .tab .symbol {
-  content: '+';
-}
-html #topicBrowser .tab .symbol.open {
-  content: '-';
 }
 html #topicBrowser .tab .label {
   padding-left: 20px;
@@ -85,8 +80,11 @@ html #notifications {
 }
 html #warnRing {
   position: fixed;
-  bottom: 0;
-  right: 0;
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  top: 200px;
+  z-index: 11;
 }
 .header {
   top: 0px;
@@ -167,6 +165,20 @@ a:hover {
 }
 .splash .visitor {
   margin: 10px;
+}
+.fade {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  /* For IE8 and earlier */
+
+}
+#cover {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: none;
+  z-index: 10;
 }
 /*
  * Scrolling
@@ -286,4 +298,66 @@ form[name=post] textarea {
   float: left;
   width: inherit;
   background-color: #ffffff;
+}
+#warnRing {
+  background-color: #ffffff;
+}
+#warnRing .warnContainer {
+  border: 2px solid #8c2318;
+  padding: 10px;
+}
+#warnRing .warnContainer .creator {
+  margin: 4px;
+}
+#warnRing .warnContainer .creator .postBy {
+  margin-right: 4px;
+}
+#warnRing .warnContainer .body {
+  line-height: 22px;
+}
+#warnRing .warnContainer form[name=warn] {
+  margin-top: 10px;
+}
+#warnRing .warnContainer form[name=warn] .types {
+  margin: 10px 0;
+}
+#warnRing .warnContainer form[name=warn] .types .checkbox {
+  margin-left: 10px;
+  margin-right: 16px;
+  display: inline-block;
+}
+#warnRing .warnContainer form[name=warn] .types .other {
+  display: block;
+  margin-left: 26px;
+}
+#warnRing .warnContainer form[name=warn] .description {
+  text-align: center;
+}
+#warnRing .warnContainer form[name=warn] .description textarea {
+  width: 90%;
+  height: 50px;
+}
+#warnRing .warnContainer .warn div {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+#warnRing .warnContainer .warn .typesArea .question {
+  margin-right: 4px;
+}
+#warnRing .warnContainer .warn .links a {
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+  padding: 10px;
+  background-color: #8c2318;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+}
+#warnRing .warnContainer .warn .links .confirm {
+  float: right;
+  margin-right: 20px;
+}
+#warnRing .warnContainer .warn .links .deny {
+  margin-left: 20px;
 }

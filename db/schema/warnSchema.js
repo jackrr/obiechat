@@ -26,4 +26,27 @@ warnSchema.methods.confirmedByUser = function(userID) {
 	return !(_.indexOf(this.confirmedBy, userID) < 0);
 }
 
+var warnTypes = {persAttack: 'personalAttack', discriminatory: 'Discriminatory', disclosure: 'Disloses secure information'}
+
+warnSchema.virtual('prettyTypes').get(function() {
+	var pt = '';
+	var niceType;
+	var self = this;
+	_.each(this.types, function(type, index) {
+		niceType = warnTypes[type] || type;
+		if (index == (self.types.length - 1)) {
+			if (index > 1) {
+				pt = pt + ', and/or ' + niceType;
+			} else {
+				pt = pt + ' and/or ' + niceType;
+			}
+		} else if (index === 0) {
+			pt = niceType;
+		} else {
+			pt = pt + ', ' + niceType;
+		}
+	});
+	return pt;
+});
+
 module.exports = warnSchema;
