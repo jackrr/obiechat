@@ -49,19 +49,29 @@ html #topicBrowser {
   bottom: 0;
   left: 0;
   width: 450px;
+  background-color: #ffffff;
+}
+@media screen and (max-width: 1300px) {
+  html #topicBrowser {
+    width: 300px;
+  }
 }
 html #topicBrowser .tab {
   position: relative;
-  height: 20px;
+  height: 40px;
   bottom: 0px;
+  text-align: center;
+  font-size: 26px;
+  line-height: 26px;
+  background-color: #8c2318;
+  color: #ffffff;
+}
+html #topicBrowser .tab span {
+  vertical-align: middle;
+  display: inline-block;
 }
 html #topicBrowser .tab .symbol {
-  position: relative;
-  left: 0;
-}
-html #topicBrowser .tab .label {
-  position: relative;
-  right: 0;
+  margin-right: 20px;
 }
 html #notifications {
   position: fixed;
@@ -208,20 +218,32 @@ a:hover {
 form[name=post] textarea {
   width: 300px;
 }
-.topicPreviewHolder {
+#topicBrowser .newTopicLink {
+  display: inline-block;
+  background-color: #dee4f6;
+  width: 80px;
+  padding: 4px;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder {
   height: 600px;
-  width: 400px;
   margin-left: 30px;
 }
 @media screen and (max-height: 700px) {
-  .topicPreviewHolder {
+  #topicBrowser .topicPreviewContainer .topicPreviewHolder {
     height: 400px;
   }
 }
-.topicPreviewHolder .topicPreview {
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
   margin: 10px 0;
 }
-.topicPreviewHolder .topicPreview:hover {
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
+  font-style: italic;
+  text-decoration: none;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink:hover {
+  color: #8c2318;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview:hover {
   background-color: #88a65e;
   cursor: pointer;
 }

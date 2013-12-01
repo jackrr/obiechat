@@ -1,20 +1,45 @@
-.topicPreviewHolder {
-	height: @topicPreviewHolderHeight;
-	@media screen and (max-height: @maxHeight) {
-		height: @topicPreviewHolderHeightSmall;
+#topicBrowser {
+
+	.newTopicLink {
+		display: inline-block;
+		background-color: @lightblue;
+		width: 80px;
+		padding: 4px;
 	}
-	width: 400px;
-	margin-left: 30px;
 
-	.topicPreview {
-		margin: 10px 0;
+	.topicPreviewContainer {
 
-		&:hover {
-			background-color: @topicPreviewHover;
-			cursor: pointer;
+		.topicPreviewHolder {
+			height: @topicPreviewHolderHeight;
+			@media screen and (max-height: @maxHeight) {
+				height: @topicPreviewHolderHeightSmall;
+			}
+
+			margin-left: 30px;
+
+
+			.topicPreview {
+				margin: 10px 0;
+
+				.topicViewLink {
+					font-style: italic;
+					text-decoration: none;
+
+					&:hover {
+						color: @red;
+					}
+				}
+
+				&:hover {
+					background-color: @topicPreviewHover;
+					cursor: pointer;
+				}
+			}
 		}
 	}
 }
+
+
 
 .topic {
 
