@@ -4,16 +4,22 @@ module.exports = function(app, events) {
 	var Topic = app.db.Topic;
 	var TopicPopInfo = app.db.TopicPopInfo;
 	var topics = {};
+	var sockets = [];
 
 	function addSocket(socket) {
 
 		socket.on('watchTopic', function(data) {
 			var slug = data.slug;
+
+			if (socket.topic) {
+				socket.stopWatching();
+			}
+			socket.topic = slug;
+
 			var date = Date.now();
 			var id = socket.id;
 			if (!topics[slug]) {
 				topics[slug] = [];
-				console.log('adding listener');
 				events.on('topicViewersChanged'+slug, saveViewerCount);
 			}
 			topics[slug].push(id);
@@ -39,7 +45,6 @@ module.exports = function(app, events) {
 			function saveViewerCount() {
 				TopicPopInfo.setViewCount(slug, topics[slug].length, function(err, tpi) {
 					if (err) return console.log(err);
-					console.log("View count for topic ", tpi.slug, " set to: ", tpi.viewCount);
 				});
 			}
 
@@ -67,7 +72,7 @@ module.exports = function(app, events) {
 			events.emit('topicViewersChanged'+slug, sendViewerCount);
 			sendPosts();
 
-			function stopWatching() {
+			socket.stopWatching = function() {
 				topics[slug] = _.without(topics[slug], id);
 				events.removeListener('topicChanged'+slug, sendPosts);
 				events.removeListener('topicViewersChanged'+slug, sendViewerCount);
@@ -76,12 +81,8 @@ module.exports = function(app, events) {
 				events.emit('topicViewersChanged'+slug);
 			}
 
-			socket.on('stopWatchingTopic', function(data) {
-				stopWatching();
-			});
-
 			socket.on('disconnect', function() {
-				stopWatching();
+				socket.stopWatching();
 			});
 		});
 	}

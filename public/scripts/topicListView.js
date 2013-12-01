@@ -1,11 +1,14 @@
-define(['jquery', 'underscore', 'window'], function($, _, window) {
-	var page, $previews, $header, $posts, $formArea;
+define(['jquery', 'underscore', 'window', './topicView'], function($, _, window, topicView) {
+	var page, $previews, $header, $posts, $formArea, socket;
 
 	function changeTopic(href) {
 		$.get(href, function(res) {
+			$posts.html('');
 			$posts.html(res.posts);
 			$header.html(res.topicHeader);
+			$formArea.html('');
 			$formArea.html(res.postForm);
+			topicView.initialize(res.slug, socket);
 		});
 	}
 
@@ -38,12 +41,13 @@ define(['jquery', 'underscore', 'window'], function($, _, window) {
 		});
 	}
 
-	function initialize() {
+	function initialize(the_socket) {
 		$previews = $('.topicPreviewHolder');
 		$posts = $('#topicHolder .posts');
 		$header = $('#topicHolder .topicHeaderContainer');
 		$formArea = $('.topicMain .postFormArea');
 		page = 2;
+		socket = the_socket;
 		watchTopicPreviewsForClicks();
 		fillAndWatchPreviewArea();
 	}
