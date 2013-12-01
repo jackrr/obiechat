@@ -1,0 +1,88 @@
+#warnRing {
+	background-color: @white;
+
+	.warnContainer {
+		border: 2px solid @red;
+ 		padding: 10px;
+
+ 		.creator {
+ 			margin: 4px;
+ 			.postBy {
+ 				margin-right: 4px;
+ 			}
+ 		}
+
+ 		.body {
+ 			line-height: 22px;
+ 		}
+
+ 		form[name=warn] {
+ 			margin-top: 10px;
+
+ 			.info {
+
+ 			}
+
+ 			.types {
+ 				margin: 10px 0;
+
+ 				.checkbox {
+ 					margin-left: 10px;
+ 					margin-right: 16px;
+ 					display: inline-block;
+ 				}
+
+ 				.other {
+ 					display: block;
+ 					margin-left: 26px;
+ 				}
+ 			}
+
+ 			.description {
+ 				text-align: center;
+
+ 				textarea {
+ 					width: 90%;
+ 					height: 50px;
+ 				}
+ 			}
+ 		}
+
+ 		.warn {
+
+ 			div {
+ 				margin-top: 6px;
+ 				margin-bottom: 6px;
+ 			}
+
+ 			.typesArea {
+ 				.question {
+ 					margin-right: 4px;
+ 				}
+ 			}
+
+ 			.links {
+
+ 				a {
+ 					display: inline-block;
+ 					width: 50px;
+ 					height: 20px;
+ 					padding: 10px;
+ 					background-color: @red;
+ 					color: @white;
+ 					text-decoration: none;
+ 					text-align: center;
+ 				}
+
+ 				.confirm {
+ 					float: right;
+ 					margin-right: 20px;
+ 				}
+
+ 				.deny {
+ 					margin-left: 20px;
+ 				}
+ 			}
+ 		}
+	}
+}

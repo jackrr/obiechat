@@ -4,19 +4,25 @@ module.exports = function(app, events) {
 	var Topic = app.db.Topic;
 	var TopicPopInfo = app.db.TopicPopInfo;
 	var topics = {};
+	var sockets = [];
 
 	function addSocket(socket) {
 
 		socket.on('watchTopic', function(data) {
 			var slug = data.slug;
+
+			if (socket.topic) {
+				socket.stopWatching();
+			}
+			socket.topic = slug;
+
 			var date = Date.now();
 			var id = socket.id;
 			if (!topics[slug]) {
 				topics[slug] = [];
+				events.on('topicViewersChanged'+slug, saveViewerCount);
 			}
 			topics[slug].push(id);
-			events.emit('topicViewersChanged'+slug);
-
 
 			function sendPosts() {
 				Topic.findPostsSince(slug, socket.userID, date, function(err, posts) {
@@ -36,11 +42,13 @@ module.exports = function(app, events) {
 				});
 			}
 
-			function sendViewerCount() {
+			function saveViewerCount() {
 				TopicPopInfo.setViewCount(slug, topics[slug].length, function(err, tpi) {
 					if (err) return console.log(err);
-					console.log("View count for topic ", tpi.slug, " set to: ", tpi.viewCount);
 				});
+			}
+
+			function sendViewerCount() {
 				socket.emit('topicViewerCount', {count: topics[slug].length});
 			}
 
@@ -58,13 +66,13 @@ module.exports = function(app, events) {
 			}
 
 			events.on('topicChanged'+slug, sendPosts);
-			events.on('topicViewersChanged'+slug, sendViewerCount);
 			events.on('newWarning'+slug, newWarning);
 			events.on('hidePost'+slug, hidePost);
-			sendViewerCount();
+			events.on('topicViewersChanged'+slug, sendViewerCount);
+			events.emit('topicViewersChanged'+slug, sendViewerCount);
 			sendPosts();
 
-			function stopWatching() {
+			socket.stopWatching = function() {
 				topics[slug] = _.without(topics[slug], id);
 				events.removeListener('topicChanged'+slug, sendPosts);
 				events.removeListener('topicViewersChanged'+slug, sendViewerCount);
@@ -73,12 +81,8 @@ module.exports = function(app, events) {
 				events.emit('topicViewersChanged'+slug);
 			}
 
-			socket.on('stopWatchingTopic', function(data) {
-				stopWatching();
-			});
-
 			socket.on('disconnect', function() {
-				stopWatching();
+				socket.stopWatching();
 			});
 		});
 	}

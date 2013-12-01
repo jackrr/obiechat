@@ -2,65 +2,60 @@ var userAuth = require('../auth/userAuth');
 var postUtils = require('../utils/postUtils');
 
 module.exports = function(app, events) {
+	var errorUtils = require('../utils/errorUtils')(app, events);
+	var notifyAll = errorUtils.notifyAll;
+	var returnError = errorUtils.error;
+
 	var Topic = app.db.Topic;
 	var Post = app.db.Post;
 	var User = app.db.User;
 
 	app.get('/topics', userAuth.signedIn, function(req, res) {
 		Topic.previewsPage(1, function(err, topics) {
-			if(err) {
-				console.log(err);
-			}
+			if(err) return returnError(req, res, 500, err, err);
 			res.render('topicList', {topics: topics, user: req.user});
 		});
 	});
 
 	app.get('/topics/:page', userAuth.signedIn, function(req, res) {
 		Topic.previewsPage(req.params.page, function(err, topics) {
-			if(err) {
-				console.log(err);
+			if(err) return returnError(req, res, 500, "Failed to find more topics", err);
+			if (!topics.length) {
+				return returnError(req, res, 404, "No more topics");
 			}
 			res.render('partials/topicPreviews', {topics: topics});
 		});
 	});
 
 	app.get('/topic/new', userAuth.signedIn, function(req, res) {
-		// send form to create a topic
 		res.render('newTopic', {user: req.user});
 	});
 
 	app.post('/topic', userAuth.signedIn, function(req, res) {
 		User.find({_id: req.user.id}, function(err, users) {
 			if (err) {
-				console.log(err);
+				return returnError(req, res, 500, "Failed to access db", err);
 			}
 			if (!users[0]) {
-				return res.send(403, "Invalid user");
+				return returnError(req, res, 403, "Invalid user");
 			}
 			var user = users[0];
 			var topic = new Topic(req.body);
 			topic.creatorID = user._id;
 			Topic.createNew(topic, function(err, topic) {
 				if (err) {
-					console.log(err);
-					res.send(400, "bad request");
+					return returnError(req, res, 400, "Try again", err);
 				}
+				notifyAll('topicNotification', {subject: 'New topic created', slug: topic.slug, name: topic.name});
 				res.redirect('/topic/show/' + topic.slug);
 			});
 		});
 	});
 
 	app.get('/topic/show/:slug/:page', userAuth.signedIn, function(req, res) {
-		console.log(req.params.page);
 		Topic.getPosts(req.params.slug, req.user.id, function(err, topic, page) {
 			if (err) {
-				return res.render('partials/alert', {error: err}, function(err, html) {
-					if (err) {
-						console.log(err);
-						res.send({error: 'Something went wrong!'});
-					}
-					res.send({error: html});
-				});
+				return returnError(req, res, 500, "Failed to find page", err);
 			}
 			res.render('partials/postPage', {page: page, user: req.user});
 		}, req.params.page);
@@ -69,7 +64,7 @@ module.exports = function(app, events) {
 	app.get('/topic/:slug/pageNumber', userAuth.signedIn, function(req, res) {
 		Topic.getPageCount(req.params.slug, function(err, count) {
 			if (err) {
-				console.log(err);
+				return returnError(req, res, 500, "Lookup failed", err);
 			}
 			res.send({page: count-1})
 		});
@@ -79,20 +74,32 @@ module.exports = function(app, events) {
 		// send the topic view
 		Topic.getPosts(req.params.slug, req.user.id, function(err, topic, page) {
 			if(err) {
-				console.log(err);
+				return returnError(req, res, 500, "Could not find topic "+req.params.slug, err);
 			}
-			res.render('topic', {topic: topic, user: req.user, postPage: page});
+			var ret = {};
+			app.render('partials/topicHeader', {topic: topic}, function(err, topicHeader) {
+				if (err) return returnError(req, res, 500, "Render error", err);
+				app.render('partials/postPage', {page: page, user: req.user}, function(err, posts) {
+					if (err) return returnError(req, res, 500, "Render error", err);
+					app.render('partials/postPageForm', {slug: topic.slug}, function(err, postForm) {
+						if (err) return returnError(req, res, 500, "Render error", err);
+						res.send({ topicHeader: topicHeader, posts: posts, postForm: postForm, slug: topic.slug });
+					});
+				});
+			});
 		});
 	});
-
 	app.post('/topic/:slug/post', userAuth.signedIn, function(req, res) {
 		// send the topic view
 		User.find({_id: req.user.id}, function(err, users) {
 			if (err) {
-				console.log(err);
+				return returnError(req, res, 500, "Bad lookup", err);
 			}
 			if (!users[0]) {
-				return res.send(404, "Invalid user");
+				return returnError(req, res, 404, "Invalid user");
+			}
+			if (!/\S/.test(req.body.body)) {
+				return returnError(req, res, 200, {empty: true});
 			}
 			var user = users[0];
 			req.body.creatorID = user._id;
@@ -100,14 +107,7 @@ module.exports = function(app, events) {
 			var post = new Post(req.body);
 			Topic.addPostToTopic(req.params.slug, post, function(err, success) {
 				if (err) {
-					console.log(err);
-					return res.render('partials/alert', {error: err}, function(err, html) {
-						if (err) {
-							console.log(err);
-							res.send({error: 'Something went wrong!'});
-						}
-						res.send({error: html});
-					});
+					return returnError(req, res, 500, "Failed to make post", err);
 				}
 				if (success) {
 					events.emit('topicChanged'+req.params.slug);

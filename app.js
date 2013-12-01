@@ -47,14 +47,13 @@ if ('development' == app.get('env')) {
  * events
  */
 var EventEmitter = require('events').EventEmitter;
-var events = {};
-events.topics = new EventEmitter;
+var events = new EventEmitter;
 
 /* routes */
 require('./routes/index')(app);
-require('./routes/post')(app, events.topics);
-require('./routes/topic')(app, events.topics);
-require('./routes/user')(app);
+require('./routes/post')(app, events);
+require('./routes/topic')(app, events);
+require('./routes/user')(app, events);
 
 var server = http.createServer(app);
 /*

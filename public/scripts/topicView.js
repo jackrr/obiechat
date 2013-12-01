@@ -19,8 +19,13 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		});
 	}
 
-	function watchTopic(slug, socket) {
-		socket.emit('watchTopic', {slug: slug});
+	function unWatchTopic(a_slug, socket) {
+		socket.removeAllListeners('topicViewerCount');
+		socket.removeAllListeners('topicUpdated');
+	}
+
+	function watchTopic(a_slug, socket) {
+		socket.emit('watchTopic', {slug: a_slug});
 
 		socket.on('topicUpdated', function(data) {
 			_.each(data.posts, function(post) {
@@ -32,16 +37,15 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		socket.on('topicViewerCount', function(data) {
 			$('.currentViewers .count').html(data.count);
 		});
-
-		$(window).unload(function() {
-			socket.emit('stopWatchingTopic', {slug: slug});
-		});
 	}
 
 	function notification(message) {
-		var $notification = $(message);
-		$('#notifications').append($notification);
-		notificationControl.initialize($notification);
+		notificationControl.newError(message);
+	}
+
+	function unWatchForm() {
+		$('form[name=post]').unbind('submit');
+		$('.postForm').unbind('keyup');
 	}
 
 	function watchForm() {
@@ -49,8 +53,8 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 			e.preventDefault();
 
 			$.post($(this).attr('action'), $(this).serialize(), function(res) {
-				if (res.error) {
-					notification(res.error);
+				if (res.empty) {
+					$(e.target).find('textarea').val("");
 				} else {
 					$(e.target).find('textarea').val("");
 				}
@@ -68,7 +72,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 
 	function loadPage(cb) {
 		if (!(page < 0)) {
-			$.get(slug + '/' + page, function(res) {
+			$.get('/topic/show/' + slug + '/' + page, function(res) {
 				if (res.error) {
 					notification(res.error);
 				} else {
@@ -113,6 +117,10 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		}
 	}
 
+	function unWatchScroll() {
+		$postContainer.unbind('scroll');
+	}
+
 	function watchScroll() {
 		$postContainer.scroll(function() {
 			if ($postContainer.scrollTop() === 0) {
@@ -128,8 +136,17 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 		});
 	}
 
-	function initialize(path, socket) {
-		slug = path.replace('/topic/show/', '');
+	function closeLast(old_slug, socket) {
+		unWatchTopic(old_slug, socket);
+		unWatchForm();
+		unWatchScroll();
+	}
+
+	function initialize(the_slug, socket) {
+		if (slug) {
+			closeLast(slug, socket);
+		}
+		slug = the_slug;
 		$postContainer = $('.posts');
 		$postsAdded = $('.topicHeader .alerts .added');
 		postsView.initialize(socket);

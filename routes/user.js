@@ -13,7 +13,11 @@ if (config.development) {
 }
 
 
-module.exports = function(app) {
+module.exports = function(app, events) {
+	var errorUtils = require('../utils/errorUtils')(app, events);
+	var notifyAll = errorUtils.notifyAll;
+	var returnError = errorUtils.error;
+
 	var User = app.db.User;
 	var PostPage = app.db.PostPage;
 
@@ -58,27 +62,21 @@ module.exports = function(app) {
 
 	app.get('/user/:id', userAuth.isSameUser, function(req, res) {
 		User.findById(req.params.id, function(err, user) {
-			if (err) {
-				console.log(err);
-			}
+			if(err) return returnError(req, res, 500, 'Failed to access db', err);
 			res.render('user', {user: user});
 		});
 	});
 
 	app.get('/user/:id/edit', userAuth.isSameUser, function(req, res) {
 		User.findById(req.params.id, function(err, user) {
-			if (err) {
-				console.log(err);
-			}
+			if(err) return returnError(req, res, 500, 'Failed to access db', err);
 			res.render('user', {user: user, edit: true});
 		});
 	});
 
 	app.post('/user/:id/editPseudo', userAuth.isSameUser, function(req, res) {
 		User.setNewPseudo(req.params.id, req.body.pseudo, function(err, user) {
-			if (err) {
-				console.log(err);
-			}
+			if(err) return returnError(req, res, 500, 'Failed to access db', err);
 			PostPage.updatePostsForUser(user, function(err) {
 				if (err) console.log(err);
 			});
