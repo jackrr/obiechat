@@ -1,39 +1,77 @@
-.topicPreviewHolder {
-	height: @topicPreviewHolderHeight;
-	width: 400px;
-	margin-left: 30px;
+#topicBrowser {
 
-	.topicPreview {
-		margin: 10px 0;
+	.newTopicLink {
+		display: inline-block;
+		background-color: @lightblue;
+		width: 80px;
+		padding: 4px;
+	}
 
-		&:hover {
-			background-color: @topicPreviewHover;
-			cursor: pointer;
+	.topicPreviewContainer {
+
+		.topicPreviewHolder {
+			height: @topicPreviewHolderHeight;
+			@media screen and (max-height: @maxHeight) {
+				height: @topicPreviewHolderHeightSmall;
+			}
+
+			margin-left: 30px;
+
+
+			.topicPreview {
+				margin: 10px 0;
+
+				.topicViewLink {
+					font-style: italic;
+					text-decoration: none;
+
+					&:hover {
+						color: @red;
+					}
+				}
+
+				&:hover {
+					background-color: @topicPreviewHover;
+					cursor: pointer;
+				}
+			}
 		}
 	}
 }
 
+
+
 .topic {
-	width: @topicWidth;
-	margin: 0 auto;
 
 	.topicHeader {
+		width: @topicBrowserWidth;
+		@media screen and (max-width: @maxWidth) {
+			width: @topicBrowserWidthSmall;
+		}
 		float: left;
-		width: inherit;
 		color: @topicHeaderText;
 		background-color: @topicHeaderBackground;
 	}
 
-	.posts {
-		float: left;
-		width: inherit;
-		background-color: @topicBackground;
-		height: @topicPostsHeight;
-	}
+	.topicMain {
+			float: left;
+			width: @topicWidth;
+			@media screen and (max-width: @maxWidth) {
+				width: @topicWidthSmall;
+			}
 
-	.postFormArea {
-		float: left;
-		width: inherit;
-		background-color: @white;
+		.posts {
+			background-color: @topicBackground;
+			height: @topicPostsHeight;
+			@media screen and (max-height: @maxHeight) {
+				height: @topicPostsHeightSmall;
+			}
+		}
+
+		.postFormArea {
+			float: left;
+			width: inherit;
+			background-color: @white;
+		}
 	}
 }

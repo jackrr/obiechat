@@ -76,10 +76,19 @@ module.exports = function(app, events) {
 			if(err) {
 				return returnError(req, res, 500, "Could not find topic "+req.params.slug, err);
 			}
-			res.render('topic', {topic: topic, user: req.user, postPage: page});
+			var ret = {};
+			app.render('partials/topicHeader', {topic: topic}, function(err, topicHeader) {
+				if (err) return returnError(req, res, 500, "Render error", err);
+				app.render('partials/postPage', {page: page, user: req.user}, function(err, posts) {
+					if (err) return returnError(req, res, 500, "Render error", err);
+					app.render('partials/postPageForm', {slug: topic.slug}, function(err, postForm) {
+						if (err) return returnError(req, res, 500, "Render error", err);
+						res.send({ topicHeader: topicHeader, posts: posts, postForm: postForm, slug: topic.slug });
+					});
+				});
+			});
 		});
 	});
-
 	app.post('/topic/:slug/post', userAuth.signedIn, function(req, res) {
 		// send the topic view
 		User.find({_id: req.user.id}, function(err, users) {

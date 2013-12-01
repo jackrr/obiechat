@@ -44,14 +44,47 @@ html .main {
   top: 70px;
   width: 100%;
 }
+html #topicBrowser {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 450px;
+  background-color: #ffffff;
+}
+@media screen and (max-width: 1300px) {
+  html #topicBrowser {
+    width: 300px;
+  }
+}
+html #topicBrowser .tab {
+  position: relative;
+  height: 40px;
+  bottom: 0px;
+  text-align: center;
+  font-size: 26px;
+  line-height: 26px;
+  background-color: #8c2318;
+  color: #ffffff;
+  cursor: pointer;
+}
+html #topicBrowser .tab span {
+  vertical-align: middle;
+  display: inline-block;
+}
+html #topicBrowser .tab .label {
+  padding-left: 20px;
+}
 html #notifications {
   position: fixed;
   bottom: 0;
 }
 html #warnRing {
   position: fixed;
-  bottom: 0;
-  right: 0;
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  top: 200px;
+  z-index: 11;
 }
 .header {
   top: 0px;
@@ -71,8 +104,12 @@ html #warnRing {
   text-decoration: none;
 }
 .header .headerRight {
+  position: fixed;
   right: 200px;
   top: 10px;
+}
+.header .headerRight.userArea .userName .name {
+  margin-left: 4px;
 }
 .header .headerRight.userArea .signOut {
   position: fixed;
@@ -97,12 +134,19 @@ html #warnRing {
  *
  */
 .btn {
-  background-color: #ffffff;
-  border: 2px solid #8c2318;
+  background-color: #5e8c6a;
+  border: 2px solid #ffffff;
   text-decoration: none;
-  color: #5e8c6a;
+  color: #8c2318;
   padding: 4px;
   margin: 2px;
+}
+a {
+  color: #8c2318;
+}
+a:hover {
+  color: #ffffff;
+  background-color: linkHoverBackgroundColor;
 }
 /*
   * Splash page
@@ -121,6 +165,20 @@ html #warnRing {
 }
 .splash .visitor {
   margin: 10px;
+}
+.fade {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  /* For IE8 and earlier */
+
+}
+#cover {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: none;
+  z-index: 10;
 }
 /*
  * Scrolling
@@ -175,39 +233,131 @@ html #warnRing {
  * post form
  *
  */
-form[name=post] {
-  text-align: right;
+form[name=post] textarea {
+  width: 300px;
 }
-.topicPreviewHolder {
-  height: 500px;
-  width: 400px;
+#topicBrowser .newTopicLink {
+  display: inline-block;
+  background-color: #dee4f6;
+  width: 80px;
+  padding: 4px;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder {
+  height: 600px;
   margin-left: 30px;
 }
-.topicPreviewHolder .topicPreview {
+@media screen and (max-height: 700px) {
+  #topicBrowser .topicPreviewContainer .topicPreviewHolder {
+    height: 400px;
+  }
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
   margin: 10px 0;
 }
-.topicPreviewHolder .topicPreview:hover {
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
+  font-style: italic;
+  text-decoration: none;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink:hover {
+  color: #8c2318;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview:hover {
   background-color: #88a65e;
   cursor: pointer;
 }
-.topic {
-  width: 800px;
-  margin: 0 auto;
-}
 .topic .topicHeader {
+  width: 450px;
   float: left;
-  width: inherit;
   color: #5e8c6a;
   background-color: #f2c45a;
 }
-.topic .posts {
-  float: left;
-  width: inherit;
-  background-color: #dee4f6;
-  height: 500px;
+@media screen and (max-width: 1300px) {
+  .topic .topicHeader {
+    width: 300px;
+  }
 }
-.topic .postFormArea {
+.topic .topicMain {
+  float: left;
+  width: 800px;
+}
+@media screen and (max-width: 1300px) {
+  .topic .topicMain {
+    width: 600px;
+  }
+}
+.topic .topicMain .posts {
+  background-color: #dee4f6;
+  height: 600px;
+}
+@media screen and (max-height: 700px) {
+  .topic .topicMain .posts {
+    height: 400px;
+  }
+}
+.topic .topicMain .postFormArea {
   float: left;
   width: inherit;
   background-color: #ffffff;
+}
+#warnRing {
+  background-color: #ffffff;
+}
+#warnRing .warnContainer {
+  border: 2px solid #8c2318;
+  padding: 10px;
+}
+#warnRing .warnContainer .creator {
+  margin: 4px;
+}
+#warnRing .warnContainer .creator .postBy {
+  margin-right: 4px;
+}
+#warnRing .warnContainer .body {
+  line-height: 22px;
+}
+#warnRing .warnContainer form[name=warn] {
+  margin-top: 10px;
+}
+#warnRing .warnContainer form[name=warn] .types {
+  margin: 10px 0;
+}
+#warnRing .warnContainer form[name=warn] .types .checkbox {
+  margin-left: 10px;
+  margin-right: 16px;
+  display: inline-block;
+}
+#warnRing .warnContainer form[name=warn] .types .other {
+  display: block;
+  margin-left: 26px;
+}
+#warnRing .warnContainer form[name=warn] .description {
+  text-align: center;
+}
+#warnRing .warnContainer form[name=warn] .description textarea {
+  width: 90%;
+  height: 50px;
+}
+#warnRing .warnContainer .warn div {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+#warnRing .warnContainer .warn .typesArea .question {
+  margin-right: 4px;
+}
+#warnRing .warnContainer .warn .links a {
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+  padding: 10px;
+  background-color: #8c2318;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+}
+#warnRing .warnContainer .warn .links .confirm {
+  float: right;
+  margin-right: 20px;
+}
+#warnRing .warnContainer .warn .links .deny {
+  margin-left: 20px;
 }

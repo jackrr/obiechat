@@ -2,7 +2,7 @@ mixin topicPreview(topic)
 	.topicPreview
 		.name= topic.name
 		.createdAt= topic.readableCreatedDate
-		a(href='/topic/show/#{topic.slug}', class='topicViewLink') Open Topic
+		a(href='/topic/show/#{topic.slug}', class='topicViewLink') click to open
 
 mixin topicPreviews(topics)
 	each topic in topics
