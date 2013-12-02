@@ -9,13 +9,13 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 			$formArea.html('');
 			$formArea.html(res.postForm);
 			topicView.initialize(res.slug, socket);
-		});
+		}, 'json');
 	}
 
 	function watchTopicPreviewsForClicks() {
 		$('.topicViewLink').click(function(e) {
+			// navigation handled by click listener on a parent element
 			e.preventDefault();
-			changeTopic($(e.delegateTarget).attr('href')); // make listener below get called
 		});
 
 		$('.topicPreview').click(function(e) {
@@ -50,6 +50,10 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		});
 	}
 
+	function initializeTopic(path) {
+		changeTopic(path);
+	}
+
 	function initialize(the_socket) {
 		$previews = $('.topicPreviewHolder');
 		$posts = $('#topicHolder .posts');
@@ -64,6 +68,7 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 	}
 
 	return {
-		initialize: initialize
+		initialize: initialize,
+		initializeTopic: initializeTopic
 	}
 });
