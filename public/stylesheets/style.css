@@ -1,6 +1,6 @@
 /*
  * Vintage Modern
- * 
+ *
  * color pallette provided by:
  * ericaspooner colourlovers.com
  */
@@ -42,17 +42,18 @@ html .main {
   position: absolute;
   top: 70px;
   width: 100%;
+  padding: 8px;
 }
 html #topicBrowser {
+  background-color: #cccccc;
   position: fixed;
   bottom: 0;
-  left: 0;
-  width: 450px;
-  background-color: #ffffff;
+  left: 8px;
+  width: 444px;
 }
 @media screen and (max-width: 1300px) {
   html #topicBrowser {
-    width: 300px;
+    width: 294px;
   }
 }
 html #topicBrowser .tab {
@@ -154,7 +155,7 @@ a:hover {
   */
 .staticPage {
   margin: 40px auto;
-  width: 70%;
+  max-width: 900px;
   font-size: 18px;
   line-height: 22px;
   overflow: auto;
@@ -226,6 +227,9 @@ a:hover {
 #footer .after:before {
   content: ' ';
 }
+.hidden {
+  display: none;
+}
 /*
  * Scrolling
  */
@@ -290,7 +294,6 @@ form[name=post] textarea {
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder {
   height: 600px;
-  margin-left: 30px;
 }
 @media screen and (max-height: 700px) {
   #topicBrowser .topicPreviewContainer .topicPreviewHolder {
@@ -298,6 +301,7 @@ form[name=post] textarea {
   }
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
+  padding: 5px;
   margin: 10px 0;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
@@ -355,6 +359,24 @@ form[name=topic] .section {
   width: inherit;
   background-color: #ffffff;
 }
+.topic .topicMain .postFormArea textarea {
+  width: 300px;
+  margin: 5px;
+}
+@media screen and (max-width: 920px) {
+  .topic .topicHeader {
+    position: fixed;
+    right: 0;
+    z-index: 2;
+  }
+  .topic .topicMain {
+    width: 95%;
+    position: fixed;
+  }
+  .topic .topicMain .posts {
+    margin-right: 20px;
+  }
+}
 #warnRing {
   background-color: #ffffff;
 }
@@ -369,7 +391,11 @@ form[name=topic] .section {
   margin-right: 4px;
 }
 #warnRing .warnContainer .body {
-  line-height: 22px;
+  padding: 5px;
+  background-color: #e2e2e2;
+  font-size: 12px;
+  width: 228px;
+  margin: 0 auto;
 }
 #warnRing .warnContainer form[name=warn] {
   margin-top: 10px;

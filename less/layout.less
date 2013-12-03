@@ -17,17 +17,18 @@ html {
  		position: absolute;
  		top: @headerHeight;
  		width: 100%;
+ 		padding: 8px;
  	}
 
  	#topicBrowser {
+ 		background-color: @lightgray;
  		position: fixed;
  		bottom: 0;
- 		left: 0;
- 		width: @topicBrowserWidth;
+ 		left: 8px;
+ 		width: (@topicBrowserWidth - 6);
  		@media screen and (max-width: @maxWidth) {
-			width: @topicBrowserWidthSmall;
+			width: (@topicBrowserWidthSmall - 6);
 		}
-		background-color: @white;
 
  		.tab {
  			position: relative;
@@ -158,7 +159,7 @@ html {
 
 .staticPage {
 	margin: 40px auto;
-	width: 70%;
+	max-width: 900px;
 	font-size: 18px;
 	line-height: 22px;
 	overflow: auto;
@@ -255,6 +256,10 @@ html {
 			content: ' ';
 		}
 	}
+}
+
+.hidden {
+	display: none;
 }
 
 /*

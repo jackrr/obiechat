@@ -15,10 +15,8 @@
 				height: @topicPreviewHolderHeightSmall;
 			}
 
-			margin-left: 30px;
-
-
 			.topicPreview {
+				padding: 5px;
 				margin: 10px 0;
 
 				.topicViewLink {
@@ -68,8 +66,10 @@ form[name=topic] {
 	.topicMain {
 			float: left;
 			width: @topicWidth;
+			// min-width: @topicWidthSmall;
 			@media screen and (max-width: @maxWidth) {
 				width: @topicWidthSmall;
+				// min-width: (@topicWidthSmall - 100);
 			}
 
 		.posts {
@@ -84,6 +84,28 @@ form[name=topic] {
 			float: left;
 			width: inherit;
 			background-color: @white;
+
+			textarea {
+				width: 300px;
+				margin: 5px;
+			}
+		}
+	}
+
+	@media screen and (max-width: 920px) {
+		.topicHeader {
+			position: fixed;
+			right: 0;
+			z-index: 2;
+		}
+
+		.topicMain {
+			width: 95%;
+			position: fixed;
+
+			.posts {
+				margin-right: 20px;
+			}
 		}
 	}
 }

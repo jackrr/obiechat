@@ -8,6 +8,7 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 			$header.html(res.topicHeader);
 			$formArea.html('');
 			$formArea.html(res.postForm);
+			$('#topicHolder').removeClass('hidden');
 			topicView.initialize(res.slug, socket);
 		}, 'json');
 	}
