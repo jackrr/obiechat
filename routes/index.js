@@ -14,10 +14,14 @@ module.exports = function(app) {
 	});
 
 	app.get('/splash', function(req, res) {
-		res.render('splash');
+		res.render('splash', {user: req.user});
 	});
 
-	app.get('/join', function(req, res) {
-		res.render('join');
+	app.get('/terms', function(req, res) {
+		res.render('terms', {user: req.user});
+	});
+
+	app.get('/relevantThings', function(req, res) {
+		res.render('relevantThings', {user: req.user});
 	});
 };

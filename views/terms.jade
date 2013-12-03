@@ -1,0 +1,43 @@
+extends layout
+
+block content
+	div(class="terms staticPage")
+		.title YeorVoice.com Terms of Use
+		.section
+			.head Language and Terminology
+			.subhead user
+			.descrip someone that has gained access to the site by authenticating through google with an @oberlin.edu email
+
+			.subhead display name
+			.descrip Each user has exactly one display name. By default it is the user’s first and last name provided by Google during the authentication process. A user may edit their first name to be a pseudonym of their choice, such that their display name is changed from “First Last” to “‘Pseudonym’ Last”. The pseudonym will be displayed in quotes.
+
+			.subhead discussion
+			.descrip created by any user on the site, a discussion is either ‘anonymous’ or not, has a name, and has an optional description
+
+			.subhead post
+			.descrip posts are created by individual users in discussions. Each post in every discussion is associated with its creating user in the database. In a discussion that is not anonymous every post shows the display name of its creating user.
+
+			.subhead warning
+			.descrip warnings can be given to any post made in a discussion. a post with a warning with enough confirmations will be stricken from view in the site.
+
+			.subhead confirm warning
+			.descrip in cases where a user seeks to warn post that has already been warned, the user is encouraged to confirm a pre-existing warning that has been made on the post. If the count of warnings on a post goes beyond a certain threshold, the post will be removed from view in the site.
+
+		.section
+			.head Privacy
+			.descrip In signing up for YeorVoice.com, you are asked to authenticate through Google from which we receive your first name, last name and email address. As provided in these Terms and Conditions, such information will not be sold to any third party and will never be made publicly available through us in the site or elsewhere, unless required to do so by law or in individual cases when it has been deemed to be in the user’s and the community’s best interest to do so by the site owners and administrators. Your email address will not be shown to any other user on the site. Your display name (see Language and Terminology above) will be shown next to each post you contribute to in a discussion that is not anonymous.
+
+			.head Use of the Site
+			.descrip The YeorVoice.com website hosts a series of live chat forums known as discussions (see Language and Terminology above) in which any authenticated user can contribute content. While we invite you to contribute your thoughts, opinions and ideas to discussions on YeorVoice.com, you must not distribute spam messages, post commercial advertisements, or spread links to malicious or dangerous websites. We do retain the right to moderate any comment or written content submitted to the YeorVoice.com website and to remove any content we deem to have violated our policies. Additionally, YeorVoice.com provides users with the means to mark content as offensive in the site through warns (see Language and Terminology above). Warned content is subject to automatic removal by the site without prior review by a moderator or administrator.
+
+			.head Termination
+			.descrip YeorVoice.com also reserves the right to temporarily or permanently deny access to the site for users that have contributed enough of a quantity of warned content for site administrators to deem the user destructive to the site experience.
+
+			.head Disclaimer
+			.descrip YeorVoice.com, as well as its owners, affiliates, and contributing authors do not claim ownership of any of the discussions or the material contained within them, and therefore are not to be held responsible for content YeorVoice.com’s users choose to contribute to the site.
+
+			.head Further Contact
+			.descrip
+				span.linkEnd Should you have any further questions, concerns, or queries about these Terms and Conditions, or if you encounter difficulties while navigating and using the site, please contact
+				a(href='mailto:yeorvoice@gmail.com') yeorvoice@gmail.com
+				span.afterLink

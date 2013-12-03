@@ -37,10 +37,9 @@ html {
 }
 html body {
   margin: 0;
-  overflow: hidden;
 }
 html .main {
-  position: fixed;
+  position: absolute;
   top: 70px;
   width: 100%;
 }
@@ -94,6 +93,7 @@ html #warnRing {
   background-color: #bfb35a;
   color: #5e8c6a;
   font-size: 18px;
+  z-index: 2;
 }
 .header .logo {
   font-size: 36px;
@@ -152,19 +152,44 @@ a:hover {
   * Splash page
   *
   */
-.splash {
-  margin: 100px auto;
-  width: 500px;
+.staticPage {
+  margin: 40px auto;
+  width: 70%;
+  font-size: 18px;
+  line-height: 22px;
+  overflow: auto;
+  z-index: 0;
 }
-.splash .welcome {
+.staticPage .title {
+  font-size: 28px;
+  font-weight: bold;
+}
+.staticPage .linkEnd:after {
+  content: ' ';
+}
+.staticPage .afterLink:before {
+  content: '.';
+}
+.staticPage.splash div {
   margin: 10px;
 }
-.splash #splashSignIn {
-  margin: 10px;
-  padding: 6px;
+.staticPage.terms .section {
+  margin: 20px 0;
 }
-.splash .visitor {
-  margin: 10px;
+.staticPage.terms .section div {
+  margin: 6px 0;
+}
+.staticPage.terms .section .head {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.staticPage.terms .section .subhead {
+  font-weight: bold;
+  margin-top: 12px;
+}
+.staticPage.terms .section .descrip {
+  margin-bottom: 18px;
 }
 .fade {
   opacity: 0.3;
@@ -179,6 +204,27 @@ a:hover {
   width: 100%;
   background-color: none;
   z-index: 10;
+}
+#footer {
+  padding: 4px;
+  background-color: #cccccc;
+  font-size: 12px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+}
+#footer .links {
+  margin-bottom: 6px;
+}
+#footer .links a {
+  margin-right: 10px;
+}
+#footer .questions:after {
+  content: ' ';
+}
+#footer .after:before {
+  content: ' ';
 }
 /*
  * Scrolling
