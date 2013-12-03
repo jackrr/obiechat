@@ -13,7 +13,7 @@ var userSchema = new Schema({
 	// email: {type: String, required: true, match: /^[A-Z0-9._%+-]+@oberlin.edu/}
 });
 
-UserSchema.path('email').validate(function (email) {
+userSchema.path('email').validate(function (email) {
    var emailRegex = /^([\w-\.]+@oberlin.edu$/;
    return emailRegex.test(email.text); // Assuming email has a text attribute
 }, 'The e-mail must be in the oberlin.edu namespace.')
