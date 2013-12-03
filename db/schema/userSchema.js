@@ -13,13 +13,13 @@ var userSchema = new Schema({
 	// email: {type: String, required: true, match: /^[A-Z0-9._%+-]+@oberlin.edu/}
 });
 
-userSchema.path('email').validate(function (email) {
-	console.log(email);
+// userSchema.path('email').validate(function (email) {
+// 	console.log(email);
 
-   var emailRegex = /^([A-Z0-9._%+-])+oberlin.edu$/;
-   console.log(emailRegex.test(email.text));
-   return emailRegex.test(email.text); // Assuming email has a text attribute
-}, 'The e-mail must be in the oberlin.edu namespace.')
+//    var emailRegex = /^([A-Z0-9._%+-])+oberlin.edu$/;
+//    console.log(emailRegex.test(email.text));
+//    return emailRegex.test(email.text); // Assuming email has a text attribute
+// }, 'The e-mail must be in the oberlin.edu namespace.');
 
 
 userSchema.virtual('displayName').get(function() {
