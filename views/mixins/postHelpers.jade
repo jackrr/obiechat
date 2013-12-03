@@ -24,7 +24,7 @@ mixin postView(post)
 						.dateContainer
 							span.postedAt= post.readableCreatedDate
 						.warnArea
-							a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') Warn Post
+							a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') warn
 							span.warnCount= post.warnCount
 
 mixin postPageView(postPage)

@@ -9,9 +9,7 @@ mixin warnForm(post)
 				span.postBy An anonymous user
 			span.additional said:
 		.body
-			span.before "
 			span.content= post.body
-			span.after "
 		form(name='warn', action='/post/#{post.pageID}/#{post._id}/warn', method='post')
 			.info This post contains one or more of:
 			.types
@@ -43,9 +41,9 @@ mixin warn(warn, groupID, post)
 
 mixin warnPreview(warn)
 	.warnPreview
-		.types You have identified this post as:
-			each type in warn.types
-				span.type= type
+		.typesArea
+			span.question You have identified this post as:
+			span.types= warn.prettyTypes
 		.description= warn.description
 		.info Other users will have the option to confirm or deny this warning.
 
@@ -58,9 +56,7 @@ mixin warnConfirms(post, warnGroup, userID)
 				span.postBy An anonymous user
 			span.additional said:
 		.body
-			span.before "
 			span.content= post.body
-			span.after "
 		each warn in warnGroup.warns
 			-if (warn.creatorID == userID || warn.confirmedByUser(userID))
 				mixin warnPreview(warn)

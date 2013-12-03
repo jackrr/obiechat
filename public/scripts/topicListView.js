@@ -8,14 +8,15 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 			$header.html(res.topicHeader);
 			$formArea.html('');
 			$formArea.html(res.postForm);
+			$('#topicHolder').removeClass('hidden');
 			topicView.initialize(res.slug, socket);
-		});
+		}, 'json');
 	}
 
 	function watchTopicPreviewsForClicks() {
 		$('.topicViewLink').click(function(e) {
+			// navigation handled by click listener on a parent element
 			e.preventDefault();
-			changeTopic($(e.delegateTarget).attr('href')); // make listener below get called
 		});
 
 		$('.topicPreview').click(function(e) {
@@ -50,6 +51,22 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		});
 	}
 
+	function watchNav() {
+		var path;
+		console.log('watching');
+		$(window).bind('onhashchange', function() {
+			console.log('unload!')
+			path = window.location.pathname;
+			if (path.match(/topic\/show\/\S*[^\/]/i) ) {
+				changeTopic(path);
+			}
+		});
+	}
+
+	function initializeTopic(path) {
+		changeTopic(path);
+	}
+
 	function initialize(the_socket) {
 		$previews = $('.topicPreviewHolder');
 		$posts = $('#topicHolder .posts');
@@ -61,9 +78,11 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		watchTopicPreviewsForClicks();
 		fillAndWatchPreviewArea();
 		watchToggle();
+		watchNav();
 	}
 
 	return {
-		initialize: initialize
+		initialize: initialize,
+		initializeTopic: initializeTopic
 	}
 });

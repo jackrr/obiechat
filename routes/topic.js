@@ -61,6 +61,7 @@ module.exports = function(app, events) {
 		}, req.params.page);
 	});
 
+
 	app.get('/topic/:slug/pageNumber', userAuth.signedIn, function(req, res) {
 		Topic.getPageCount(req.params.slug, function(err, count) {
 			if (err) {
@@ -71,22 +72,32 @@ module.exports = function(app, events) {
 	});
 
 	app.get('/topic/show/:slug', userAuth.signedIn, function(req, res) {
-		// send the topic view
-		Topic.getPosts(req.params.slug, req.user.id, function(err, topic, page) {
-			if(err) {
-				return returnError(req, res, 500, "Could not find topic "+req.params.slug, err);
-			}
-			var ret = {};
-			app.render('partials/topicHeader', {topic: topic}, function(err, topicHeader) {
-				if (err) return returnError(req, res, 500, "Render error", err);
-				app.render('partials/postPage', {page: page, user: req.user}, function(err, posts) {
-					if (err) return returnError(req, res, 500, "Render error", err);
-					app.render('partials/postPageForm', {slug: topic.slug}, function(err, postForm) {
+		res.format({
+			html: function() {
+				Topic.previewsPage(1, function(err, topics) {
+					if (err) return res.send(500);
+					res.render('index', { topics: topics, user: req.user });
+				});
+			},
+
+			json: function() {
+				Topic.getPosts(req.params.slug, req.user.id, function(err, topic, page) {
+					if(err) {
+						return returnError(req, res, 500, "Could not find topic "+req.params.slug, err);
+					}
+					var ret = {};
+					app.render('partials/topicHeader', {topic: topic}, function(err, topicHeader) {
 						if (err) return returnError(req, res, 500, "Render error", err);
-						res.send({ topicHeader: topicHeader, posts: posts, postForm: postForm, slug: topic.slug });
+						app.render('partials/postPage', {page: page, user: req.user}, function(err, posts) {
+							if (err) return returnError(req, res, 500, "Render error", err);
+							app.render('partials/postPageForm', {slug: topic.slug}, function(err, postForm) {
+								if (err) return returnError(req, res, 500, "Render error", err);
+								res.send({ topicHeader: topicHeader, posts: posts, postForm: postForm, slug: topic.slug });
+							});
+						});
 					});
 				});
-			});
+			}
 		});
 	});
 	app.post('/topic/:slug/post', userAuth.signedIn, function(req, res) {

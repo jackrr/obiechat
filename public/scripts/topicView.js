@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', './notificationController', './postsView', 'jquery.autosize'], function($, _, notificationControl, postsView) {
+define(['jquery', 'underscore', './notificationController', './postsView', './window', 'jquery.autosize'], function($, _, notificationControl, postsView, window) {
 	var page, slug, $postContainer, $postsAdded;
 
 	function postsAdded() {
@@ -147,6 +147,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', 'jque
 			closeLast(slug, socket);
 		}
 		slug = the_slug;
+		window.history.pushState({slug: slug}, slug, '/topic/show/'+slug);
 		$postContainer = $('.posts');
 		$postsAdded = $('.topicHeader .alerts .added');
 		postsView.initialize(socket);

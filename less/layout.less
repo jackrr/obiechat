@@ -10,24 +10,25 @@ html {
 
  	body {
  		margin: 0;
- 		overflow: hidden;
+ 		// overflow: hidden;
  	}
 
  	.main {
- 		position: fixed;
+ 		position: absolute;
  		top: @headerHeight;
  		width: 100%;
+ 		padding: 8px;
  	}
 
  	#topicBrowser {
+ 		background-color: @lightgray;
  		position: fixed;
  		bottom: 0;
- 		left: 0;
- 		width: @topicBrowserWidth;
+ 		left: 8px;
+ 		width: (@topicBrowserWidth - 6);
  		@media screen and (max-width: @maxWidth) {
-			width: @topicBrowserWidthSmall;
+			width: (@topicBrowserWidthSmall - 6);
 		}
-		background-color: @white;
 
  		.tab {
  			position: relative;
@@ -78,6 +79,7 @@ html {
 	background-color: @headerBackground;
 	color: @headerSecondaryText;
 	font-size: @headerSecondaryFontSize;
+	z-index: 2;
 
 	.logo {
 		font-size: @logosize;
@@ -155,21 +157,60 @@ html {
   *
   */
 
-.splash {
-	margin: 100px auto;
-	width: 500px;
+.staticPage {
+	margin: 40px auto;
+	max-width: 900px;
+	font-size: 18px;
+	line-height: 22px;
+	overflow: auto;
+	z-index: 0;
 
-	.welcome {
-		margin: 10px;
+	.title {
+		font-size: 28px;
+		font-weight: bold;
 	}
 
-	#splashSignIn {
-		margin: 10px;
-		padding: 6px;
+	.linkEnd {
+		&:after {
+			content: ' ';
+		}
 	}
 
-	.visitor {
-		margin: 10px;
+	.afterLink {
+		&:before {
+			content: '.';
+		}
+	}
+
+	&.splash {
+		div {
+			margin: 10px;
+		}
+	}
+
+	&.terms {
+		.section {
+			margin: 20px 0;
+
+			div {
+				margin: 6px 0;
+			}
+
+			.head {
+				font-weight: bold;
+				font-size: 22px;
+				margin-bottom: 10px;
+			}
+
+			.subhead {
+				font-weight: bold;
+				margin-top: 12px;
+			}
+
+			.descrip {
+				margin-bottom: 18px;
+			}
+		}
 	}
 }
 
@@ -185,6 +226,40 @@ html {
 	width: 100%;
 	background-color: none;
 	z-index: 10;
+}
+
+#footer {
+	padding: 4px;
+	background-color: @lightgray;
+	font-size: 12px;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	width: 300px;
+
+	.links {
+		margin-bottom: 6px;
+
+		a {
+			margin-right: 10px;
+		}
+	}
+
+	.questions {
+		&:after {
+			content: ' ';
+		}
+	}
+
+	.after {
+		&:before {
+			content: ' ';
+		}
+	}
+}
+
+.hidden {
+	display: none;
 }
 
 /*

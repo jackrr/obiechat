@@ -1,6 +1,6 @@
 /*
  * Vintage Modern
- * 
+ *
  * color pallette provided by:
  * ericaspooner colourlovers.com
  */
@@ -37,23 +37,23 @@ html {
 }
 html body {
   margin: 0;
-  overflow: hidden;
 }
 html .main {
-  position: fixed;
+  position: absolute;
   top: 70px;
   width: 100%;
+  padding: 8px;
 }
 html #topicBrowser {
+  background-color: #cccccc;
   position: fixed;
   bottom: 0;
-  left: 0;
-  width: 450px;
-  background-color: #ffffff;
+  left: 8px;
+  width: 444px;
 }
 @media screen and (max-width: 1300px) {
   html #topicBrowser {
-    width: 300px;
+    width: 294px;
   }
 }
 html #topicBrowser .tab {
@@ -94,6 +94,7 @@ html #warnRing {
   background-color: #bfb35a;
   color: #5e8c6a;
   font-size: 18px;
+  z-index: 2;
 }
 .header .logo {
   font-size: 36px;
@@ -152,19 +153,44 @@ a:hover {
   * Splash page
   *
   */
-.splash {
-  margin: 100px auto;
-  width: 500px;
+.staticPage {
+  margin: 40px auto;
+  max-width: 900px;
+  font-size: 18px;
+  line-height: 22px;
+  overflow: auto;
+  z-index: 0;
 }
-.splash .welcome {
+.staticPage .title {
+  font-size: 28px;
+  font-weight: bold;
+}
+.staticPage .linkEnd:after {
+  content: ' ';
+}
+.staticPage .afterLink:before {
+  content: '.';
+}
+.staticPage.splash div {
   margin: 10px;
 }
-.splash #splashSignIn {
-  margin: 10px;
-  padding: 6px;
+.staticPage.terms .section {
+  margin: 20px 0;
 }
-.splash .visitor {
-  margin: 10px;
+.staticPage.terms .section div {
+  margin: 6px 0;
+}
+.staticPage.terms .section .head {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.staticPage.terms .section .subhead {
+  font-weight: bold;
+  margin-top: 12px;
+}
+.staticPage.terms .section .descrip {
+  margin-bottom: 18px;
 }
 .fade {
   opacity: 0.3;
@@ -179,6 +205,30 @@ a:hover {
   width: 100%;
   background-color: none;
   z-index: 10;
+}
+#footer {
+  padding: 4px;
+  background-color: #cccccc;
+  font-size: 12px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+}
+#footer .links {
+  margin-bottom: 6px;
+}
+#footer .links a {
+  margin-right: 10px;
+}
+#footer .questions:after {
+  content: ' ';
+}
+#footer .after:before {
+  content: ' ';
+}
+.hidden {
+  display: none;
 }
 /*
  * Scrolling
@@ -229,6 +279,15 @@ a:hover {
 .postContainer .post .postInner .dateContainer {
   font-size: 11px;
 }
+.postContainer .post .postInner .warnArea .warnLink {
+  font-style: italic;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.postContainer .post .postInner .warnArea .warnCount {
+  margin-left: 5px;
+  font-weight: bold;
+}
 /*
  * post form
  *
@@ -244,7 +303,6 @@ form[name=post] textarea {
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder {
   height: 600px;
-  margin-left: 30px;
 }
 @media screen and (max-height: 700px) {
   #topicBrowser .topicPreviewContainer .topicPreviewHolder {
@@ -252,6 +310,7 @@ form[name=post] textarea {
   }
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
+  padding: 5px;
   margin: 10px 0;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
@@ -265,6 +324,16 @@ form[name=post] textarea {
   background-color: #88a65e;
   cursor: pointer;
 }
+form[name=topic] {
+  margin: 50px;
+}
+form[name=topic] .title {
+  margin: 20px;
+  font-size: 24px;
+}
+form[name=topic] .section {
+  margin: 20px;
+}
 .topic .topicHeader {
   width: 450px;
   float: left;
@@ -275,6 +344,20 @@ form[name=post] textarea {
   .topic .topicHeader {
     width: 300px;
   }
+}
+.topic .topicHeader div {
+  margin: 5px 3px;
+}
+.topic .topicHeader .name {
+  font-weight: bold;
+}
+.topic .topicHeader .description {
+  font-style: italic;
+  font-size: 12px;
+  padding: 2px;
+}
+.topic .topicHeader .label {
+  margin-right: 4px;
 }
 .topic .topicMain {
   float: left;
@@ -299,6 +382,24 @@ form[name=post] textarea {
   width: inherit;
   background-color: #ffffff;
 }
+.topic .topicMain .postFormArea textarea {
+  width: 300px;
+  margin: 5px;
+}
+@media screen and (max-width: 920px) {
+  .topic .topicHeader {
+    position: fixed;
+    right: 0;
+    z-index: 2;
+  }
+  .topic .topicMain {
+    width: 95%;
+    position: fixed;
+  }
+  .topic .topicMain .posts {
+    margin-right: 20px;
+  }
+}
 #warnRing {
   background-color: #ffffff;
 }
@@ -313,7 +414,11 @@ form[name=post] textarea {
   margin-right: 4px;
 }
 #warnRing .warnContainer .body {
-  line-height: 22px;
+  padding: 5px;
+  background-color: #e2e2e2;
+  font-size: 12px;
+  width: 228px;
+  margin: 0 auto;
 }
 #warnRing .warnContainer form[name=warn] {
   margin-top: 10px;
@@ -337,14 +442,17 @@ form[name=post] textarea {
   width: 90%;
   height: 50px;
 }
-#warnRing .warnContainer .warn div {
+#warnRing .warnContainer .warn div,
+#warnRing .warnContainer .warnPreview div {
   margin-top: 6px;
   margin-bottom: 6px;
 }
-#warnRing .warnContainer .warn .typesArea .question {
+#warnRing .warnContainer .warn .typesArea .question,
+#warnRing .warnContainer .warnPreview .typesArea .question {
   margin-right: 4px;
 }
-#warnRing .warnContainer .warn .links a {
+#warnRing .warnContainer .warn .links a,
+#warnRing .warnContainer .warnPreview .links a {
   display: inline-block;
   width: 50px;
   height: 20px;
@@ -354,10 +462,34 @@ form[name=post] textarea {
   text-decoration: none;
   text-align: center;
 }
-#warnRing .warnContainer .warn .links .confirm {
+#warnRing .warnContainer .warn .links .confirm,
+#warnRing .warnContainer .warnPreview .links .confirm {
   float: right;
   margin-right: 20px;
 }
-#warnRing .warnContainer .warn .links .deny {
+#warnRing .warnContainer .warn .links .deny,
+#warnRing .warnContainer .warnPreview .links .deny {
   margin-left: 20px;
+}
+.userInfo {
+  margin: 50px;
+}
+.userInfo .name div,
+.userInfo .email div {
+  margin: 10px 0;
+}
+.userInfo .name .label,
+.userInfo .email .label {
+  margin-right: 10px;
+}
+.editLink {
+  margin: 50px;
+}
+.info {
+  margin: 0px 50px;
+  max-width: 500px;
+}
+form[name=editPseudo] {
+  margin: 20px 50px;
+  max-width: 500px;
 }
