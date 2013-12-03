@@ -1,5 +1,5 @@
-mixin text(name, placeholder)
-	input(type="text" name="#{name}" placeholder="#{placeholder}")
+mixin text(name, placeholder, value)
+	input(type="text" name="#{name}" placeholder="#{placeholder}" value="#{value}")
 
 mixin textArea(name, placeholder, autofocus, aClass)
 	- if (autofocus)

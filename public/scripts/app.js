@@ -1,4 +1,5 @@
 define(['jquery', './socketModule', './topicListView', './notificationController'], function($, socketModule, topicListView, notificationControl) {
+
 	var socket = socketModule.newSocket();
 
 	var topicList = $('.topicList');

@@ -311,6 +311,16 @@ form[name=post] textarea {
   background-color: #88a65e;
   cursor: pointer;
 }
+form[name=topic] {
+  margin: 50px;
+}
+form[name=topic] .title {
+  margin: 20px;
+  font-size: 24px;
+}
+form[name=topic] .section {
+  margin: 20px;
+}
 .topic .topicHeader {
   width: 450px;
   float: left;
@@ -406,4 +416,26 @@ form[name=post] textarea {
 }
 #warnRing .warnContainer .warn .links .deny {
   margin-left: 20px;
+}
+.userInfo {
+  margin: 50px;
+}
+.userInfo .name div,
+.userInfo .email div {
+  margin: 10px 0;
+}
+.userInfo .name .label,
+.userInfo .email .label {
+  margin-right: 10px;
+}
+.editLink {
+  margin: 50px;
+}
+.info {
+  margin: 0px 50px;
+  max-width: 500px;
+}
+form[name=editPseudo] {
+  margin: 20px 50px;
+  max-width: 500px;
 }

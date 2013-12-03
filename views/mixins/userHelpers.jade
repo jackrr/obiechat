@@ -3,17 +3,26 @@ include formHelpers
 mixin displayUser(user)
 	.userInfo
 		.name
-			.firstName= user.name.first
-			.lastName= user.name.last
+			.firstName
+				span.label First Name:
+				span.data= user.name.first
+			.lastName
+				span.label Last Name:
+				span.data= user.name.last
 			-if (user.name.pseudo)
-				.pseudo '#{user.name.pseudo}'
-		.email= user.email
+				.pseudo Pseudonym: '#{user.name.pseudo}'
+			.displayName
+				span.label Display Name:
+				span.data= user.displayName
+		.email
+			span.label Email:
+			span.data= user.email
 
 mixin editForm(user)
 	.info To prevent misleading names on the site, as of now users can only modify their name with a pseudonym. This will appear in quotes in place of your first name followed by your last name according to your oberlin.edu email account.
 	form(name='editPseudo', action='/user/#{user._id}/editPseudo', method="post")
 		-if (user.name.pseudo)
-			mixin text('pseudo', user.name.pseudo)
+			mixin text('pseudo', user.name.pseudo, user.name.pseudo)
 		-else
 			mixin text('pseudo', '')
 		mixin submit('Save Change')

@@ -50,6 +50,18 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		});
 	}
 
+	function watchNav() {
+		var path;
+		console.log('watching');
+		$(window).bind('onhashchange', function() {
+			console.log('unload!')
+			path = window.location.pathname;
+			if (path.match(/topic\/show\/\S*[^\/]/i) ) {
+				changeTopic(path);
+			}
+		});
+	}
+
 	function initializeTopic(path) {
 		changeTopic(path);
 	}
@@ -65,6 +77,7 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		watchTopicPreviewsForClicks();
 		fillAndWatchPreviewArea();
 		watchToggle();
+		watchNav();
 	}
 
 	return {
