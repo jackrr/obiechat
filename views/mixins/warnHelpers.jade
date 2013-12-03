@@ -41,9 +41,9 @@ mixin warn(warn, groupID, post)
 
 mixin warnPreview(warn)
 	.warnPreview
-		.types You have identified this post as:
-			each type in warn.types
-				span.type= type
+		.typesArea
+			span.question You have identified this post as:
+			span.types= warn.prettyTypes
 		.description= warn.description
 		.info Other users will have the option to confirm or deny this warning.
 

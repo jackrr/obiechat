@@ -11,7 +11,7 @@ mixin topicPreviews(topics)
 mixin topicHeader(topic)
 	.topicHeader
 		.name= topic.name
-		.createdAt Created #{topic.readableCreatedDate}
+		.createdAt Created: #{topic.readableCreatedDate}
 		- if (topic.anonymous)
 			.anonymous Anonymous
 		- if (topic.description)

@@ -279,6 +279,15 @@ a:hover {
 .postContainer .post .postInner .dateContainer {
   font-size: 11px;
 }
+.postContainer .post .postInner .warnArea .warnLink {
+  font-style: italic;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.postContainer .post .postInner .warnArea .warnCount {
+  margin-left: 5px;
+  font-weight: bold;
+}
 /*
  * post form
  *
@@ -335,6 +344,20 @@ form[name=topic] .section {
   .topic .topicHeader {
     width: 300px;
   }
+}
+.topic .topicHeader div {
+  margin: 5px 3px;
+}
+.topic .topicHeader .name {
+  font-weight: bold;
+}
+.topic .topicHeader .description {
+  font-style: italic;
+  font-size: 12px;
+  padding: 2px;
+}
+.topic .topicHeader .label {
+  margin-right: 4px;
 }
 .topic .topicMain {
   float: left;
@@ -419,14 +442,17 @@ form[name=topic] .section {
   width: 90%;
   height: 50px;
 }
-#warnRing .warnContainer .warn div {
+#warnRing .warnContainer .warn div,
+#warnRing .warnContainer .warnPreview div {
   margin-top: 6px;
   margin-bottom: 6px;
 }
-#warnRing .warnContainer .warn .typesArea .question {
+#warnRing .warnContainer .warn .typesArea .question,
+#warnRing .warnContainer .warnPreview .typesArea .question {
   margin-right: 4px;
 }
-#warnRing .warnContainer .warn .links a {
+#warnRing .warnContainer .warn .links a,
+#warnRing .warnContainer .warnPreview .links a {
   display: inline-block;
   width: 50px;
   height: 20px;
@@ -436,11 +462,13 @@ form[name=topic] .section {
   text-decoration: none;
   text-align: center;
 }
-#warnRing .warnContainer .warn .links .confirm {
+#warnRing .warnContainer .warn .links .confirm,
+#warnRing .warnContainer .warnPreview .links .confirm {
   float: right;
   margin-right: 20px;
 }
-#warnRing .warnContainer .warn .links .deny {
+#warnRing .warnContainer .warn .links .deny,
+#warnRing .warnContainer .warnPreview .links .deny {
   margin-left: 20px;
 }
 .userInfo {
