@@ -8,8 +8,8 @@ if (config.development) {
 	googlePaths.returnURL = 'http://localhost:3000/auth/google/return';
 	googlePaths.realm = 'http://localhost:3000/';
 } else {
-	googlePaths.returnURL = 'http://obiechat.com/auth/google/return';
-	googlePaths.realm = 'http://obiechat.com/';
+	googlePaths.returnURL = 'http://yeorvoice.com/auth/google/return';
+	googlePaths.realm = 'http://yeorvoice.com/';
 }
 
 
