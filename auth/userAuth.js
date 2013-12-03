@@ -1,5 +1,6 @@
 function signedIn(req, res, next) {
 	if (!req.user) {
+		console.log('REDIRECTING');
 		return res.redirect('/splash');
 	};
 	next();
