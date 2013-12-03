@@ -3,7 +3,7 @@ extends layout
 include mixins/topicHelpers
 
 block content
-	#topicHolder
+	div(id='topicHolder' class='hidden')
 		.topic
 			.topicHeaderContainer
 			.topicMain
@@ -12,10 +12,10 @@ block content
 
 	#topicBrowser
 		.previewsAndCreateRegion
-			a(href='/topic/new', class='newTopicLink') New Topic
+			a(href='/topic/new', class='newTopicLink') Create a Discussion
 			.topicPreviewContainer
 				div(class="topicPreviewHolder infiniteScroll")
 					mixin topicPreviews(topics)
 		div(class='tab', id='topicListToggle')
 			span(class='symbol open') -
-			span(class='label') Topic Browser
+			span(class='label') Discussion Browser

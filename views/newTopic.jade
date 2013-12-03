@@ -4,12 +4,13 @@ include mixins/formHelpers
 
 block content
 	form(name='topic', action='/topic', method="post")
-		div.name
-			mixin text('name', 'Topic Name', 'name')
-		div.checkboxes
+		.title Create a new discussion
+		div(class='name section')
+			mixin text('name', 'Discussion Name', 'name')
+		div(class='checkboxes section')
 			div.anon
-				mixin checkbox('anonymous', 'anonymous', 'Anonymous')
-		div.description
+				mixin checkbox('anonymous', 'anonymous', 'Make it anonymous')
+		div(class='description section')
 			mixin textArea('description', 'Description', false)
-		div.submit
-			mixin submit('Launch Topic')
+		div(class='submit section')
+			mixin submit('Launch Discussion')

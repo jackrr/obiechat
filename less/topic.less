@@ -15,10 +15,8 @@
 				height: @topicPreviewHolderHeightSmall;
 			}
 
-			margin-left: 30px;
-
-
 			.topicPreview {
+				padding: 5px;
 				margin: 10px 0;
 
 				.topicViewLink {
@@ -39,6 +37,18 @@
 	}
 }
 
+form[name=topic] {
+	margin: 50px;
+
+	.title {
+		margin: 20px;
+		font-size: 24px;
+	}
+
+	.section {
+		margin: 20px;
+	}
+}
 
 
 .topic {
@@ -51,13 +61,33 @@
 		float: left;
 		color: @topicHeaderText;
 		background-color: @topicHeaderBackground;
+
+		div {
+			margin: 5px 3px;
+		}
+
+		.name {
+			font-weight: bold;
+		}
+
+		.description {
+			font-style: italic;
+			font-size: 12px;
+			padding: 2px;
+		}
+
+		.label {
+			margin-right: 4px;
+		}
 	}
 
 	.topicMain {
 			float: left;
 			width: @topicWidth;
+			// min-width: @topicWidthSmall;
 			@media screen and (max-width: @maxWidth) {
 				width: @topicWidthSmall;
+				// min-width: (@topicWidthSmall - 100);
 			}
 
 		.posts {
@@ -72,6 +102,28 @@
 			float: left;
 			width: inherit;
 			background-color: @white;
+
+			textarea {
+				width: 300px;
+				margin: 5px;
+			}
+		}
+	}
+
+	@media screen and (max-width: 920px) {
+		.topicHeader {
+			position: fixed;
+			right: 0;
+			z-index: 2;
+		}
+
+		.topicMain {
+			width: 95%;
+			position: fixed;
+
+			.posts {
+				margin-right: 20px;
+			}
 		}
 	}
 }
