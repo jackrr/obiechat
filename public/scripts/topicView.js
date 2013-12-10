@@ -136,6 +136,26 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 		});
 	}
 
+	function unwatchHeader() {
+		$('.topicHeader .moreInfo').unbind('click');
+	}
+
+	function watchHeader() {
+		var button = $('.topicHeader .moreInfo')
+		button.click(function() {
+			$('.topicHeader .headerContent').slideToggle(300);
+			if (button.hasClass('arrowsUp')) {
+				button.removeClass('arrowsUp');
+				button.addClass('arrowsDown');
+				button.text('show info')
+			} else {
+				button.removeClass('arrowsDown');
+				button.addClass('arrowsUp');
+				button.text('hide info')
+			}
+		});
+	}
+
 	function closeLast(old_slug, socket) {
 		unWatchTopic(old_slug, socket);
 		unWatchForm();
@@ -155,6 +175,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 		watchForm();
 		watchTopic(slug, socket);
 		watchHides(socket);
+		watchHeader();
 	}
 
 	return {

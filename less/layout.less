@@ -16,12 +16,10 @@ html {
  	.main {
  		position: absolute;
  		top: @headerHeight;
- 		width: 100%;
  		padding: 8px;
  	}
 
  	#topicBrowser {
- 		background-color: @lightgray;
  		position: fixed;
  		top: @headerHeight;
  		bottom: 0;
@@ -32,7 +30,7 @@ html {
 			width: (@topicBrowserWidthSmall - 6);
 		}
 
- 		.tab {
+		.tab {
  			position: absolute;
  			height: 40px;
  			bottom: 0px;
@@ -41,8 +39,15 @@ html {
 			line-height: 26px;
 			background-color: @red;
 			color: @white;
+			border: 1px solid @lightgray;
 			cursor: pointer;
 			width: 100%;
+
+			&:hover {
+				border: 1px solid @red;
+				background-color: @white;
+				color: @red;
+			}
 
 			span {
 				vertical-align: middle;
@@ -57,7 +62,9 @@ html {
  				padding-left: 20px;
  			}
  		}
+
  	}
+
 
  	#notifications {
  		position: fixed;
@@ -258,13 +265,18 @@ html {
 	position: fixed;
 	left: 0;
 	bottom: 0;
-	width: 300px;
+	width: @topicWidth;
+ 	@media screen and (max-width: @maxWidth) {
+		width: @topicWidthSmall;
+	}
 
 	.links {
+		text-align: center;
 		margin-bottom: 6px;
 
 		a {
-			margin-right: 10px;
+			margin-left: 46px;
+			margin-right: 46px;
 		}
 	}
 
@@ -290,4 +302,27 @@ html {
  */
 .infiniteScroll {
 	overflow: auto;
+}
+
+.openable {
+	&.arrowsDown {
+		&:before {
+			content: '\2193\2193\0020'
+		}
+
+		&:after {
+			content: '\0020\2193\2193'
+		}
+	}
+
+	&.arrowsUp {
+		&:before {
+			content: '\2191\2191\0020'
+		}
+
+		&:after {
+			content: '\0020\2191\2191'
+		}
+	}
+
 }

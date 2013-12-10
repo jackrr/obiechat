@@ -10,15 +10,17 @@ mixin topicPreviews(topics)
 
 mixin topicHeader(topic)
 	.topicHeader
-		.name= topic.name
-		.createdAt Created: #{topic.readableCreatedDate}
-		- if (topic.anonymous)
-			.anonymous Anonymous
-		- if (topic.description)
-			.description= topic.description
-		.currentViewers
-			span.label Users Viewing:
-			span.count
-		.alerts
-			.added
-			.warns
+		.headerContent
+			.name= topic.name
+			.createdAt Created: #{topic.readableCreatedDate}
+			- if (topic.anonymous)
+				.anonymous Anonymous
+			- if (topic.description)
+				.description= topic.description
+			.currentViewers
+				span.label Users Viewing:
+				span.count
+			.alerts
+				.added
+				.warns
+		div(class='moreInfo openable arrowsUp') hide info

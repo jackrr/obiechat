@@ -1,27 +1,37 @@
 #topicBrowser {
 
+	.previewsAndCreateRegion {
+		background-color: @lightgray;
+	}
+
 	.newTopicLink {
 		display: block;
-		background-color: @lightblue;
+		background-color: @white;
+		color: @red;
+		border: 2px solid @red;
+		width: 160px;
 		padding: 4px;
 		text-decoration: none;
 		text-align: center;
 		height: 24px;
+		margin: 0 auto;
 
 		&:hover {
-			background-color: @gold;
-			color: @green;
+			background-color: @red;
+			color: @white;
+			border: 2px solid @white;
 		}
 	}
 
 	.topicPreviewContainer {
 
+ 		background-color: @lightgray;
 		overflow: auto;
 		height: auto;
 		width: 100%;
 		position: absolute;
 		bottom: 40px;
-		top: 32px;
+		top: 36px;
 
 		.topicPreviewHolder {
 
@@ -64,13 +74,17 @@ form[name=topic] {
 .topic {
 
 	.topicHeader {
-		width: @topicBrowserWidth;
+		width: @topicWidth;
 		@media screen and (max-width: @maxWidth) {
-			width: @topicBrowserWidthSmall;
+			width: @topicWidthSmall;
 		}
 		float: left;
 		color: @topicHeaderText;
 		background-color: @topicHeaderBackground;
+		position: absolute;
+		top: 0;
+		margin: 0 auto;
+		z-index: 1;
 
 		div {
 			margin: 5px 3px;
@@ -89,10 +103,24 @@ form[name=topic] {
 		.label {
 			margin-right: 4px;
 		}
+
+		.moreInfo {
+			text-align: center;
+			font-size: 14px;
+			font-style: italic;
+			color: @red;
+			vertical-align: bottom;
+
+			&:hover {
+				color: @white;
+				cursor: pointer;
+			}
+		}
 	}
 
 	.topicMain {
-			float: left;
+		position: absolute;
+		top: 30px;
 			width: @topicWidth;
 			// min-width: @topicWidthSmall;
 			@media screen and (max-width: @maxWidth) {
@@ -112,6 +140,18 @@ form[name=topic] {
 			float: left;
 			width: inherit;
 			background-color: @white;
+
+			form {
+				float: left;
+			}
+
+			.help {
+				margin-top: 3px;
+				.subtext {
+					display: block;
+					font-size: 12px;
+				}
+			}
 
 			textarea {
 				width: 300px;

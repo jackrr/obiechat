@@ -34,3 +34,6 @@ mixin postPageView(postPage)
 mixin postForm(slug)
 	form(name='post', action='/topic/#{slug}/post', method="post")
 		mixin textArea('body', 'Reply', true, 'postForm')
+	.help
+		span(class='subtext') Press the enter key to submit.
+		span(class='subtext') Pressing shift+enter will make a new line without submitting.

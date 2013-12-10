@@ -1,5 +1,5 @@
 define(['jquery', 'underscore', 'window', './topicView'], function($, _, window, topicView) {
-	var page, $previews, $header, $posts, $formArea, $listToggle, socket;
+	var page, $previews, $header, $posts, $formArea, $listToggle, $scrollContainer, socket;
 
 	function changeTopic(href) {
 		$.get(href, function(res) {
@@ -35,27 +35,32 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 	}
 
 	function fillAndWatchPreviewArea() {
-		$previews.scroll(function() {
-			if ($previews.scrollTop() == $previews[0].scrollHeight - $previews.height()) {
+		$scrollContainer.scroll(function() {
+			if ($scrollContainer.scrollTop() == $scrollContainer[0].scrollHeight - $scrollContainer.height()) {
 				loadNextPage();
 			}
 		});
 	}
 
 	function watchToggle() {
+		var $textHolder = $listToggle.find('.label');
 		$listToggle.click(function() {
-			$('.previewsAndCreateRegion').toggle();
-			$listToggle.find('.symbol').toggleClass('open');
-			$listToggle.find('.symbol').html('+');
-			$listToggle.find('.open').html('-');
+			$('.previewsAndCreateRegion').slideToggle(500);
+			$('.topicPreviewContainer').slideToggle(400);
+
+			if ($textHolder.hasClass('arrowsUp')) {
+				$textHolder.removeClass('arrowsUp');
+				$textHolder.addClass('arrowsDown');
+			} else {
+				$textHolder.removeClass('arrowsDown');
+				$textHolder.addClass('arrowsUp');
+			}
 		});
 	}
 
 	function watchNav() {
 		var path;
-		console.log('watching');
 		$(window).bind('onhashchange', function() {
-			console.log('unload!')
 			path = window.location.pathname;
 			if (path.match(/topic\/show\/\S*[^\/]/i) ) {
 				changeTopic(path);
@@ -73,6 +78,7 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		$header = $('#topicHolder .topicHeaderContainer');
 		$formArea = $('.topicMain .postFormArea');
 		$listToggle = $('#topicListToggle');
+		$scrollContainer = $('.topicPreviewContainer');
 		page = 2;
 		socket = the_socket;
 		watchTopicPreviewsForClicks();
