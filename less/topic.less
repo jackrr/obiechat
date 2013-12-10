@@ -1,19 +1,29 @@
 #topicBrowser {
 
 	.newTopicLink {
-		display: inline-block;
+		display: block;
 		background-color: @lightblue;
-		width: 80px;
 		padding: 4px;
+		text-decoration: none;
+		text-align: center;
+		height: 24px;
+
+		&:hover {
+			background-color: @gold;
+			color: @green;
+		}
 	}
 
 	.topicPreviewContainer {
 
+		overflow: auto;
+		height: auto;
+		width: 100%;
+		position: absolute;
+		bottom: 40px;
+		top: 32px;
+
 		.topicPreviewHolder {
-			height: @topicPreviewHolderHeight;
-			@media screen and (max-height: @maxHeight) {
-				height: @topicPreviewHolderHeightSmall;
-			}
 
 			.topicPreview {
 				padding: 5px;

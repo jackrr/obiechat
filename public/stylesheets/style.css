@@ -47,8 +47,10 @@ html .main {
 html #topicBrowser {
   background-color: #cccccc;
   position: fixed;
+  top: 70px;
   bottom: 0;
-  left: 8px;
+  height: auto;
+  right: 0;
   width: 444px;
 }
 @media screen and (max-width: 1300px) {
@@ -57,7 +59,7 @@ html #topicBrowser {
   }
 }
 html #topicBrowser .tab {
-  position: relative;
+  position: absolute;
   height: 40px;
   bottom: 0px;
   text-align: center;
@@ -66,6 +68,7 @@ html #topicBrowser .tab {
   background-color: #8c2318;
   color: #ffffff;
   cursor: pointer;
+  width: 100%;
 }
 html #topicBrowser .tab span {
   vertical-align: middle;
@@ -228,7 +231,7 @@ a:hover {
   background-color: #cccccc;
   font-size: 12px;
   position: fixed;
-  right: 0;
+  left: 0;
   bottom: 0;
   width: 300px;
 }
@@ -313,18 +316,24 @@ form[name=post] textarea {
   width: 300px;
 }
 #topicBrowser .newTopicLink {
-  display: inline-block;
+  display: block;
   background-color: #dee4f6;
-  width: 80px;
   padding: 4px;
+  text-decoration: none;
+  text-align: center;
+  height: 24px;
 }
-#topicBrowser .topicPreviewContainer .topicPreviewHolder {
-  height: 600px;
+#topicBrowser .newTopicLink:hover {
+  background-color: #f2c45a;
+  color: #88a65e;
 }
-@media screen and (max-height: 700px) {
-  #topicBrowser .topicPreviewContainer .topicPreviewHolder {
-    height: 400px;
-  }
+#topicBrowser .topicPreviewContainer {
+  overflow: auto;
+  height: auto;
+  width: 100%;
+  position: absolute;
+  bottom: 40px;
+  top: 32px;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
   padding: 5px;

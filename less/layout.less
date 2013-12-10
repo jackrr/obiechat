@@ -23,15 +23,17 @@ html {
  	#topicBrowser {
  		background-color: @lightgray;
  		position: fixed;
+ 		top: @headerHeight;
  		bottom: 0;
- 		left: 8px;
+ 		height: auto;
+ 		right: 0;
  		width: (@topicBrowserWidth - 6);
  		@media screen and (max-width: @maxWidth) {
 			width: (@topicBrowserWidthSmall - 6);
 		}
 
  		.tab {
- 			position: relative;
+ 			position: absolute;
  			height: 40px;
  			bottom: 0px;
  			text-align: center;
@@ -40,6 +42,7 @@ html {
 			background-color: @red;
 			color: @white;
 			cursor: pointer;
+			width: 100%;
 
 			span {
 				vertical-align: middle;
@@ -253,7 +256,7 @@ html {
 	background-color: @lightgray;
 	font-size: 12px;
 	position: fixed;
-	right: 0;
+	left: 0;
 	bottom: 0;
 	width: 300px;
 
