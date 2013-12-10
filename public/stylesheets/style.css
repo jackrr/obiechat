@@ -77,6 +77,23 @@ html #topicBrowser .tab .label {
 html #notifications {
   position: fixed;
   bottom: 0;
+  z-index: 5;
+}
+html #notifications .topic {
+  position: fixed;
+  top: 0;
+  left: 10px;
+}
+html #notifications .topic .notification {
+  width: 150px;
+  padding: 6px;
+  background-color: #dddddd;
+}
+html #notifications .topic .notification .close {
+  font-style: italic;
+  font-size: 14px;
+  text-align: right;
+  color: #8c2318;
 }
 html #warnRing {
   position: fixed;

@@ -59,6 +59,26 @@ html {
  	#notifications {
  		position: fixed;
  		bottom: 0;
+ 		z-index: 5;
+
+ 		.topic {
+ 			position: fixed;
+ 			top: 0;
+ 			left: 10px;
+
+ 			.notification {
+ 				width: 150px;
+ 				padding: 6px;
+ 				background-color: #dddddd;
+
+ 				.close {
+ 					font-style: italic;
+ 					font-size: 14px;
+ 					text-align: right;
+ 					color: @red;
+ 				}
+ 			}
+ 		}
  	}
 
  	#warnRing {
