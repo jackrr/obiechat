@@ -17,8 +17,12 @@ var userSchema = new Schema({
 
 userSchema.virtual('displayName').get(function() {
 	if (this.name.pseudo) {
-		return "'" + this.name.pseudo + "' " + this.name.last;
+		return this.name.pseudo;
 	}
+	return this.name.first + ' ' + this.name.last;
+});
+
+userSchema.virtual('officialName').get(function() {
 	return this.name.first + ' ' + this.name.last;
 });
 

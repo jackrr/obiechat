@@ -27,6 +27,7 @@ mixin postView(post)
 					div(class='post other')
 						.postInner
 							span.author= post.creatorName
+							span.authorOfficial= post.officialName
 							span.body= post.body
 							.dateContainer
 								span.postedAt= post.readableCreatedDate

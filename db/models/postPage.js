@@ -77,10 +77,8 @@ PostPage.updatePostsForUser = function(user, cb) {
 		if (err) return cb(err);
 		var updateFunctions = [];
 		_.each(pps, function(pp) {
-			console.log(pps);
 			_.each(pp.posts, function(post) {
 				if (post.creatorID.equals(user._id)) {
-					console.log('updating post', post);
 					updateFunctions.push(function(callback) {
 						PostPage.findOneAndUpdate({ _id: pp._id, 'posts._id': post._id}, { $set: { 'posts.$.creatorName': user.displayName }}, function(err, pp) {
 							if (err) return callback(err);

@@ -5,6 +5,7 @@ var dateUtils = require('../../utils/dateUtils');
 var postSchema = new Schema({
 	creatorID: {type: Schema.Types.ObjectId, required: true},
 	creatorName: String,
+	officialName: String,
 	body: {type: String, required: true},
 	createdDate: {type: Date, default: Date.now},
 	warnGroup: Schema.Types.ObjectId,

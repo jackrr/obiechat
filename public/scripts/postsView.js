@@ -89,7 +89,8 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 	}
 
 	function handleWarns() {
-		$('.warnArea .warnLink').click(function(e) {
+		var warnLinkClickFunc = function(e) {
+			console.log('warn link');
 			e.preventDefault();
 
 			$.get($(this).attr('href'), function(res) {
@@ -97,17 +98,41 @@ define(['jquery', 'underscore', './notificationController', 'jquery.autosize'], 
 				if (res.warnConfirms) return warnInteracts(res.warnConfirms);
 				if (res.warnForm) return warnForm(res.warnForm);
 			});
-		});
+		}
+		$('.warnArea .warnLink').unbind('click', warnLinkClickFunc);
+		$('.warnArea .warnLink').click(warnLinkClickFunc);
+	}
+
+	function watchNameShow() {
+		function swapNames(e) {
+			var unameHolder = $(e.currentTarget);
+			var username = unameHolder.html();
+			var realnameHolder = $(e.currentTarget).next('.authorOfficial');
+			var realname = realnameHolder.html();
+			realnameHolder.html(username);
+			unameHolder.html(realname);
+		}
+
+		$('.postInner .author').off('mouseenter');
+		$('.postInner .author').off('mouseleave');
+		$('.postInner .author').on('mouseenter', swapNames);
+		$('.postInner .author').on('mouseleave', swapNames);
+	}
+
+	function newPosts() {
+		handleWarns();
+		watchNameShow();
 	}
 
 	function initialize(socket) {
 		$warnRing = $('#warnRing');
 		handleWarns();
+		watchNameShow();
 		watchPostEvents(socket);
 	}
 
 	return {
 		initialize: initialize,
-		handleWarns: handleWarns
+		newPosts: newPosts
 	};
 });

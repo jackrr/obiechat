@@ -7,7 +7,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 			scrollTopic('bottom');
 			$('textarea').focus();
 		});
-		postsView.handleWarns();
+		postsView.newPosts();
 		if (($postContainer[0].scrollHeight - ($postContainer.height() + $postContainer.scrollTop())) < (5*$('.postContainer').height())) {
 			scrollTopic('bottom');
 		}
@@ -78,7 +78,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 				} else {
 					page--;
 					$postContainer.prepend(res);
-					postsView.handleWarns();
+					postsView.newPosts();
 					if (page < 0) {
 						$postContainer.prepend("<div class=noPosts>No older posts in discussion</div>");
 					}

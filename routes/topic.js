@@ -115,6 +115,7 @@ module.exports = function(app, events) {
 			var user = users[0];
 			req.body.creatorID = user._id;
 			req.body.creatorName = user.displayName;
+			req.body.officialName = user.officialName;
 			var post = new Post(req.body);
 			Topic.addPostToTopic(req.params.slug, post, function(err, success) {
 				if (err) {
