@@ -32,22 +32,10 @@ html {
 
 		.tab {
  			position: absolute;
- 			height: 40px;
+ 			height: 30px;
  			bottom: 0px;
- 			text-align: center;
-			font-size: 26px;
-			line-height: 26px;
-			background-color: @red;
-			color: @white;
-			border: 1px solid @lightgray;
-			cursor: pointer;
+			font-size: 24px;
 			width: 100%;
-
-			&:hover {
-				border: 1px solid @red;
-				background-color: @white;
-				color: @red;
-			}
 
 			span {
 				vertical-align: middle;
@@ -121,21 +109,25 @@ html {
 	}
 
 	.headerRight {
-		position: fixed;
-		right: 200px;
-		top: 10px;
+		position: absolute;
+		right: 10px;
+		top: 8px;
+		text-align: center;
 
 		&.userArea {
 			.userName {
 				.name {
 					margin-left: 4px;
+					a {
+						text-decoration: none;
+						font-style: italic;
+					}
 				}
 			}
 
 			.signOut {
-				position: fixed;
-				right: @userCountRight;
-				top: @signOutTop;
+				position: relative;
+				top: 11px;
 			}
 		}
 
@@ -152,9 +144,10 @@ html {
 	}
 
 	#usersOnline {
-		position: fixed;
-		right: @userCountRight;
-		top: (@headerHeight - 26px);
+		width: 300px;
+		text-align: center;
+		margin: 0 auto;
+		margin-top: 22px;
 	}
 }
 
@@ -166,11 +159,25 @@ html {
 
  .btn {
  	background-color: @buttonBackground;
- 	border: 2px solid @buttonBorder;
+ 	// border: 2px solid @buttonBorder;
  	text-decoration: none;
  	color: @buttonColor;
  	padding: 4px;
  	margin: 2px;
+ 	text-align: center;
+ 	cursor: pointer;
+
+ 	a {
+ 		color: @buttonColor;
+ 		text-decoration: none;
+ 	}
+
+ 	&:hover {
+ 		color: @buttonHoverColor;
+ 		a {
+	 		color: @buttonHoverColor;
+ 		}
+ 	}
  }
 
  a {
@@ -178,7 +185,6 @@ html {
 
  	&:hover {
  		color: @linkHoverColor;
- 		background-color: linkHoverBackgroundColor;
  	}
  }
 
@@ -260,7 +266,7 @@ html {
 
 #footer {
 	padding: 4px;
-	background-color: @lightgray;
+	background-color: @footerColor;
 	font-size: 12px;
 	position: fixed;
 	left: 0;
@@ -272,7 +278,6 @@ html {
 
 	.links {
 		text-align: center;
-		margin-bottom: 6px;
 
 		a {
 			margin-left: 46px;
@@ -281,6 +286,7 @@ html {
 	}
 
 	.questions {
+		margin-bottom: 2px;
 		&:after {
 			content: ' ';
 		}

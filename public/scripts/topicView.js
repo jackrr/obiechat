@@ -79,6 +79,9 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 					page--;
 					$postContainer.prepend(res);
 					postsView.handleWarns();
+					if (page < 0) {
+						$postContainer.prepend("<div class=noPosts>No older posts in discussion</div>");
+					}
 					cb();
 				}
 			});
@@ -147,11 +150,11 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 			if (button.hasClass('arrowsUp')) {
 				button.removeClass('arrowsUp');
 				button.addClass('arrowsDown');
-				button.text('show info')
+				// button.text('show info')
 			} else {
 				button.removeClass('arrowsDown');
 				button.addClass('arrowsUp');
-				button.text('hide info')
+				// button.text('hide info')
 			}
 		});
 	}

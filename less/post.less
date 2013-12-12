@@ -2,19 +2,28 @@
  * Styling for posts
  */
 
+ .noPosts {
+ 	width:100%;
+ 	margin-top: 5px;
+ 	margin-bottom: 5px;
+ 	text-align: center;
+ 	font-style: italic;
+ }
+
  .postContainer {
  	width:100%;
  	margin-top: 5px;
  	margin-bottom: 5px;
 
  	.post {
+ 		color: @postTextColor;
 
  		&.mine {
  			text-align: right;
  			margin-right: 5px;
  			.postInner {
  				margin-left: auto;
-	 			background-color: @myPostColor;
+ 				background-color: @myPostColor;
  				margin-right: 0;
 
  				.dateContainer {
@@ -28,7 +37,7 @@
  			text-align: left;
  			margin-left: 5px;
  			.postInner {
-	 			background-color: @theirPostColor;
+ 				background-color: @theirPostColor;
  			}
  			.dateContainer {
  				text-align: right;
@@ -40,7 +49,7 @@
  			margin-right: 0px;
 
  			&.mine {
-	 			text-align: left;
+ 				text-align: left;
 
  				.postInner {
  					background-color: @myPostAnonColor;
@@ -51,6 +60,14 @@
  				margin-left: auto;
  				margin-right: auto;
  				background-color: @myPostAnonColor;
+
+ 				.warnLink {
+ 					color: @warnLinkAnonColor;
+
+ 					&:hover {
+ 						color: @warnLinkAnonHover;
+ 					}
+ 				}
  			}
  		}
 
@@ -61,14 +78,17 @@
  			min-width: 80px;
  			width: 300px;
 
-			.author {
-				font-weight: 700;
-				margin: 0px 4px;
-			}
+ 			.author {
+ 				font-weight: 700;
+ 				display: block;
+ 				margin-bottom: 3px;
+ 				color: @postNameColor;
+ 			}
  			.body {
-				white-space: pre-line;
+ 				white-space: pre-line;
  			}
  			.dateContainer {
+ 				margin-top: 3px;
  				font-size: 11px;
  			}
 
@@ -86,8 +106,8 @@
  				}
  			}
  		}
-	}
-}
+ 	}
+ }
 
 /*
  * post form
@@ -98,6 +118,6 @@
 
  	textarea {
  		width: 300px;
-	}
-}
+ 	}
+ }
 

@@ -78,21 +78,10 @@ html #topicBrowser {
 }
 html #topicBrowser .tab {
   position: absolute;
-  height: 40px;
+  height: 30px;
   bottom: 0px;
-  text-align: center;
-  font-size: 26px;
-  line-height: 26px;
-  background-color: #8c2517;
-  color: #ffffff;
-  border: 1px solid #cccccc;
-  cursor: pointer;
+  font-size: 24px;
   width: 100%;
-}
-html #topicBrowser .tab:hover {
-  border: 1px solid #8c2517;
-  background-color: #ffffff;
-  color: #8c2517;
 }
 html #topicBrowser .tab span {
   vertical-align: middle;
@@ -135,8 +124,8 @@ html #warnRing {
   height: 70px;
   position: fixed;
   width: 100%;
-  background-color: #114857;
-  color: #c5584a;
+  background-color: #4494ab;
+  color: #5b1108;
   font-size: 18px;
   z-index: 2;
 }
@@ -145,21 +134,25 @@ html #warnRing {
   float: left;
   margin-top: 12px;
   margin-left: 40px;
-  color: #c5584a;
+  color: #5b1108;
   text-decoration: none;
 }
 .header .headerRight {
-  position: fixed;
-  right: 200px;
-  top: 10px;
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  text-align: center;
 }
 .header .headerRight.userArea .userName .name {
   margin-left: 4px;
 }
+.header .headerRight.userArea .userName .name a {
+  text-decoration: none;
+  font-style: italic;
+}
 .header .headerRight.userArea .signOut {
-  position: fixed;
-  right: 30px;
-  top: 7px;
+  position: relative;
+  top: 11px;
 }
 .header .headerRight.buttons .join {
   float: right;
@@ -169,9 +162,10 @@ html #warnRing {
   float: right;
 }
 .header #usersOnline {
-  position: fixed;
-  right: 30px;
-  top: 44px;
+  width: 300px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 22px;
 }
 /*
  *
@@ -180,18 +174,28 @@ html #warnRing {
  */
 .btn {
   background-color: #5b1108;
-  border: 2px solid #c5a14a;
   text-decoration: none;
   color: #ffffff;
   padding: 4px;
   margin: 2px;
+  text-align: center;
+  cursor: pointer;
+}
+.btn a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.btn:hover {
+  color: #c5ab6b;
+}
+.btn:hover a {
+  color: #c5ab6b;
 }
 a {
   color: #5b4208;
 }
 a:hover {
-  color: #5b1108;
-  background-color: linkHoverBackgroundColor;
+  color: #c5ab6b;
 }
 /*
   * Splash page
@@ -252,7 +256,7 @@ a:hover {
 }
 #footer {
   padding: 4px;
-  background-color: #cccccc;
+  background-color: #ffffff;
   font-size: 12px;
   position: fixed;
   left: 0;
@@ -266,11 +270,13 @@ a:hover {
 }
 #footer .links {
   text-align: center;
-  margin-bottom: 6px;
 }
 #footer .links a {
   margin-left: 46px;
   margin-right: 46px;
+}
+#footer .questions {
+  margin-bottom: 2px;
 }
 #footer .questions:after {
   content: ' ';
@@ -302,10 +308,20 @@ a:hover {
 /*
  * Styling for posts
  */
+.noPosts {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-style: italic;
+}
 .postContainer {
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.postContainer .post {
+  color: #d1d1d1;
 }
 .postContainer .post.mine {
   text-align: right;
@@ -341,6 +357,12 @@ a:hover {
   margin-right: auto;
   background-color: #695627;
 }
+.postContainer .post.anonymous .postInner .warnLink {
+  color: #692f27;
+}
+.postContainer .post.anonymous .postInner .warnLink:hover {
+  color: #c5ab6b;
+}
 .postContainer .post .postInner {
   border: 1px solid #062d39;
   padding: 4px;
@@ -349,12 +371,15 @@ a:hover {
 }
 .postContainer .post .postInner .author {
   font-weight: 700;
-  margin: 0px 4px;
+  display: block;
+  margin-bottom: 3px;
+  color: #d1d1d1;
 }
 .postContainer .post .postInner .body {
   white-space: pre-line;
 }
 .postContainer .post .postInner .dateContainer {
+  margin-top: 3px;
   font-size: 11px;
 }
 .postContainer .post .postInner .warnArea .warnLink {
@@ -376,32 +401,27 @@ form[name=post] textarea {
 #topicBrowser .previewsAndCreateRegion {
   background-color: #8c6a17;
 }
-#topicBrowser .newTopicLink {
-  display: block;
-  background-color: #ffffff;
-  color: #8c2517;
-  border: 2px solid #8c2517;
+#topicBrowser .btn {
+  padding: 8px;
   width: 160px;
-  padding: 4px;
-  text-decoration: none;
-  text-align: center;
   height: 24px;
   margin: 0 auto;
 }
-#topicBrowser .newTopicLink:hover {
-  background-color: #8c2517;
-  color: #ffffff;
-  border: 2px solid #ffffff;
-}
 #topicBrowser .topicPreviewContainer {
-  background-color: #4494ab;
+  background-color: #114857;
   color: #cccccc;
   overflow: auto;
   height: auto;
   width: 100%;
   position: absolute;
-  bottom: 40px;
+  bottom: 46px;
   top: 36px;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .noTopics {
+  padding: 5px;
+  margin: 10px 0;
+  font-style: italic;
+  text-align: center;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
   padding: 5px;
@@ -410,6 +430,7 @@ form[name=post] textarea {
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
   font-style: italic;
   text-decoration: none;
+  color: #8c2517;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink:hover {
   color: #8c2517;
@@ -429,18 +450,18 @@ form[name=topic] .section {
   margin: 20px;
 }
 .topic .topicHeader {
-  width: 800px;
-  float: left;
+  left: 5px;
+  right: 450px;
   color: #cccccc;
-  background-color: #4494ab;
-  position: absolute;
-  top: 0;
+  background-color: #114857;
+  position: fixed;
+  top: 70px;
   margin: 0 auto;
   z-index: 1;
 }
 @media screen and (max-width: 1300px) {
   .topic .topicHeader {
-    width: 600px;
+    right: 350px;
   }
 }
 .topic .topicHeader div {
@@ -461,43 +482,43 @@ form[name=topic] .section {
   text-align: center;
   font-size: 14px;
   font-style: italic;
-  color: #8c2517;
+  color: #c5ab6b;
   vertical-align: bottom;
 }
 .topic .topicHeader .moreInfo:hover {
-  color: #ffffff;
+  color: #8c2517;
   cursor: pointer;
 }
 .topic .topicMain {
-  position: absolute;
-  top: 30px;
-  width: 800px;
+  position: fixed;
+  top: 97px;
+  bottom: 110px;
+  left: 5px;
+  right: 450px;
 }
 @media screen and (max-width: 1300px) {
   .topic .topicMain {
-    width: 600px;
+    right: 350px;
   }
 }
 .topic .topicMain .posts {
   background-color: #c5ab6b;
-  height: 600px;
+  height: 100%;
   color: #cccccc;
 }
-@media screen and (max-height: 700px) {
-  .topic .topicMain .posts {
-    height: 400px;
-  }
-}
 .topic .topicMain .postFormArea {
+  position: relative;
   float: left;
-  width: inherit;
-  background-color: #ffffff;
+  width: 100%;
+  background-color: #c5766b;
 }
 .topic .topicMain .postFormArea form {
   float: left;
 }
 .topic .topicMain .postFormArea .help {
-  margin-top: 3px;
+  position: absolute;
+  bottom: 9px;
+  left: 320px;
 }
 .topic .topicMain .postFormArea .help .subtext {
   display: block;
@@ -506,6 +527,11 @@ form[name=topic] .section {
 .topic .topicMain .postFormArea textarea {
   width: 300px;
   margin: 5px;
+}
+.topic .topicMain .postFormArea .informText {
+  text-align: right;
+  padding-right: 20px;
+  font-style: italic;
 }
 @media screen and (max-width: 920px) {
   .topic .topicHeader {

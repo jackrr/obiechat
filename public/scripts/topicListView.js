@@ -25,11 +25,24 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 	}
 
 	function loadNextPage() {
-		$.get('/topics/'+page, function(res) {
-			if (res) {
-				page++;
-				$previews.append(res);
-				watchTopicPreviewsForClicks();
+		if (page < 0) {
+			return;
+		}
+		$.ajax({
+			url: '/topics/'+page,
+			type: 'get',
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				if (XMLHttpRequest.status == 404) {
+					$previews.append("<div class='noTopics'>No more topics</div>");
+					page = -1;
+				}
+			},
+			success: function(res) {
+				if (res) {
+					page++;
+					$previews.append(res);
+					watchTopicPreviewsForClicks();
+				}
 			}
 		});
 	}
