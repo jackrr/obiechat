@@ -1,7 +1,7 @@
 #topicBrowser {
 
 	.previewsAndCreateRegion {
-		background-color: @lightgray;
+		background-color: @goldbrown;
 	}
 
 	.newTopicLink {
@@ -25,7 +25,8 @@
 
 	.topicPreviewContainer {
 
- 		background-color: @lightgray;
+ 		background-color: @topicBrowserBackground;
+ 		color: @lighttext;
 		overflow: auto;
 		height: auto;
 		width: 100%;
@@ -134,6 +135,7 @@ form[name=topic] {
 			@media screen and (max-height: @maxHeight) {
 				height: @topicPostsHeightSmall;
 			}
+			color: @topicText;
 		}
 
 		.postFormArea {

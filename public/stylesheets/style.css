@@ -17,6 +17,26 @@
  * colors
  */
 /*
+
+HEADER
+
+*/
+/*
+
+LINKS AND BUTTONS
+
+*/
+/*
+
+TOPIC BROWSING
+
+*/
+/*
+
+THE TOPIC
+
+*/
+/*
  * fonts
  */
 /*
@@ -63,16 +83,16 @@ html #topicBrowser .tab {
   text-align: center;
   font-size: 26px;
   line-height: 26px;
-  background-color: #8c2318;
+  background-color: #8c2517;
   color: #ffffff;
   border: 1px solid #cccccc;
   cursor: pointer;
   width: 100%;
 }
 html #topicBrowser .tab:hover {
-  border: 1px solid #8c2318;
+  border: 1px solid #8c2517;
   background-color: #ffffff;
-  color: #8c2318;
+  color: #8c2517;
 }
 html #topicBrowser .tab span {
   vertical-align: middle;
@@ -100,7 +120,7 @@ html #notifications .topic .notification .close {
   font-style: italic;
   font-size: 14px;
   text-align: right;
-  color: #8c2318;
+  color: #8c2517;
 }
 html #warnRing {
   position: fixed;
@@ -115,8 +135,8 @@ html #warnRing {
   height: 70px;
   position: fixed;
   width: 100%;
-  background-color: #bfb35a;
-  color: #5e8c6a;
+  background-color: #114857;
+  color: #c5584a;
   font-size: 18px;
   z-index: 2;
 }
@@ -125,7 +145,7 @@ html #warnRing {
   float: left;
   margin-top: 12px;
   margin-left: 40px;
-  color: #8c2318;
+  color: #c5584a;
   text-decoration: none;
 }
 .header .headerRight {
@@ -159,18 +179,18 @@ html #warnRing {
  *
  */
 .btn {
-  background-color: #5e8c6a;
-  border: 2px solid #ffffff;
+  background-color: #5b1108;
+  border: 2px solid #c5a14a;
   text-decoration: none;
-  color: #8c2318;
+  color: #ffffff;
   padding: 4px;
   margin: 2px;
 }
 a {
-  color: #8c2318;
+  color: #5b4208;
 }
 a:hover {
-  color: #ffffff;
+  color: #5b1108;
   background-color: linkHoverBackgroundColor;
 }
 /*
@@ -293,7 +313,7 @@ a:hover {
 }
 .postContainer .post.mine .postInner {
   margin-left: auto;
-  background-color: #f2c45a;
+  background-color: #5b4208;
   margin-right: 0;
 }
 .postContainer .post.other {
@@ -301,13 +321,28 @@ a:hover {
   margin-left: 5px;
 }
 .postContainer .post.other .postInner {
-  background-color: #88a65e;
+  background-color: #c5584a;
 }
 .postContainer .post.other .dateContainer {
   text-align: right;
 }
+.postContainer .post.anonymous {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.postContainer .post.anonymous.mine {
+  text-align: left;
+}
+.postContainer .post.anonymous.mine .postInner {
+  background-color: #695627;
+}
+.postContainer .post.anonymous .postInner {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #695627;
+}
 .postContainer .post .postInner {
-  border: 1px solid #2e2e2e;
+  border: 1px solid #062d39;
   padding: 4px;
   min-width: 80px;
   width: 300px;
@@ -339,13 +374,13 @@ form[name=post] textarea {
   width: 300px;
 }
 #topicBrowser .previewsAndCreateRegion {
-  background-color: #cccccc;
+  background-color: #8c6a17;
 }
 #topicBrowser .newTopicLink {
   display: block;
   background-color: #ffffff;
-  color: #8c2318;
-  border: 2px solid #8c2318;
+  color: #8c2517;
+  border: 2px solid #8c2517;
   width: 160px;
   padding: 4px;
   text-decoration: none;
@@ -354,12 +389,13 @@ form[name=post] textarea {
   margin: 0 auto;
 }
 #topicBrowser .newTopicLink:hover {
-  background-color: #8c2318;
+  background-color: #8c2517;
   color: #ffffff;
   border: 2px solid #ffffff;
 }
 #topicBrowser .topicPreviewContainer {
-  background-color: #cccccc;
+  background-color: #4494ab;
+  color: #cccccc;
   overflow: auto;
   height: auto;
   width: 100%;
@@ -376,10 +412,10 @@ form[name=post] textarea {
   text-decoration: none;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink:hover {
-  color: #8c2318;
+  color: #8c2517;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview:hover {
-  background-color: #88a65e;
+  background-color: #8c6a17;
   cursor: pointer;
 }
 form[name=topic] {
@@ -395,8 +431,8 @@ form[name=topic] .section {
 .topic .topicHeader {
   width: 800px;
   float: left;
-  color: #5e8c6a;
-  background-color: #f2c45a;
+  color: #cccccc;
+  background-color: #4494ab;
   position: absolute;
   top: 0;
   margin: 0 auto;
@@ -425,7 +461,7 @@ form[name=topic] .section {
   text-align: center;
   font-size: 14px;
   font-style: italic;
-  color: #8c2318;
+  color: #8c2517;
   vertical-align: bottom;
 }
 .topic .topicHeader .moreInfo:hover {
@@ -443,8 +479,9 @@ form[name=topic] .section {
   }
 }
 .topic .topicMain .posts {
-  background-color: #dee4f6;
+  background-color: #c5ab6b;
   height: 600px;
+  color: #cccccc;
 }
 @media screen and (max-height: 700px) {
   .topic .topicMain .posts {
@@ -488,7 +525,7 @@ form[name=topic] .section {
   background-color: #ffffff;
 }
 #warnRing .warnContainer {
-  border: 2px solid #8c2318;
+  border: 2px solid #8c2517;
   padding: 10px;
 }
 #warnRing .warnContainer .creator {
@@ -541,7 +578,7 @@ form[name=topic] .section {
   width: 50px;
   height: 20px;
   padding: 10px;
-  background-color: #8c2318;
+  background-color: #8c2517;
   color: #ffffff;
   text-decoration: none;
   text-align: center;
