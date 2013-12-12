@@ -9,8 +9,8 @@ var userSchema = new Schema({
 		pseudo: String
 	},
 //	email: {type: String, required: true, enum: permittedUsers.users}
-	email: {type: String, required: true}
-	// email: {type: String, required: true, validate: [ /^[\w\d\._%+-]+@oberlin\.edu$/, 'Email is not valid' ]}
+	// email: {type: String, required: true}
+	email: {type: String, required: true, validate: [ /^[\w\d\._%+-]+@oberlin\.edu$/, 'Email is not valid' ]}
 });
 
 
