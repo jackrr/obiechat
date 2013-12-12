@@ -9,16 +9,20 @@ var userSchema = new Schema({
 		pseudo: String
 	},
 //	email: {type: String, required: true, enum: permittedUsers.users}
-	email: {type: String, required: true}
-	// email: {type: String, required: true, match: /^[A-Z0-9._%+-]+@oberlin.edu/}
+	// email: {type: String, required: true}
+	email: {type: String, required: true, validate: [ /^[\w\d\._%+-]+@oberlin\.edu$/, 'Email is not valid' ]}
 });
 
 
 
 userSchema.virtual('displayName').get(function() {
 	if (this.name.pseudo) {
-		return "'" + this.name.pseudo + "' " + this.name.last;
+		return this.name.pseudo;
 	}
+	return this.name.first + ' ' + this.name.last;
+});
+
+userSchema.virtual('officialName').get(function() {
 	return this.name.first + ' ' + this.name.last;
 });
 

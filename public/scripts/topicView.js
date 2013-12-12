@@ -7,7 +7,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 			scrollTopic('bottom');
 			$('textarea').focus();
 		});
-		postsView.handleWarns();
+		postsView.newPosts();
 		if (($postContainer[0].scrollHeight - ($postContainer.height() + $postContainer.scrollTop())) < (5*$('.postContainer').height())) {
 			scrollTopic('bottom');
 		}
@@ -78,7 +78,10 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 				} else {
 					page--;
 					$postContainer.prepend(res);
-					postsView.handleWarns();
+					postsView.newPosts();
+					if (page < 0) {
+						$postContainer.prepend("<div class=noPosts>No older posts in discussion</div>");
+					}
 					cb();
 				}
 			});
@@ -136,6 +139,26 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 		});
 	}
 
+	function unwatchHeader() {
+		$('.topicHeader .moreInfo').unbind('click');
+	}
+
+	function watchHeader() {
+		var button = $('.topicHeader .moreInfo')
+		button.click(function() {
+			$('.topicHeader .headerContent').slideToggle(300);
+			if (button.hasClass('arrowsUp')) {
+				button.removeClass('arrowsUp');
+				button.addClass('arrowsDown');
+				// button.text('show info')
+			} else {
+				button.removeClass('arrowsDown');
+				button.addClass('arrowsUp');
+				// button.text('hide info')
+			}
+		});
+	}
+
 	function closeLast(old_slug, socket) {
 		unWatchTopic(old_slug, socket);
 		unWatchForm();
@@ -155,6 +178,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 		watchForm();
 		watchTopic(slug, socket);
 		watchHides(socket);
+		watchHeader();
 	}
 
 	return {

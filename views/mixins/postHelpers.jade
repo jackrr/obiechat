@@ -10,27 +10,51 @@ mixin postView(post)
 						span.postedAt= post.readableCreatedDate
 		-else
 			- if (post.isTheirs)
-				div(class='post mine')
-					.postInner
-						span.body= post.body
-						.dateContainer
-							span.postedAt= post.readableCreatedDate
+				- if (post.creatorName)
+					div(class='post mine')
+						.postInner
+							span.body= post.body
+							.dateContainer
+								span.postedAt= post.readableCreatedDate
+				- else
+					div(class='post mine anonymous')
+						.postInner
+							span.body= post.body
+							.dateContainer
+								span.postedAt= post.readableCreatedDate
 			- else
-				div(class='post other')
-					.postInner
-						- if (post.creatorName)
+				- if (post.creatorName)
+					div(class='post other')
+						.postInner
 							span.author= post.creatorName
-						span.body= post.body
-						.dateContainer
-							span.postedAt= post.readableCreatedDate
-						.warnArea
-							a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') warn
-							span.warnCount= post.warnCount
+							span.authorOfficial= post.officialName
+							span.body= post.body
+							.dateContainer
+								span.postedAt= post.readableCreatedDate
+							.warnArea
+								a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') warn
+								span.warnCount= post.warnCount
+				- else
+					div(class='post other anonymous')
+						.postInner
+							span.body= post.body
+							.dateContainer
+								span.postedAt= post.readableCreatedDate
+							.warnArea
+								a(href='/post/#{post.pageID}/#{post._id}/warn' class='warnLink') warn
+								span.warnCount= post.warnCount
 
 mixin postPageView(postPage)
 	each post in postPage.posts
 		mixin postView(post)
 
-mixin postForm(slug)
+mixin postForm(slug, anonymous)
+	-if (anonymous)
+		.informText posts ARE anonymous
+	-else
+		.informText posts are NOT anonymous
 	form(name='post', action='/topic/#{slug}/post', method="post")
 		mixin textArea('body', 'Reply', true, 'postForm')
+	.help
+		span(class='subtext') Press the enter key to submit.
+		span(class='subtext') Pressing shift+enter will make a new line without submitting.

@@ -15,9 +15,7 @@ html
 							a(href='/user/#{user._id}' class='userProfileLink')= user.displayName
 					a(href='/signOut', class='signOut btn') Sign Out
 			- else
-				div(class='buttons headerRight')
-					.join
-						a(href='/join', class='join btn') Join Now
+				div(class='userArea headerRight')
 					.signIn
 						a(href='/auth/google', class='signIn btn') Sign In
 			#usersOnline
@@ -30,11 +28,11 @@ html
 		#warnRing
 		#cover
 		#footer
-			.links
-				a(href='/terms', class='termsLink') Terms of Use
-				a(href='/splash', class='aboutLink') About
-				a(href='/relevantThings', class='otherStuffLink') Things to Remember
 			.contact
 				span.questions Do you have questions, comments, or concerns? Send an email to
 				a(href='mailto:yeorvoice@gmail.com') yeorvoice@gmail.com
 				span.after and a site admin will do their best to respond promptly!
+			.links
+				a(href='/terms', class='termsLink') Terms of Use
+				a(href='/splash', class='aboutLink') About
+				//- a(href='/relevantThings', class='otherStuffLink') Things to Remember

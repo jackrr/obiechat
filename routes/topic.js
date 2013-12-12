@@ -90,7 +90,7 @@ module.exports = function(app, events) {
 						if (err) return returnError(req, res, 500, "Render error", err);
 						app.render('partials/postPage', {page: page, user: req.user}, function(err, posts) {
 							if (err) return returnError(req, res, 500, "Render error", err);
-							app.render('partials/postPageForm', {slug: topic.slug}, function(err, postForm) {
+							app.render('partials/postPageForm', {slug: topic.slug, anonymous: topic.anonymous}, function(err, postForm) {
 								if (err) return returnError(req, res, 500, "Render error", err);
 								res.send({ topicHeader: topicHeader, posts: posts, postForm: postForm, slug: topic.slug });
 							});
@@ -115,6 +115,7 @@ module.exports = function(app, events) {
 			var user = users[0];
 			req.body.creatorID = user._id;
 			req.body.creatorName = user.displayName;
+			req.body.officialName = user.officialName;
 			var post = new Post(req.body);
 			Topic.addPostToTopic(req.params.slug, post, function(err, success) {
 				if (err) {
