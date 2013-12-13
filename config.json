@@ -28,6 +28,6 @@
 		}
 	},
 	"warns": {
-			"warnThreshold": 5
+			"warnThreshold": 3
 	}
 }
