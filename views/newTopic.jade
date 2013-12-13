@@ -6,7 +6,7 @@ block content
 	form(name='topic', action='/topic', method="post")
 		.title Create a new discussion
 		div(class='name section')
-			mixin text('name', 'Discussion Name', 'name')
+			mixin text('name', 'Discussion Name')
 		div(class='checkboxes section')
 			div.anon
 				mixin checkbox('anonymous', 'anonymous', 'Make it anonymous')

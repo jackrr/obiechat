@@ -271,9 +271,9 @@ html {
 	position: fixed;
 	left: 0;
 	bottom: 0;
-	width: @topicWidth;
+	right: (@topicBrowserWidth);
  	@media screen and (max-width: @maxWidth) {
-		width: @topicWidthSmall;
+		right: (@topicBrowserWidthSmall);
 	}
 
 	.links {

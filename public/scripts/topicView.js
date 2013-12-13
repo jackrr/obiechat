@@ -144,7 +144,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 	}
 
 	function watchHeader() {
-		var button = $('.topicHeader .moreInfo')
+		var button = $('.topicHeader .moreInfo');
 		button.click(function() {
 			$('.topicHeader .headerContent').slideToggle(300);
 			if (button.hasClass('arrowsUp')) {
@@ -157,6 +157,10 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 				// button.text('hide info')
 			}
 		});
+	}
+
+	function toggleHeader() {
+		$('.topicHeader .moreInfo').click();
 	}
 
 	function closeLast(old_slug, socket) {
@@ -179,6 +183,7 @@ define(['jquery', 'underscore', './notificationController', './postsView', './wi
 		watchTopic(slug, socket);
 		watchHides(socket);
 		watchHeader();
+		toggleHeader();
 	}
 
 	return {

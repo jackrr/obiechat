@@ -261,11 +261,11 @@ a:hover {
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 800px;
+  right: 450px;
 }
 @media screen and (max-width: 1300px) {
   #footer {
-    width: 600px;
+    right: 350px;
   }
 }
 #footer .links {
