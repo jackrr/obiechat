@@ -9,8 +9,6 @@ mixin displayUser(user)
 			.lastName
 				span.label Last Name:
 				span.data= user.name.last
-			-if (user.name.pseudo)
-				.pseudo Pseudonym: '#{user.name.pseudo}'
 			.displayName
 				span.label Display Name:
 				span.data= user.displayName
@@ -19,7 +17,7 @@ mixin displayUser(user)
 			span.data= user.email
 
 mixin editForm(user)
-	.info To prevent misleading names on the site, as of now users can only modify their name with a pseudonym. This will appear in quotes in place of your first name followed by your last name according to your oberlin.edu email account.
+	.info Set your username to be used in place of your name on the site. To maintain transparency, any user will still be able to hover over your user name in non-anonymous discussions to see your first and last names.
 	form(name='editPseudo', action='/user/#{user._id}/editPseudo', method="post")
 		-if (user.name.pseudo)
 			mixin text('pseudo', user.name.pseudo, user.name.pseudo)

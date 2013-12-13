@@ -78,12 +78,14 @@ PostPage.updatePostsForUser = function(user, cb) {
 		var updateFunctions = [];
 		_.each(pps, function(pp) {
 			_.each(pp.posts, function(post) {
-				updateFunctions.push(function(callback) {
-					PostPage.findOneAndUpdate({ _id: pp._id, 'posts._id': post._id}, { $set: { 'posts.$.creatorName': user.displayName }}, function(err, pp) {
-						if (err) return callback(err);
-						callback();
+				if (post.creatorID.equals(user._id)) {
+					updateFunctions.push(function(callback) {
+						PostPage.findOneAndUpdate({ _id: pp._id, 'posts._id': post._id}, { $set: { 'posts.$.creatorName': user.displayName }}, function(err, pp) {
+							if (err) return callback(err);
+							callback();
+						});
 					});
-				});
+				}
 			});
 		});
 		async.waterfall(updateFunctions, function (err, result) {

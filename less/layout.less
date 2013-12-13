@@ -16,30 +16,26 @@ html {
  	.main {
  		position: absolute;
  		top: @headerHeight;
- 		width: 100%;
  		padding: 8px;
  	}
 
  	#topicBrowser {
- 		background-color: @lightgray;
  		position: fixed;
+ 		top: @headerHeight;
  		bottom: 0;
- 		left: 8px;
+ 		height: auto;
+ 		right: 0;
  		width: (@topicBrowserWidth - 6);
  		@media screen and (max-width: @maxWidth) {
 			width: (@topicBrowserWidthSmall - 6);
 		}
 
- 		.tab {
- 			position: relative;
- 			height: 40px;
+		.tab {
+ 			position: absolute;
+ 			height: 30px;
  			bottom: 0px;
- 			text-align: center;
-			font-size: 26px;
-			line-height: 26px;
-			background-color: @red;
-			color: @white;
-			cursor: pointer;
+			font-size: 24px;
+			width: 100%;
 
 			span {
 				vertical-align: middle;
@@ -54,11 +50,33 @@ html {
  				padding-left: 20px;
  			}
  		}
+
  	}
+
 
  	#notifications {
  		position: fixed;
  		bottom: 0;
+ 		z-index: 5;
+
+ 		.topic {
+ 			position: fixed;
+ 			top: 0;
+ 			left: 10px;
+
+ 			.notification {
+ 				width: 150px;
+ 				padding: 6px;
+ 				background-color: #dddddd;
+
+ 				.close {
+ 					font-style: italic;
+ 					font-size: 14px;
+ 					text-align: right;
+ 					color: @red;
+ 				}
+ 			}
+ 		}
  	}
 
  	#warnRing {
@@ -91,21 +109,25 @@ html {
 	}
 
 	.headerRight {
-		position: fixed;
-		right: 200px;
-		top: 10px;
+		position: absolute;
+		right: 10px;
+		top: 8px;
+		text-align: center;
 
 		&.userArea {
 			.userName {
 				.name {
 					margin-left: 4px;
+					a {
+						text-decoration: none;
+						font-style: italic;
+					}
 				}
 			}
 
 			.signOut {
-				position: fixed;
-				right: @userCountRight;
-				top: @signOutTop;
+				position: relative;
+				top: 11px;
 			}
 		}
 
@@ -122,9 +144,10 @@ html {
 	}
 
 	#usersOnline {
-		position: fixed;
-		right: @userCountRight;
-		top: (@headerHeight - 26px);
+		width: 300px;
+		text-align: center;
+		margin: 0 auto;
+		margin-top: 22px;
 	}
 }
 
@@ -136,11 +159,25 @@ html {
 
  .btn {
  	background-color: @buttonBackground;
- 	border: 2px solid @buttonBorder;
+ 	// border: 2px solid @buttonBorder;
  	text-decoration: none;
  	color: @buttonColor;
  	padding: 4px;
  	margin: 2px;
+ 	text-align: center;
+ 	cursor: pointer;
+
+ 	a {
+ 		color: @buttonColor;
+ 		text-decoration: none;
+ 	}
+
+ 	&:hover {
+ 		color: @buttonHoverColor;
+ 		a {
+	 		color: @buttonHoverColor;
+ 		}
+ 	}
  }
 
  a {
@@ -148,7 +185,6 @@ html {
 
  	&:hover {
  		color: @linkHoverColor;
- 		background-color: linkHoverBackgroundColor;
  	}
  }
 
@@ -230,22 +266,27 @@ html {
 
 #footer {
 	padding: 4px;
-	background-color: @lightgray;
+	background-color: @footerColor;
 	font-size: 12px;
 	position: fixed;
-	right: 0;
+	left: 0;
 	bottom: 0;
-	width: 300px;
+	width: @topicWidth;
+ 	@media screen and (max-width: @maxWidth) {
+		width: @topicWidthSmall;
+	}
 
 	.links {
-		margin-bottom: 6px;
+		text-align: center;
 
 		a {
-			margin-right: 10px;
+			margin-left: 46px;
+			margin-right: 46px;
 		}
 	}
 
 	.questions {
+		margin-bottom: 2px;
 		&:after {
 			content: ' ';
 		}
@@ -267,4 +308,27 @@ html {
  */
 .infiniteScroll {
 	overflow: auto;
+}
+
+.openable {
+	&.arrowsDown {
+		&:before {
+			content: '\2193\2193\0020'
+		}
+
+		&:after {
+			content: '\0020\2193\2193'
+		}
+	}
+
+	&.arrowsUp {
+		&:before {
+			content: '\2191\2191\0020'
+		}
+
+		&:after {
+			content: '\0020\2191\2191'
+		}
+	}
+
 }

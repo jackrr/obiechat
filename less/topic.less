@@ -1,18 +1,39 @@
 #topicBrowser {
 
-	.newTopicLink {
-		display: inline-block;
-		background-color: @lightblue;
-		width: 80px;
-		padding: 4px;
+	.previewsAndCreateRegion {
+		background-color: @goldbrown;
 	}
+
+	.btn {
+		padding: 8px;
+		width: 160px;
+		height: 24px;
+		margin: 0 auto;
+
+		.newTopicLink {
+
+		}
+	}
+
 
 	.topicPreviewContainer {
 
+ 		background-color: @topicBrowserBackground;
+ 		color: @lighttext;
+		overflow: auto;
+		height: auto;
+		width: 100%;
+		position: absolute;
+		bottom: 46px;
+		top: 36px;
+
 		.topicPreviewHolder {
-			height: @topicPreviewHolderHeight;
-			@media screen and (max-height: @maxHeight) {
-				height: @topicPreviewHolderHeightSmall;
+
+			.noTopics {
+				padding: 5px;
+				margin: 10px 0;
+				font-style: italic;
+				text-align: center;
 			}
 
 			.topicPreview {
@@ -22,9 +43,10 @@
 				.topicViewLink {
 					font-style: italic;
 					text-decoration: none;
+					color: @topicPreviewLink;
 
 					&:hover {
-						color: @red;
+						color: @topicPreviewLinkHover;
 					}
 				}
 
@@ -54,13 +76,17 @@ form[name=topic] {
 .topic {
 
 	.topicHeader {
-		width: @topicBrowserWidth;
-		@media screen and (max-width: @maxWidth) {
-			width: @topicBrowserWidthSmall;
+		left: 5px;
+		right: (@topicBrowserWidth);
+ 		@media screen and (max-width: @maxWidth) {
+			right: (@topicBrowserWidthSmall);
 		}
-		float: left;
 		color: @topicHeaderText;
 		background-color: @topicHeaderBackground;
+		position: fixed;
+		top: 70px;
+		margin: 0 auto;
+		z-index: 1;
 
 		div {
 			margin: 5px 3px;
@@ -79,33 +105,71 @@ form[name=topic] {
 		.label {
 			margin-right: 4px;
 		}
+
+		.moreInfo {
+			text-align: center;
+			font-size: 14px;
+			font-style: italic;
+			color: @topicHeaderLink;
+			vertical-align: bottom;
+
+			&:hover {
+				color: @topicHeaderLinkHover;
+				cursor: pointer;
+			}
+		}
 	}
 
 	.topicMain {
-			float: left;
-			width: @topicWidth;
-			// min-width: @topicWidthSmall;
-			@media screen and (max-width: @maxWidth) {
-				width: @topicWidthSmall;
-				// min-width: (@topicWidthSmall - 100);
-			}
+		position: fixed;
+		top: 97px;
+		bottom: 110px;
+		left: 5px;
+		right: (@topicBrowserWidth);
+ 		@media screen and (max-width: @maxWidth) {
+			right: (@topicBrowserWidthSmall);
+		}
 
 		.posts {
 			background-color: @topicBackground;
-			height: @topicPostsHeight;
-			@media screen and (max-height: @maxHeight) {
-				height: @topicPostsHeightSmall;
-			}
+			height: 100%;
+			// height: @topicPostsHeight;
+			// @media screen and (max-height: @maxHeight) {
+			// 	height: @topicPostsHeightSmall;
+			// }
+			color: @topicText;
 		}
 
 		.postFormArea {
+			position: relative;
 			float: left;
-			width: inherit;
-			background-color: @white;
+			width: 100%;
+			background-color: @postingAreaColor;
+
+			form {
+				float: left;
+			}
+
+			.help {
+				position: absolute;
+				bottom: 9px;
+				left: 320px;
+
+				.subtext {
+					display: block;
+					font-size: 12px;
+				}
+			}
 
 			textarea {
 				width: 300px;
 				margin: 5px;
+			}
+
+			.informText {
+				text-align: right;
+				padding-right: 20px;
+				font-style: italic;
 			}
 		}
 	}

@@ -17,6 +17,26 @@
  * colors
  */
 /*
+
+HEADER
+
+*/
+/*
+
+LINKS AND BUTTONS
+
+*/
+/*
+
+TOPIC BROWSING
+
+*/
+/*
+
+THE TOPIC
+
+*/
+/*
  * fonts
  */
 /*
@@ -41,31 +61,27 @@ html body {
 html .main {
   position: absolute;
   top: 70px;
-  width: 100%;
   padding: 8px;
 }
 html #topicBrowser {
-  background-color: #cccccc;
   position: fixed;
+  top: 70px;
   bottom: 0;
-  left: 8px;
+  height: auto;
+  right: 0;
   width: 444px;
 }
 @media screen and (max-width: 1300px) {
   html #topicBrowser {
-    width: 294px;
+    width: 344px;
   }
 }
 html #topicBrowser .tab {
-  position: relative;
-  height: 40px;
+  position: absolute;
+  height: 30px;
   bottom: 0px;
-  text-align: center;
-  font-size: 26px;
-  line-height: 26px;
-  background-color: #8c2318;
-  color: #ffffff;
-  cursor: pointer;
+  font-size: 24px;
+  width: 100%;
 }
 html #topicBrowser .tab span {
   vertical-align: middle;
@@ -77,6 +93,23 @@ html #topicBrowser .tab .label {
 html #notifications {
   position: fixed;
   bottom: 0;
+  z-index: 5;
+}
+html #notifications .topic {
+  position: fixed;
+  top: 0;
+  left: 10px;
+}
+html #notifications .topic .notification {
+  width: 150px;
+  padding: 6px;
+  background-color: #dddddd;
+}
+html #notifications .topic .notification .close {
+  font-style: italic;
+  font-size: 14px;
+  text-align: right;
+  color: #8c2517;
 }
 html #warnRing {
   position: fixed;
@@ -91,8 +124,8 @@ html #warnRing {
   height: 70px;
   position: fixed;
   width: 100%;
-  background-color: #bfb35a;
-  color: #5e8c6a;
+  background-color: #4494ab;
+  color: #5b1108;
   font-size: 18px;
   z-index: 2;
 }
@@ -101,21 +134,25 @@ html #warnRing {
   float: left;
   margin-top: 12px;
   margin-left: 40px;
-  color: #8c2318;
+  color: #5b1108;
   text-decoration: none;
 }
 .header .headerRight {
-  position: fixed;
-  right: 200px;
-  top: 10px;
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  text-align: center;
 }
 .header .headerRight.userArea .userName .name {
   margin-left: 4px;
 }
+.header .headerRight.userArea .userName .name a {
+  text-decoration: none;
+  font-style: italic;
+}
 .header .headerRight.userArea .signOut {
-  position: fixed;
-  right: 30px;
-  top: 7px;
+  position: relative;
+  top: 11px;
 }
 .header .headerRight.buttons .join {
   float: right;
@@ -125,9 +162,10 @@ html #warnRing {
   float: right;
 }
 .header #usersOnline {
-  position: fixed;
-  right: 30px;
-  top: 44px;
+  width: 300px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 22px;
 }
 /*
  *
@@ -135,19 +173,29 @@ html #warnRing {
  *
  */
 .btn {
-  background-color: #5e8c6a;
-  border: 2px solid #ffffff;
+  background-color: #5b1108;
   text-decoration: none;
-  color: #8c2318;
+  color: #ffffff;
   padding: 4px;
   margin: 2px;
+  text-align: center;
+  cursor: pointer;
+}
+.btn a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.btn:hover {
+  color: #c5ab6b;
+}
+.btn:hover a {
+  color: #c5ab6b;
 }
 a {
-  color: #8c2318;
+  color: #5b4208;
 }
 a:hover {
-  color: #ffffff;
-  background-color: linkHoverBackgroundColor;
+  color: #c5ab6b;
 }
 /*
   * Splash page
@@ -208,18 +256,27 @@ a:hover {
 }
 #footer {
   padding: 4px;
-  background-color: #cccccc;
+  background-color: #ffffff;
   font-size: 12px;
   position: fixed;
-  right: 0;
+  left: 0;
   bottom: 0;
-  width: 300px;
+  width: 800px;
+}
+@media screen and (max-width: 1300px) {
+  #footer {
+    width: 600px;
+  }
 }
 #footer .links {
-  margin-bottom: 6px;
+  text-align: center;
 }
 #footer .links a {
-  margin-right: 10px;
+  margin-left: 46px;
+  margin-right: 46px;
+}
+#footer .questions {
+  margin-bottom: 2px;
 }
 #footer .questions:after {
   content: ' ';
@@ -236,13 +293,35 @@ a:hover {
 .infiniteScroll {
   overflow: auto;
 }
+.openable.arrowsDown:before {
+  content: '\2193\2193\0020';
+}
+.openable.arrowsDown:after {
+  content: '\0020\2193\2193';
+}
+.openable.arrowsUp:before {
+  content: '\2191\2191\0020';
+}
+.openable.arrowsUp:after {
+  content: '\0020\2191\2191';
+}
 /*
  * Styling for posts
  */
+.noPosts {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-style: italic;
+}
 .postContainer {
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.postContainer .post {
+  color: #d1d1d1;
 }
 .postContainer .post.mine {
   text-align: right;
@@ -250,7 +329,7 @@ a:hover {
 }
 .postContainer .post.mine .postInner {
   margin-left: auto;
-  background-color: #f2c45a;
+  background-color: #5b4208;
   margin-right: 0;
 }
 .postContainer .post.other {
@@ -258,25 +337,52 @@ a:hover {
   margin-left: 5px;
 }
 .postContainer .post.other .postInner {
-  background-color: #88a65e;
+  background-color: #c5584a;
 }
 .postContainer .post.other .dateContainer {
   text-align: right;
 }
+.postContainer .post.anonymous {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.postContainer .post.anonymous.mine {
+  text-align: left;
+}
+.postContainer .post.anonymous.mine .postInner {
+  background-color: #695627;
+}
+.postContainer .post.anonymous .postInner {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #695627;
+}
+.postContainer .post.anonymous .postInner .warnLink {
+  color: #692f27;
+}
+.postContainer .post.anonymous .postInner .warnLink:hover {
+  color: #c5ab6b;
+}
 .postContainer .post .postInner {
-  border: 1px solid #2e2e2e;
+  border: 1px solid #062d39;
   padding: 4px;
   min-width: 80px;
   width: 300px;
 }
+.postContainer .post .postInner .authorOfficial {
+  display: none;
+}
 .postContainer .post .postInner .author {
   font-weight: 700;
-  margin: 0px 4px;
+  display: block;
+  margin-bottom: 3px;
+  color: #d1d1d1;
 }
 .postContainer .post .postInner .body {
   white-space: pre-line;
 }
 .postContainer .post .postInner .dateContainer {
+  margin-top: 3px;
   font-size: 11px;
 }
 .postContainer .post .postInner .warnArea .warnLink {
@@ -295,19 +401,30 @@ a:hover {
 form[name=post] textarea {
   width: 300px;
 }
-#topicBrowser .newTopicLink {
-  display: inline-block;
-  background-color: #dee4f6;
-  width: 80px;
-  padding: 4px;
+#topicBrowser .previewsAndCreateRegion {
+  background-color: #8c6a17;
 }
-#topicBrowser .topicPreviewContainer .topicPreviewHolder {
-  height: 600px;
+#topicBrowser .btn {
+  padding: 8px;
+  width: 160px;
+  height: 24px;
+  margin: 0 auto;
 }
-@media screen and (max-height: 700px) {
-  #topicBrowser .topicPreviewContainer .topicPreviewHolder {
-    height: 400px;
-  }
+#topicBrowser .topicPreviewContainer {
+  background-color: #114857;
+  color: #cccccc;
+  overflow: auto;
+  height: auto;
+  width: 100%;
+  position: absolute;
+  bottom: 46px;
+  top: 36px;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .noTopics {
+  padding: 5px;
+  margin: 10px 0;
+  font-style: italic;
+  text-align: center;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
   padding: 5px;
@@ -316,12 +433,13 @@ form[name=post] textarea {
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
   font-style: italic;
   text-decoration: none;
+  color: #8c2517;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink:hover {
-  color: #8c2318;
+  color: #8c2517;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview:hover {
-  background-color: #88a65e;
+  background-color: #8c6a17;
   cursor: pointer;
 }
 form[name=topic] {
@@ -335,14 +453,18 @@ form[name=topic] .section {
   margin: 20px;
 }
 .topic .topicHeader {
-  width: 450px;
-  float: left;
-  color: #5e8c6a;
-  background-color: #f2c45a;
+  left: 5px;
+  right: 450px;
+  color: #cccccc;
+  background-color: #114857;
+  position: fixed;
+  top: 70px;
+  margin: 0 auto;
+  z-index: 1;
 }
 @media screen and (max-width: 1300px) {
   .topic .topicHeader {
-    width: 300px;
+    right: 350px;
   }
 }
 .topic .topicHeader div {
@@ -359,32 +481,60 @@ form[name=topic] .section {
 .topic .topicHeader .label {
   margin-right: 4px;
 }
+.topic .topicHeader .moreInfo {
+  text-align: center;
+  font-size: 14px;
+  font-style: italic;
+  color: #c5ab6b;
+  vertical-align: bottom;
+}
+.topic .topicHeader .moreInfo:hover {
+  color: #8c2517;
+  cursor: pointer;
+}
 .topic .topicMain {
-  float: left;
-  width: 800px;
+  position: fixed;
+  top: 97px;
+  bottom: 110px;
+  left: 5px;
+  right: 450px;
 }
 @media screen and (max-width: 1300px) {
   .topic .topicMain {
-    width: 600px;
+    right: 350px;
   }
 }
 .topic .topicMain .posts {
-  background-color: #dee4f6;
-  height: 600px;
-}
-@media screen and (max-height: 700px) {
-  .topic .topicMain .posts {
-    height: 400px;
-  }
+  background-color: #c5ab6b;
+  height: 100%;
+  color: #cccccc;
 }
 .topic .topicMain .postFormArea {
+  position: relative;
   float: left;
-  width: inherit;
-  background-color: #ffffff;
+  width: 100%;
+  background-color: #c5766b;
+}
+.topic .topicMain .postFormArea form {
+  float: left;
+}
+.topic .topicMain .postFormArea .help {
+  position: absolute;
+  bottom: 9px;
+  left: 320px;
+}
+.topic .topicMain .postFormArea .help .subtext {
+  display: block;
+  font-size: 12px;
 }
 .topic .topicMain .postFormArea textarea {
   width: 300px;
   margin: 5px;
+}
+.topic .topicMain .postFormArea .informText {
+  text-align: right;
+  padding-right: 20px;
+  font-style: italic;
 }
 @media screen and (max-width: 920px) {
   .topic .topicHeader {
@@ -404,7 +554,7 @@ form[name=topic] .section {
   background-color: #ffffff;
 }
 #warnRing .warnContainer {
-  border: 2px solid #8c2318;
+  border: 2px solid #8c2517;
   padding: 10px;
 }
 #warnRing .warnContainer .creator {
@@ -457,7 +607,7 @@ form[name=topic] .section {
   width: 50px;
   height: 20px;
   padding: 10px;
-  background-color: #8c2318;
+  background-color: #8c2517;
   color: #ffffff;
   text-decoration: none;
   text-align: center;
