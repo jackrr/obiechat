@@ -1,7 +1,8 @@
-var userAuth = require('../auth/userAuth');
 var postUtils = require('../utils/postUtils');
+var _ = require('underscore');
 
 module.exports = function(app, events) {
+	var userAuth = require('../auth/userAuth')(app.db.User);
 	var errorUtils = require('../utils/errorUtils')(app, events);
 	var notifyAll = errorUtils.notifyAll;
 	var returnError = errorUtils.error;
@@ -9,11 +10,36 @@ module.exports = function(app, events) {
 	var Topic = app.db.Topic;
 	var Post = app.db.Post;
 	var User = app.db.User;
+	var TopicPop = app.db.TopicPopInfo;
+
+	function popInfos(previews, lastAccess, cb) {
+		var queries = previews.length;
+		_.each(previews, function(preview) {
+			TopicPop.find({topicID: preview._id}, function(err, tp) {
+				if (err) return cb(err);
+				if (!tp[0]) return cb('no pop info!');
+				preview.viewCount = tp[0].viewCount;
+				if (lastAccess < tp[0].lastActivity) {
+					preview.newPosts = true;
+				}
+				queries--;
+				if (queries === 0) {
+					return cb(null, previews);
+				}
+			});
+		});
+		if (queries === 0) {
+			return cb(null, previews);
+		}
+	}
 
 	app.get('/topics', userAuth.signedIn, function(req, res) {
 		Topic.previewsPage(1, function(err, topics) {
 			if(err) return returnError(req, res, 500, err, err);
-			res.render('topicList', {topics: topics, user: req.user});
+			popInfos(topics, req.lastAccess, function(err, previews) {
+				if(err) return returnError(req, res, 500, err, err);
+				res.render('topicList', {topics: previews, user: req.user});
+			});
 		});
 	});
 
@@ -23,7 +49,10 @@ module.exports = function(app, events) {
 			if (!topics.length) {
 				return returnError(req, res, 404, "No more topics");
 			}
-			res.render('partials/topicPreviews', {topics: topics});
+			popInfos(topics, req.lastAccess, function(err, previews) {
+				if(err) return returnError(req, res, 500, err, err);
+				res.render('partials/topicPreviews', {topics: previews});
+			});
 		});
 	});
 
@@ -76,7 +105,10 @@ module.exports = function(app, events) {
 			html: function() {
 				Topic.previewsPage(1, function(err, topics) {
 					if (err) return res.send(500);
-					res.render('index', { topics: topics, user: req.user });
+					popInfos(topics, req.lastAccess, function(err, previews) {
+						if(err) return returnError(req, res, 500, err, err);
+						res.render('index', {topics: previews, user: req.user});
+					});
 				});
 			},
 

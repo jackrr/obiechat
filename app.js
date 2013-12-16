@@ -54,6 +54,7 @@ require('./routes/index')(app);
 require('./routes/post')(app, events);
 require('./routes/topic')(app, events);
 require('./routes/user')(app, events);
+require('./routes/topicPop')(app, events);
 
 var server = http.createServer(app);
 /*

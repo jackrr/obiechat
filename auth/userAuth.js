@@ -1,26 +1,41 @@
-function signedIn(req, res, next) {
-	if (!req.user) {
-		return res.redirect('/splash');
+module.exports = function(User) {
+
+	function findUserAndUpLastAccess(req, res, next) {
+		User.find({_id: req.user}, function (err, user) {
+			if (err || !user) return res.redirect('/splash');
+			req.lastAccess = user[0].lastAccess;
+			User.findOneAndUpdate({_id: req.user}, { $set: { lastAccess: Date.now()} }, function (err, user) {
+				if (err || !user) return res.redirect('/splash');
+				req.theUser = user;
+				next();
+			});
+		});
+	}
+
+	function signedIn(req, res, next) {
+		if (!req.user) {
+			return res.redirect('/splash');
+		};
+		findUserAndUpLastAccess(req, res, next);
 	};
-	next();
-};
 
-function isSameUser(req, res, next) {
-	if (req.user.id != req.params.id) {
-		return res.redirect('/');
+	function isSameUser(req, res, next) {
+		if (req.user.id != req.params.id) {
+			return res.redirect('/');
+		}
+		findUserAndUpLastAccess(req, res, next);
+	};
+
+	function ajaxSignedIn(req, res, next) {
+		if (!req.user) {
+			return res.send(403, 'not signed in');
+		}
+		findUserAndUpLastAccess(req, res, next);
 	}
-	next();
-};
 
-function ajaxSignedIn(req, res, next) {
-	if (!req.user) {
-		return res.send(403, 'not signed in');
+	return {
+		signedIn: signedIn,
+		isSameUser: isSameUser,
+		ajaxSignedIn: ajaxSignedIn
 	}
-	next();
-}
-
-module.exports = {
-	signedIn: signedIn,
-	ajaxSignedIn: ajaxSignedIn,
-	isSameUser: isSameUser
 };

@@ -37,8 +37,40 @@
 			}
 
 			.topicPreview {
+				position: relative;
 				padding: 5px;
 				margin: 10px 0;
+
+				div {
+					margin-right: 20px;
+				}
+
+				.popInfos {
+					position: absolute;
+					right: 0px;
+					top: 0px;
+					margin-right: 0;
+
+					.viewCount {
+						position: absolute;
+						right: 0;
+						background-color: @topicPreviewCountBackground;
+						width: 25px;
+						height: 25px;
+						line-height: 25px;
+						display: block;
+						text-align: center;
+					}
+
+					.newPosts {
+						position: absolute;
+						display: block;
+						right: 0;
+						top: 32px;
+						width: 86px;
+						font-style: italic;
+					}
+				}
 
 				.topicViewLink {
 					font-style: italic;
