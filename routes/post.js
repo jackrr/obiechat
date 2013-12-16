@@ -1,10 +1,10 @@
 var postUtils = require('../utils/postUtils');
-var userAuth = require('../auth/userAuth');
 var _ = require('underscore');
 module.exports = function(app, events) {
 	var errorUtils = require('../utils/errorUtils')(app, events);
 	var notifyAll = errorUtils.notifyAll;
 	var returnError = errorUtils.error;
+	var userAuth = require('../auth/userAuth')(app.db.User);
 
 	var PostPage = app.db.PostPage;
 	var Warn = app.db.Warn;
