@@ -1,7 +1,6 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google').Strategy;
 var googlePaths = {};
-var userAuth = require('../auth/userAuth');
 var config = require('../config.json');
 
 if (config.development) {
@@ -17,6 +16,7 @@ module.exports = function(app, events) {
 	var errorUtils = require('../utils/errorUtils')(app, events);
 	var notifyAll = errorUtils.notifyAll;
 	var returnError = errorUtils.error;
+	var userAuth = require('../auth/userAuth')(app.db.User);
 
 	var User = app.db.User;
 	var PostPage = app.db.PostPage;

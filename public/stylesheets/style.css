@@ -427,8 +427,26 @@ form[name=post] textarea {
   text-align: center;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview {
+  position: relative;
   padding: 5px;
   margin: 10px 0;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview div {
+  margin-right: 20px;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .popInfos {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin-right: 0;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .popInfos .viewCount {
+  background-color: #8c2517;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  display: inline-block;
+  text-align: center;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
   font-style: italic;
