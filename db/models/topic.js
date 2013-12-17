@@ -71,6 +71,7 @@ Topic.previewsPage = function(page, cb) {
 		name: 1,
 		slug: 1,
 		createdDate: 1,
+		anonymous: 1,
 		popularity: 1
 	}).sort('-popularity').skip((page-1)*previewsLength).limit(previewsLength).exec(function(err, previews) {
 		if (err) return cb(err);
