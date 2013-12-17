@@ -15,7 +15,6 @@ module.exports = function(app) {
 				if (err) return cb(err);
 				if (!tp[0]) return cb('no pop info!');
 				preview.viewCount = tp[0].viewCount;
-				console.log(preview);
 				if (lastAccess < tp[0].lastActivity) {
 					preview.newPosts = true;
 				}
