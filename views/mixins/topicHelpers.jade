@@ -1,13 +1,12 @@
 mixin topicPreview(topic)
-	.topicPreview
+	div(class="topicPreview" id="preview_#{topic.slug}")
 		.name= topic.name
 		- if (topic.anonymous)
 			.anon Anonymous
 		- else
 			.notAnon Not anonymous
 		.popInfos
-			- if (topic.viewCount > 0)
-				span.viewCount= topic.viewCount
+			span.viewCount= topic.viewCount
 			- if (topic.newPosts)
 				span.newPosts New posts!
 		.createdAt= topic.readableCreatedDate

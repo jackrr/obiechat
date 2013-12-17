@@ -24,6 +24,16 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		});
 	}
 
+	function updateViewCount(slug, count) {
+		$('#preview_'+ slug + ' .viewCount').html(count);
+	}
+
+	function watchPreviewsForViewCounts() {
+		socket.on('topicViewChange', function(data) {
+			updateViewCount(data.slug, data.count);
+		});
+	}
+
 	function loadNextPage() {
 		if (page < 0) {
 			return;
@@ -95,6 +105,7 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		page = 2;
 		socket = the_socket;
 		watchTopicPreviewsForClicks();
+		watchPreviewsForViewCounts();
 		fillAndWatchPreviewArea();
 		watchToggle();
 		watchNav();

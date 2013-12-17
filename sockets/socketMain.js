@@ -28,6 +28,10 @@ function initialize(app, io, events) {
 		events.on('newNotification', functionHolder.sendNotification);
 	}
 
+	events.on('topicViewChange', function(data) {
+		io.sockets.emit('topicViewChange', data);
+	});
+
 	function stopWatchingOnlineCount(id) {
 		events.removeListener('usersChanged', sockets[id].onlineCount);
 		events.removeListener('newNotification', sockets[id].sendNotification)
