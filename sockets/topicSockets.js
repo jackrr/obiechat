@@ -23,6 +23,7 @@ module.exports = function(app, events) {
 				events.on('topicViewersChanged'+slug, saveViewerCount);
 			}
 			topics[slug].push(id);
+			events.emit('topicViewChange', {slug: slug, count: topics[slug].length});
 
 			function sendPosts() {
 				Topic.findPostsSince(slug, socket.userID, date, function(err, posts) {
@@ -69,7 +70,7 @@ module.exports = function(app, events) {
 			events.on('newWarning'+slug, newWarning);
 			events.on('hidePost'+slug, hidePost);
 			events.on('topicViewersChanged'+slug, sendViewerCount);
-			events.emit('topicViewersChanged'+slug, sendViewerCount);
+			events.emit('topicViewersChanged'+slug);
 			sendPosts();
 
 			socket.stopWatching = function() {
@@ -79,6 +80,7 @@ module.exports = function(app, events) {
 				events.removeListener('newWarning'+slug, newWarning);
 				events.removeListener('hidePost'+slug, hidePost);
 				events.emit('topicViewersChanged'+slug);
+				events.emit('topicViewChange', {slug: slug, count: topics[slug].length});
 			}
 
 			socket.on('disconnect', function() {
