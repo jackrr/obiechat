@@ -24,6 +24,18 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		});
 	}
 
+	function updateViewCount(slug, count) {
+		$('#preview_'+ slug + ' .viewCount').html(count);
+	}
+
+	function watchPreviewsForViewCounts() {
+		console.log('watching');
+		socket.on('topicViewChange', function(data) {
+			console.log('new count in' + data.slug + ': ' + data.count);
+			updateViewCount(data.slug, data.count);
+		});
+	}
+
 	function loadNextPage() {
 		if (page < 0) {
 			return;
@@ -95,6 +107,7 @@ define(['jquery', 'underscore', 'window', './topicView'], function($, _, window,
 		page = 2;
 		socket = the_socket;
 		watchTopicPreviewsForClicks();
+		watchPreviewsForViewCounts();
 		fillAndWatchPreviewArea();
 		watchToggle();
 		watchNav();
