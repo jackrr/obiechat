@@ -47,7 +47,7 @@ module.exports = function(app) {
 		res.render('terms', {user: req.user});
 	});
 
-	app.get('/relevantThings', function(req, res) {
+	app.get('/about', function(req, res) {
 		res.render('relevantThings', {user: req.user});
 	});
 };

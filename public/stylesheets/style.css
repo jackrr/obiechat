@@ -212,6 +212,7 @@ a:hover {
 .staticPage .title {
   font-size: 28px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 .staticPage .linkEnd:after {
   content: ' ';
@@ -239,6 +240,25 @@ a:hover {
 }
 .staticPage.terms .section .descrip {
   margin-bottom: 18px;
+}
+.staticPage.relevantThings .articles {
+  margin-top: 40px;
+}
+.staticPage.relevantThings .article {
+  margin: 25px 0;
+}
+.staticPage.relevantThings .article .nameArea {
+  font-size: 20px;
+}
+.staticPage.relevantThings .article div {
+  margin: 12px 0;
+}
+.staticPage.relevantThings .article div .intro {
+  margin-right: 4px;
+  font-weight: 700;
+}
+.staticPage.relevantThings .article div .quote {
+  font-style: italic;
 }
 .fade {
   opacity: 0.3;
@@ -441,12 +461,22 @@ form[name=post] textarea {
   margin-right: 0;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .popInfos .viewCount {
+  position: absolute;
+  right: 0;
   background-color: #8c2517;
   width: 25px;
   height: 25px;
   line-height: 25px;
-  display: inline-block;
+  display: block;
   text-align: center;
+}
+#topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .popInfos .newPosts {
+  position: absolute;
+  display: block;
+  right: 0;
+  top: 32px;
+  width: 86px;
+  font-style: italic;
 }
 #topicBrowser .topicPreviewContainer .topicPreviewHolder .topicPreview .topicViewLink {
   font-style: italic;
